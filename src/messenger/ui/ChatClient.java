@@ -6,6 +6,8 @@ import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.io.IOException;
@@ -48,31 +50,34 @@ public class ChatClient extends JPanel {
 
 		this.room = room;
 		initUI();
-		this.autoUpdate = new Thread(() -> {
-			while (!stop) {
-				try {
-					updateMessages();
-				} catch (InterruptedException | AsynchronousCloseException | FileLockInterruptionException e) {
-					// Interruption
-					if (stop) {
-						return;
+		this.autoUpdate = new Thread(new Runnable() {
+			@Override
+			public void run() {
+				while (!stop) {
+					try {
+						updateMessages();
+					} catch (InterruptedException | AsynchronousCloseException | FileLockInterruptionException e) {
+						// Interruption
+						if (stop) {
+							return;
+						}
+						// Make sure to reset interrupted flag.
+						Thread.interrupted();
+					} catch (IOException e) {
+						// Place this here just in case if some how an interruption-related exception occurs.
+						if (stop) {
+							return;
+						}
+						// Make sure to reset interrupted flag.
+						Thread.interrupted();
+						e.printStackTrace();
+						JOptionPane.showMessageDialog(ChatClient.this, "Unable to load messages", "MessengerApp", JOptionPane.ERROR_MESSAGE);
+					} catch (Exception e) {
+						// Make sure to reset interrupted flag.
+						Thread.interrupted();
+						e.printStackTrace();
+						JOptionPane.showMessageDialog(ChatClient.this, "Unexpected error occured", "MessagerApp", JOptionPane.ERROR_MESSAGE);
 					}
-					// Make sure to reset interrupted flag.
-					Thread.interrupted();
-				} catch (IOException e) {
-					// Place this here just in case if some how an interruption-related exception occurs.
-					if (stop) {
-						return;
-					}
-					// Make sure to reset interrupted flag.
-					Thread.interrupted();
-					e.printStackTrace();
-					JOptionPane.showMessageDialog(this, "Unable to load messages", "MessengerApp", JOptionPane.ERROR_MESSAGE);
-				} catch (Exception e) {
-					// Make sure to reset interrupted flag.
-					Thread.interrupted();
-					e.printStackTrace();
-					JOptionPane.showMessageDialog(this, "Unexpected error occured", "MessagerApp", JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});
@@ -167,18 +172,21 @@ public class ChatClient extends JPanel {
 		srpnMsgs.setViewportView(txtMsgs);
 
 		txtInput = new JTextField();
-		txtInput.addActionListener(e -> {
-			if (txtInput.getText().isEmpty()) {
-				return;
-			}
+		txtInput.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (txtInput.getText().isEmpty()) {
+					return;
+				}
 
-			try {
-				room.post(txtInput.getText());
-			} catch (IOException e1) {
-				e1.printStackTrace();
-				JOptionPane.showMessageDialog(this, "Unable to post message", "MessengerApp", JOptionPane.ERROR_MESSAGE);
-			} finally {
-				txtInput.setText("");
+				try {
+					room.post(txtInput.getText());
+				} catch (IOException e1) {
+					e1.printStackTrace();
+					JOptionPane.showMessageDialog(ChatClient.this, "Unable to post message", "MessengerApp", JOptionPane.ERROR_MESSAGE);
+				} finally {
+					txtInput.setText("");
+				}
 			}
 		});
 		txtInput.addFocusListener(new FocusAdapter() {

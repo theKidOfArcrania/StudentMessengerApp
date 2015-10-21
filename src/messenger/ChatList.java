@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.nio.file.ClosedWatchServiceException;
 import java.nio.file.DirectoryStream;
+import java.nio.file.DirectoryStream.Filter;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -125,21 +126,24 @@ public class ChatList {
 		wtsvPrivateChat = root.getFileSystem().newWatchService();
 		root.resolve("chats").register(wtsvPrivateChat, ENTRY_CREATE, ENTRY_DELETE, OVERFLOW);
 
-		Thread updater = new Thread(() -> {
-			while (true) {
-				try {
-					WatchKey events = wtsvPrivateChat.take();
+		Thread updater = new Thread(new Runnable() {
+			@Override
+			public void run() {
+				while (true) {
+					try {
+						WatchKey events = wtsvPrivateChat.take();
 
-					for (WatchEvent<?> event : events.pollEvents()) {
-						processEvent(event);
+						for (WatchEvent<?> event : events.pollEvents()) {
+							processEvent(event);
+						}
+						events.reset();
+					} catch (ClosedWatchServiceException e) {
+						// This watch service became closed.
+						e.printStackTrace();
+						return;
+					} catch (Exception e) {
+						e.printStackTrace();
 					}
-					events.reset();
-				} catch (ClosedWatchServiceException e) {
-					// This watch service became closed.
-					e.printStackTrace();
-					return;
-				} catch (Exception e) {
-					e.printStackTrace();
 				}
 			}
 		});
@@ -167,7 +171,12 @@ public class ChatList {
 
 	public ArrayList<String> getPrivateChats() throws IOException {
 		ArrayList<String> chats = new ArrayList<>();
-		DirectoryStream.Filter<Path> filter = path -> path.getFileName().toString().endsWith(".crm");
+		DirectoryStream.Filter<Path> filter = new Filter<Path>() {
+			@Override
+			public boolean accept(Path path) throws IOException {
+				return path.getFileName().toString().endsWith(".crm");
+			}
+		};
 		try (DirectoryStream<Path> chatStream = Files.newDirectoryStream(root.resolve("chats"), filter)) {
 			for (Path chat : chatStream) {
 				String chatName = chat.getFileName().toString();

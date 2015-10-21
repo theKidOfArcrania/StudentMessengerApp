@@ -7,6 +7,8 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
@@ -30,11 +32,14 @@ import javax.swing.KeyStroke;
 import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import messenger.ChatList;
 import messenger.ChatRoom;
 import messenger.Message;
+import messenger.event.MessageEvent;
+import messenger.event.MessageListener;
 import messenger.ui.image.ImageHelper;
 
 import static javax.swing.JOptionPane.ERROR_MESSAGE;
@@ -57,16 +62,19 @@ public class MessengerApp extends JFrame {
 		private boolean removed = false;
 
 		@SuppressWarnings("resource")
-		public ChatTabComponent(JTabbedPane aTabbedPane, ChatClient client) {
+		public ChatTabComponent(JTabbedPane aTabbedPane, final ChatClient client) {
 			super(new BorderLayout());
-			ChatRoom chatRoom = client.getChatRoom();
-			ChangeListener list = (evt) -> {
-				if (removed) {
-					return;
-				}
-				if (ChatTabComponent.this == tabbedPane.getTabComponentAt(tabbedPane.getSelectedIndex())) {
-					lastUser = null;
-					titleLabel.setText(chatRoom.getChatName() + "   ");
+			final ChatRoom chatRoom = client.getChatRoom();
+			final ChangeListener list = new ChangeListener() {
+				@Override
+				public void stateChanged(ChangeEvent evt) {
+					if (removed) {
+						return;
+					}
+					if (ChatTabComponent.this == tabbedPane.getTabComponentAt(tabbedPane.getSelectedIndex())) {
+						lastUser = null;
+						titleLabel.setText(chatRoom.getChatName() + "   ");
+					}
 				}
 			};
 
@@ -90,53 +98,63 @@ public class MessengerApp extends JFrame {
 			closeButton.setContentAreaFilled(false);
 			closeButton.setPreferredSize(new Dimension(closerImage.getIconWidth(), closerImage.getIconHeight()));
 			closeButton.setSize(new Dimension(closerImage.getIconWidth(), closerImage.getIconHeight()));
-			closeButton.addActionListener((e) -> {
-				for (int i = 0; i < tabbedPane.getTabCount(); i++) {
-					if (ChatTabComponent.this == tabbedPane.getTabComponentAt(i)) {
-						try {
-							client.leave();
-						} catch (Exception e1) {
-							e1.printStackTrace();
-							showMessageDialog(this, "Unable to safely leave the chatroom " + client.getName(), "MessengerApp", ERROR_MESSAGE);
-						}
-						removed = true;
-						chatIDs.remove(i);
-						chatRooms.remove(i);
-						chatTabComps.remove(i);
+			closeButton.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					for (int i = 0; i < tabbedPane.getTabCount(); i++) {
+						if (ChatTabComponent.this == tabbedPane.getTabComponentAt(i)) {
+							try {
+								client.leave();
+							} catch (Exception e1) {
+								e1.printStackTrace();
+								showMessageDialog(ChatTabComponent.this, "Unable to safely leave the chatroom "
+										+ client.getName(), "MessengerApp", ERROR_MESSAGE);
+							}
+							removed = true;
+							chatIDs.remove(i);
+							chatRooms.remove(i);
+							chatTabComps.remove(i);
 
-						tabbedPane.removeChangeListener(list);
-						tabbedPane.removeTabAt(i);
-						break;
+							tabbedPane.removeChangeListener(list);
+							tabbedPane.removeTabAt(i);
+							break;
+						}
 					}
 				}
 			});
 
-			client.addMessageListener((evt) -> {
-				Message msg = evt.getMessage();
-				if (msg.getFlag() != Message.FLAG_POST || ChatTabComponent.this == tabbedPane.getTabComponentAt(tabbedPane.getSelectedIndex())) {
-					return;
+			client.addMessageListener(new MessageListener() {
+				@Override
+				public void messageRecieved(MessageEvent evt) {
+					Message msg = evt.getMessage();
+					if (msg.getFlag() != Message.FLAG_POST || ChatTabComponent.this == tabbedPane.getTabComponentAt(tabbedPane.getSelectedIndex())) {
+						return;
+					}
+					lastUser = chatRoom.getUserName(msg.getSender());
 				}
-				lastUser = chatRoom.getUserName(msg.getSender());
 			});
 
 			tabbedPane.addChangeListener(list);
 			add(titleLabel, BorderLayout.CENTER);
 			add(closeButton, BorderLayout.EAST);
-			Thread t = new Thread(() -> {
-				while (true) {
-					try {
-						if (removed) {
-							return;
+			Thread t = new Thread(new Runnable() {
+				@Override
+				public void run() {
+					while (true) {
+						try {
+							if (removed) {
+								return;
+							}
+							Thread.sleep(1000);
+							rotate = !rotate;
+							if (rotate && lastUser != null) {
+								titleLabel.setText(lastUser + " said...   ");
+							} else {
+								titleLabel.setText(chatRoom.getChatName() + "   ");
+							}
+						} catch (Exception e1) {
+							e1.printStackTrace();
 						}
-						Thread.sleep(1000);
-						rotate = !rotate;
-						if (rotate && lastUser != null) {
-							titleLabel.setText(lastUser + " said...   ");
-						} else {
-							titleLabel.setText(chatRoom.getChatName() + "   ");
-						}
-					} catch (Exception e1) {
-						e1.printStackTrace();
 					}
 				}
 			});
@@ -191,44 +209,56 @@ public class MessengerApp extends JFrame {
 		menuBar.add(mnuChats);
 
 		JMenuItem mnuNewPrivateChat = new JMenuItem("New Private Chat");
-		mnuNewPrivateChat.addActionListener(e -> {
-			CreateChatPrompt prompt = new CreateChatPrompt(false, this);
-			prompt.setVisible(true);
-			if (!prompt.isCanceled()) {
-				addChatTab("Private", prompt.getResponse());
-			}
+		mnuNewPrivateChat.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				CreateChatPrompt prompt = new CreateChatPrompt(false, MessengerApp.this);
+				prompt.setVisible(true);
+				if (!prompt.isCanceled()) {
+					addChatTab("Private", prompt.getResponse());
+				}
 
+			}
 		});
 		mnuNewPrivateChat.setMnemonic('P');
 		mnuNewPrivateChat.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P, InputEvent.CTRL_MASK));
 		mnuChats.add(mnuNewPrivateChat);
 
 		JMenuItem mnuPublicChat = new JMenuItem("Public Open Chat");
-		mnuPublicChat.addActionListener(e -> {
-			addChatTab();
+		mnuPublicChat.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				addChatTab();
+			}
 		});
 
 		JMenuItem mnuNewUnlistedChat = new JMenuItem("New Unlisted Chat");
-		mnuNewUnlistedChat.addActionListener(e -> {
-			CreateChatPrompt prompt = new CreateChatPrompt(true, this);
-			prompt.setVisible(true);
-			if (!prompt.isCanceled()) {
-				addChatTab("Unlisted", prompt.getResponse());
-			}
+		mnuNewUnlistedChat.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				CreateChatPrompt prompt = new CreateChatPrompt(true, MessengerApp.this);
+				prompt.setVisible(true);
+				if (!prompt.isCanceled()) {
+					addChatTab("Unlisted", prompt.getResponse());
+				}
 
+			}
 		});
 		mnuNewUnlistedChat.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_U, InputEvent.CTRL_MASK));
 		mnuNewUnlistedChat.setMnemonic('U');
 		mnuChats.add(mnuNewUnlistedChat);
 
 		JMenuItem mnuLoadChat = new JMenuItem("Load Chat");
-		mnuLoadChat.addActionListener((evt) -> {
-			LoadChatPrompt prompt = new LoadChatPrompt(this);
-			prompt.setVisible(true);
-			if (!prompt.isCanceled()) {
-				addChatTab(prompt.isUnlisted() ? "Unlisted" : "Private", prompt.getResponse());
-			}
+		mnuLoadChat.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent evt) {
+				LoadChatPrompt prompt = new LoadChatPrompt(MessengerApp.this);
+				prompt.setVisible(true);
+				if (!prompt.isCanceled()) {
+					addChatTab(prompt.isUnlisted() ? "Unlisted" : "Private", prompt.getResponse());
+				}
 
+			}
 		});
 
 		JSeparator separator_1 = new JSeparator();
@@ -245,7 +275,12 @@ public class MessengerApp extends JFrame {
 		mnuChats.add(separator);
 
 		JMenuItem mnuExit = new JMenuItem("Exit");
-		mnuExit.addActionListener(e -> promptClosing());
+		mnuExit.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				promptClosing();
+			}
+		});
 		mnuExit.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X, InputEvent.ALT_MASK));
 		mnuExit.setMnemonic('X');
 		mnuChats.add(mnuExit);
@@ -254,9 +289,12 @@ public class MessengerApp extends JFrame {
 		menuBar.add(mnHelp);
 
 		JMenuItem mntmAbout = new JMenuItem("About");
-		mntmAbout.addActionListener(e -> {
-			MessengerAbout about = new MessengerAbout(this);
-			about.setVisible(true);
+		mntmAbout.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				MessengerAbout about = new MessengerAbout(MessengerApp.this);
+				about.setVisible(true);
+			}
 		});
 		mnHelp.add(mntmAbout);
 		contentPane = new JPanel();

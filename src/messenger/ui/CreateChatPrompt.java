@@ -5,6 +5,8 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.Window;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
@@ -61,7 +63,7 @@ public class CreateChatPrompt extends JDialog {
 	private final JPasswordField txtConfirm;
 	private final ChatList chatList;
 
-	public CreateChatPrompt(boolean unlisted, Window owner) {
+	public CreateChatPrompt(final boolean unlisted, final Window owner) {
 		super(owner);
 		try {
 			chatList = ChatList.getMainChatList();
@@ -173,15 +175,18 @@ public class CreateChatPrompt extends JDialog {
 		gbc_txtConfirm.gridy = 2;
 		contentPanel.add(txtConfirm, gbc_txtConfirm);
 
-		JCheckBox chkShowPassword = new JCheckBox("Show Password");
+		final JCheckBox chkShowPassword = new JCheckBox("Show Password");
 		chkShowPassword.setOpaque(false);
-		chkShowPassword.addActionListener(e -> {
-			if (chkShowPassword.isSelected()) {
-				txtPassword.setEchoChar((char) 0);
-				txtConfirm.setEchoChar((char) 0);
-			} else {
-				txtPassword.setEchoChar(DEFAULT_ECHO_CHAR);
-				txtConfirm.setEchoChar(DEFAULT_ECHO_CHAR);
+		chkShowPassword.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (chkShowPassword.isSelected()) {
+					txtPassword.setEchoChar((char) 0);
+					txtConfirm.setEchoChar((char) 0);
+				} else {
+					txtPassword.setEchoChar(DEFAULT_ECHO_CHAR);
+					txtConfirm.setEchoChar(DEFAULT_ECHO_CHAR);
+				}
 			}
 		});
 		GridBagConstraints gbc_chckbxShowPassword = new GridBagConstraints();
@@ -198,8 +203,11 @@ public class CreateChatPrompt extends JDialog {
 		gbl_buttonPane.rowWeights = new double[] { 0.0, Double.MIN_VALUE };
 		buttonPane.setLayout(gbl_buttonPane);
 		JButton cmdCancel = new JButton("Cancel");
-		cmdCancel.addActionListener(e -> {
-			dispose();
+		cmdCancel.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+			}
 		});
 		GridBagConstraints gbc_cmdCancel = new GridBagConstraints();
 		gbc_cmdCancel.fill = GridBagConstraints.HORIZONTAL;
@@ -209,45 +217,48 @@ public class CreateChatPrompt extends JDialog {
 		gbc_cmdCancel.gridy = 0;
 		buttonPane.add(cmdCancel, gbc_cmdCancel);
 		cmdCreate.setEnabled(false);
-		cmdCreate.addActionListener(evt -> {
-			char[] password = txtPassword.getPassword();
-			char[] confirm = txtConfirm.getPassword();
-			if (!Arrays.equals(password, confirm)) {
-				showMessageDialog(this, "The new password and confirm password fields are not the same.", "MessengerApp", WARNING_MESSAGE);
-				txtConfirm.requestFocusInWindow();
-				txtConfirm.selectAll();
-				return;
-			}
+		cmdCreate.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent evt) {
+				char[] password = txtPassword.getPassword();
+				char[] confirm = txtConfirm.getPassword();
+				if (!Arrays.equals(password, confirm)) {
+					showMessageDialog(CreateChatPrompt.this, "The new password and confirm password fields are not the same.", "MessengerApp", WARNING_MESSAGE);
+					txtConfirm.requestFocusInWindow();
+					txtConfirm.selectAll();
+					return;
+				}
 
-			try {
-				if (chatList.privateChatExists(txtChatName.getText(), unlisted)) {
-					showMessageDialog(this, "Chat name already exists.", "MessengerApp", WARNING_MESSAGE);
+				try {
+					if (chatList.privateChatExists(txtChatName.getText(), unlisted)) {
+						showMessageDialog(CreateChatPrompt.this, "Chat name already exists.", "MessengerApp", WARNING_MESSAGE);
+						txtChatName.requestFocusInWindow();
+						txtChatName.selectAll();
+						txtPassword.setText("");
+						txtConfirm.setText("");
+						return;
+					}
+					chatRoom = chatList.privateChatRoom(txtChatName.getText(), password, unlisted);
+				} catch (PasswordInvalidException ex) {
+					ex.printStackTrace();
+					showMessageDialog(CreateChatPrompt.this, "Unexpected Error Occured.", "MessengerApp", ERROR_MESSAGE);
+					txtChatName.requestFocusInWindow();
+					txtChatName.selectAll();
+					txtPassword.setText("");
+					txtConfirm.setText("");
+					return;
+				} catch (IOException ex) {
+					// TO DO: make more sophisticated error logging utility.
+					ex.printStackTrace();
+					showMessageDialog(CreateChatPrompt.this, ex.getMessage(), "MessengerApp", ERROR_MESSAGE);
 					txtChatName.requestFocusInWindow();
 					txtChatName.selectAll();
 					txtPassword.setText("");
 					txtConfirm.setText("");
 					return;
 				}
-				chatRoom = chatList.privateChatRoom(txtChatName.getText(), password, unlisted);
-			} catch (PasswordInvalidException ex) {
-				ex.printStackTrace();
-				showMessageDialog(this, "Unexpected Error Occured.", "MessengerApp", ERROR_MESSAGE);
-				txtChatName.requestFocusInWindow();
-				txtChatName.selectAll();
-				txtPassword.setText("");
-				txtConfirm.setText("");
-				return;
-			} catch (IOException ex) {
-				// TO DO: make more sophisticated error logging utility.
-				ex.printStackTrace();
-				showMessageDialog(this, ex.getMessage(), "MessengerApp", ERROR_MESSAGE);
-				txtChatName.requestFocusInWindow();
-				txtChatName.selectAll();
-				txtPassword.setText("");
-				txtConfirm.setText("");
-				return;
+				dispose();
 			}
-			dispose();
 		});
 		GridBagConstraints gbc_cmdCreate = new GridBagConstraints();
 		gbc_cmdCreate.insets = new Insets(0, 0, 5, 5);
