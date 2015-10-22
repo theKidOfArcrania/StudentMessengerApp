@@ -19,19 +19,19 @@ public class UpdateService {
 
 	/**
 	 * Fetches the head binary program
-	 * 
+	 *
 	 * @return the newest program binary data
-	 * @throws IOException
+	 * @throws IOException if an error occurs while connecting the the update server.
 	 */
 	public InputStream fetchHead() throws IOException {
-
+		return null;
 	}
 
 	/**
 	 * Fetches the head (newest) version of this binary program.
-	 * 
+	 *
 	 * @return the newest version in a md5 digest.
-	 * @throws IOException
+	 * @throws IOException if an error occurs while connecting the the update server.
 	 */
 	public byte[] fetchHeadVersion() throws IOException {
 		// TO DO: implement this method.
@@ -40,7 +40,7 @@ public class UpdateService {
 
 	/**
 	 * Retrieves the version of this binary file.
-	 * 
+	 *
 	 * @return the version of this binary file in a md5 digest.
 	 */
 	public byte[] getVersion() {

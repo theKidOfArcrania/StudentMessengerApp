@@ -7,6 +7,8 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.Window;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
@@ -143,7 +145,7 @@ public class LoadChatPrompt extends JDialog {
 	private final JComboBox<String> cmbChats;
 	private ChatRoom chatRoom;
 
-	public LoadChatPrompt(Window owner) {
+	public LoadChatPrompt(final Window owner) {
 		super(owner);
 		try {
 			chatList = ChatList.getMainChatList();
@@ -188,7 +190,12 @@ public class LoadChatPrompt extends JDialog {
 		optPrivateChat.setBackground(Color.WHITE);
 		optPrivateChat.setActionCommand("Private");
 		optPrivateChat.setSelected(true);
-		optPrivateChat.addActionListener(evt -> changeChatType());
+		optPrivateChat.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent evt) {
+				changeChatType();
+			}
+		});
 		chatType.add(optPrivateChat);
 		GridBagConstraints gbc_optPrivateChat = new GridBagConstraints();
 		gbc_optPrivateChat.insets = new Insets(5, 5, 0, 0);
@@ -200,7 +207,12 @@ public class LoadChatPrompt extends JDialog {
 		JRadioButton optUnlistedChat = new JRadioButton("Unlisted Chat");
 		optUnlistedChat.setOpaque(false);
 		optUnlistedChat.setActionCommand("Unlisted");
-		optUnlistedChat.addActionListener(evt -> changeChatType());
+		optUnlistedChat.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent evt) {
+				changeChatType();
+			}
+		});
 		chatType.add(optUnlistedChat);
 		GridBagConstraints gbc_optUnlistedChat = new GridBagConstraints();
 		gbc_optUnlistedChat.anchor = GridBagConstraints.WEST;
@@ -299,13 +311,16 @@ public class LoadChatPrompt extends JDialog {
 		gbc_txtUnlistedPassword.gridy = 1;
 		pnlUnlistedChat.add(txtUnlistedPassword, gbc_txtUnlistedPassword);
 
-		JCheckBox chkShowUnlistedPassword = new JCheckBox("Show Password");
+		final JCheckBox chkShowUnlistedPassword = new JCheckBox("Show Password");
 		chkShowUnlistedPassword.setOpaque(false);
-		chkShowUnlistedPassword.addActionListener(e -> {
-			if (chkShowUnlistedPassword.isSelected()) {
-				txtUnlistedPassword.setEchoChar((char) 0);
-			} else {
-				txtUnlistedPassword.setEchoChar(DEFAULT_ECHO_CHAR);
+		chkShowUnlistedPassword.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (chkShowUnlistedPassword.isSelected()) {
+					txtUnlistedPassword.setEchoChar((char) 0);
+				} else {
+					txtUnlistedPassword.setEchoChar(DEFAULT_ECHO_CHAR);
+				}
 			}
 		});
 		GridBagConstraints gbc_chkShowUnlistedPassword = new GridBagConstraints();
@@ -341,9 +356,12 @@ public class LoadChatPrompt extends JDialog {
 			showMessageDialog(this, e.getMessage(), "MessengerApp", ERROR_MESSAGE);
 		}
 		cmbChats.setSelectedItem("<Please Select A Chat>");
-		cmbChats.addActionListener((evt) -> {
-			cmdLoad.setEnabled(cmbChats.getSelectedIndex() > 0);
-			txtPassword.setText("");
+		cmbChats.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent evt) {
+				cmdLoad.setEnabled(cmbChats.getSelectedIndex() > 0);
+				txtPassword.setText("");
+			}
 		});
 		GridBagConstraints gbc_cmbChats = new GridBagConstraints();
 		gbc_cmbChats.insets = new Insets(5, 0, 5, 5);
@@ -368,13 +386,16 @@ public class LoadChatPrompt extends JDialog {
 		gbc_txtPassword.gridy = 1;
 		pnlPrivateChat.add(txtPassword, gbc_txtPassword);
 
-		JCheckBox chkShowPassword = new JCheckBox("Show Password");
+		final JCheckBox chkShowPassword = new JCheckBox("Show Password");
 		chkShowPassword.setOpaque(false);
-		chkShowPassword.addActionListener(e -> {
-			if (chkShowPassword.isSelected()) {
-				txtPassword.setEchoChar((char) 0);
-			} else {
-				txtPassword.setEchoChar(DEFAULT_ECHO_CHAR);
+		chkShowPassword.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (chkShowPassword.isSelected()) {
+					txtPassword.setEchoChar((char) 0);
+				} else {
+					txtPassword.setEchoChar(DEFAULT_ECHO_CHAR);
+				}
 			}
 		});
 		GridBagConstraints gbc_chkShowPassword = new GridBagConstraints();
@@ -397,8 +418,11 @@ public class LoadChatPrompt extends JDialog {
 		pnlResponse.setLayout(gbl_pnlResponse);
 
 		JButton cmdCancel = new JButton("Cancel");
-		cmdCancel.addActionListener(e -> {
-			dispose();
+		cmdCancel.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+			}
 		});
 		GridBagConstraints gbc_cmdCancel = new GridBagConstraints();
 		gbc_cmdCancel.fill = GridBagConstraints.HORIZONTAL;
@@ -410,47 +434,50 @@ public class LoadChatPrompt extends JDialog {
 
 		cmdLoad = new JButton("Load");
 		cmdLoad.setEnabled(false);
-		cmdLoad.addActionListener(e -> {
-			boolean unlisted = isUnlisted();
-			String chatName = unlisted ? txtChatName.getText() : cmbChats.getSelectedItem().toString();
-			char[] password = unlisted ? txtUnlistedPassword.getPassword() : txtPassword.getPassword();
-			try {
-				if (!chatList.privateChatExists(chatName, unlisted)) {
-					showMessageDialog(this, "Chatroom name or password is incorrect.", "MessengerApp", WARNING_MESSAGE);
+		cmdLoad.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				boolean unlisted = isUnlisted();
+				String chatName = unlisted ? txtChatName.getText() : cmbChats.getSelectedItem().toString();
+				char[] password = unlisted ? txtUnlistedPassword.getPassword() : txtPassword.getPassword();
+				try {
+					if (!chatList.privateChatExists(chatName, unlisted)) {
+						showMessageDialog(LoadChatPrompt.this, "Chatroom name or password is incorrect.", "MessengerApp", WARNING_MESSAGE);
+						if (unlisted) {
+							txtUnlistedPassword.setText("");
+							txtChatName.requestFocusInWindow();
+							txtChatName.selectAll();
+						} else {
+							txtPassword.setText("");
+							cmbChats.requestFocusInWindow();
+						}
+						return;
+					}
+
+					chatRoom = chatList.privateChatRoom(chatName, password, unlisted);
+					dispose();
+				} catch (PasswordInvalidException ex) {
+					showMessageDialog(LoadChatPrompt.this, "Chatroom name or password is incorrect.", "MessengerApp", WARNING_MESSAGE);
 					if (unlisted) {
-						txtUnlistedPassword.setText("");
 						txtChatName.requestFocusInWindow();
 						txtChatName.selectAll();
+						txtUnlistedPassword.setText("");
 					} else {
-						txtPassword.setText("");
 						cmbChats.requestFocusInWindow();
+						txtPassword.setText("");
 					}
-					return;
-				}
-
-				chatRoom = chatList.privateChatRoom(chatName, password, unlisted);
-				dispose();
-			} catch (PasswordInvalidException ex) {
-				showMessageDialog(this, "Chatroom name or password is incorrect.", "MessengerApp", WARNING_MESSAGE);
-				if (unlisted) {
-					txtChatName.requestFocusInWindow();
-					txtChatName.selectAll();
-					txtUnlistedPassword.setText("");
-				} else {
-					cmbChats.requestFocusInWindow();
-					txtPassword.setText("");
-				}
-			} catch (IOException ex) {
-				// TO DO: make more sophisticated error logging utility.
-				ex.printStackTrace();
-				showMessageDialog(this, ex.getMessage(), "MessengerApp", ERROR_MESSAGE);
-				if (unlisted) {
-					txtChatName.requestFocusInWindow();
-					txtChatName.selectAll();
-					txtUnlistedPassword.setText("");
-				} else {
-					cmbChats.requestFocusInWindow();
-					txtPassword.setText("");
+				} catch (IOException ex) {
+					// TO DO: make more sophisticated error logging utility.
+					ex.printStackTrace();
+					showMessageDialog(LoadChatPrompt.this, ex.getMessage(), "MessengerApp", ERROR_MESSAGE);
+					if (unlisted) {
+						txtChatName.requestFocusInWindow();
+						txtChatName.selectAll();
+						txtUnlistedPassword.setText("");
+					} else {
+						cmbChats.requestFocusInWindow();
+						txtPassword.setText("");
+					}
 				}
 			}
 		});

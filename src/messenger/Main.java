@@ -14,7 +14,7 @@ import messenger.ui.image.ImageHelper;
 public class Main {
 
 	public static void main(String[] args) throws IOException {
-		BufferedImage splash = ImageHelper.loadImage("messenger/About.png");
+		final BufferedImage splash = ImageHelper.loadImage("messenger/About.png");
 
 		Window splashScreen = new Window(null) {
 			private static final long serialVersionUID = 8733767680868899639L;
