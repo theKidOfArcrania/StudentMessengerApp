@@ -40,7 +40,6 @@ public class ChatList {
 	private static ChatList mainChatList;
 
 	static {
-
 		try {
 			// Attempt to load chat list...
 			mainChatList = new ChatList();
@@ -59,6 +58,23 @@ public class ChatList {
 
 	public static Path getMainRoot() {
 		return mainRoot;
+	}
+
+	public static Path getUpdatePath() throws IOException {
+		try {
+			// See if the chat folders exist or not.
+			Files.readAttributes(mainRoot.resolve("update"), BasicFileAttributes.class);
+		} catch (IOException e) {
+			try {
+				// Doesn't exist, attempt to make directories and make the root hide.
+				Files.createDirectories(mainRoot.resolve("update"));
+				Files.setAttribute(mainRoot, "dos:hidden", true);
+			} catch (IOException e2) {
+				e2.printStackTrace();
+				throw new IOException("Unable to create chatroom directory.");
+			}
+		}
+		return mainRoot.resolve("update");
 	}
 
 	public static void setMainRoot(Path mainRoot) throws IOException {
@@ -94,6 +110,22 @@ public class ChatList {
 			}
 		}
 		return encoded.toString();
+	}
+
+	private static void initFolders(Path root) throws IOException {
+		try {
+			// See if the chat folders exist or not.
+			Files.readAttributes(root.resolve("chats").resolve("unlist"), BasicFileAttributes.class);
+		} catch (IOException e) {
+			try {
+				// Doesn't exist, attempt to make directories and make the root hide.
+				Files.createDirectories(root.resolve("chats").resolve("unlist"));
+				Files.setAttribute(root, "dos:hidden", true);
+			} catch (IOException e2) {
+				e2.printStackTrace();
+				throw new IOException("Unable to create chatroom directory.");
+			}
+		}
 	}
 
 	private final WatchService wtsvPrivateChat;

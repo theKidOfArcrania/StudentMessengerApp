@@ -14,6 +14,10 @@ import messenger.ui.image.ImageHelper;
 public class Main {
 
 	public static void main(String[] args) throws IOException {
+		runProgram();
+	}
+
+	public static void runProgram() throws IOException {
 		final BufferedImage splash = ImageHelper.loadImage("messenger/About.png");
 
 		Window splashScreen = new Window(null) {
@@ -43,7 +47,5 @@ public class Main {
 		}
 		splashScreen.dispose();
 		app.setVisible(true);
-
 	}
-
 }

@@ -166,6 +166,7 @@ public class ChatClient extends JPanel {
 		add(srpnMsgs, gbc_scrollPane);
 
 		txtMsgs = new JTextArea();
+		txtMsgs.setWrapStyleWord(true);
 		txtMsgs.setLineWrap(true);
 		txtMsgs.setEditable(false);
 		txtMsgs.setBackground(Color.WHITE);
