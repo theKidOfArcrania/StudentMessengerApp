@@ -112,6 +112,16 @@ public class ChatList {
 		return encoded.toString();
 	}
 
+	private static byte[] encodeBase64(byte[] data) {
+		byte[] base64 = Base64.getEncoder().encode(data);
+		for (int i = 0; i < base64.length; i++) {
+			if (base64[i] == '/') {
+				base64[i] = '-';
+			}
+		}
+		return data;
+	}
+
 	private static void initFolders(Path root) throws IOException {
 		try {
 			// See if the chat folders exist or not.
@@ -188,9 +198,10 @@ public class ChatList {
 	public Path chatRoomPath(String chatName, boolean unlisted) throws IOException {
 		try {
 			if (unlisted) {
-				MessageDigest digest = MessageDigest.getInstance("MD5");
+				MessageDigest digest = MessageDigest.getInstance("SHA-256");
 				byte[] digested = digest.digest(chatName.getBytes("utf-8"));
-				byte[] chatID = Base64.getEncoder().encode(digested);
+
+				byte[] chatID = encodeBase64(digested);
 				return root.resolve("chats").resolve("unlist").resolve(new String(chatID) + ".crm");
 			} else {
 				return root.resolve("chats").resolve(encode(chatName) + ".crm");
