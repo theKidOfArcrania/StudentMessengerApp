@@ -119,7 +119,7 @@ public class ChatList {
 				base64[i] = '-';
 			}
 		}
-		return data;
+		return base64;
 	}
 
 	private static void initFolders(Path root) throws IOException {
