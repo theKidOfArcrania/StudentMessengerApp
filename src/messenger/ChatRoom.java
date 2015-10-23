@@ -310,6 +310,37 @@ public class ChatRoom implements Closeable {
 	}
 
 	/**
+	 * Joins the chatroom using the last user-name used (or the default user-name). If a user already joined the chat, this has no effect.
+	 *
+	 * @throws IOException if an error occurred when joining
+	 */
+	public void connect() throws IOException {
+		connect(null);
+	}
+
+	/**
+	 * Joins the chatroom with a user name. If a user already joined the chat, this has no effect.
+	 *
+	 * @param name name of the user.
+	 * @throws IOException if an error occurred when joining
+	 */
+	public void connect(String name) throws IOException {
+		if (!connected) {
+			sendMessage(new Message(Message.FLAG_CONNECT, userID, name.getBytes("utf-8")));
+			sendMessage(new Message(Message.FLAG_ALIAS, userID, System.getProperty("user.name").getBytes("utf-8")));
+			connected = true;
+			userProfiles.get(userID).setUserName(name);
+
+			if (!cache.isEmpty()) {
+				for (Message msg : cache) {
+					sendMessage(msg);
+				}
+				cache.clear();
+			}
+		}
+	}
+
+	/**
 	 * Disconnects the user from the chatroom. This is not the same as closing the chatroom, but if any further messages are sent, they will be not be sent until the user reconnects.
 	 *
 	 * @throws IOException if an error occurs while sending the leave message.
@@ -372,37 +403,6 @@ public class ChatRoom implements Closeable {
 	 */
 	public boolean isConnected() {
 		return connected;
-	}
-
-	/**
-	 * Joins the chatroom using the last user-name used (or the default user-name). If a user already joined the chat, this has no effect.
-	 *
-	 * @throws IOException if an error occurred when joining
-	 */
-	public void connect() throws IOException {
-		connect(null);
-	}
-
-	/**
-	 * Joins the chatroom with a user name. If a user already joined the chat, this has no effect.
-	 *
-	 * @param name name of the user.
-	 * @throws IOException if an error occurred when joining
-	 */
-	public void connect(String name) throws IOException {
-		if (!connected) {
-			sendMessage(new Message(Message.FLAG_CONNECT, userID, name.getBytes("utf-8")));
-			sendMessage(new Message(Message.FLAG_ALIAS, userID, System.getProperty("user.name").getBytes("utf-8")));
-			connected = true;
-			userProfiles.get(userID).setUserName(name);
-
-			if (!cache.isEmpty()) {
-				for (Message msg : cache) {
-					sendMessage(msg);
-				}
-				cache.clear();
-			}
-		}
 	}
 
 	/**
