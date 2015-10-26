@@ -14,8 +14,8 @@ import java.security.SignatureException;
 import java.security.spec.InvalidKeySpecException;
 import java.util.Arrays;
 
-import messenger.crypto.AuthCode;
-import messenger.crypto.AuthCode.AuthKeyType;;
+import messenger.profile.AuthCode;
+import messenger.profile.AuthCode.AuthKeyType;;
 
 public class UpdateService {
 

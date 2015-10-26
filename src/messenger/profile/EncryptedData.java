@@ -1,4 +1,4 @@
-package messenger.crypto;
+package messenger.profile;
 
 public class EncryptedData {
 
