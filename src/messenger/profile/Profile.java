@@ -1,9 +1,9 @@
 package messenger.profile;
 
 import java.awt.Image;
-import java.util.HashMap;
+import java.io.IOException;
 
-import messenger.ui.image.ImageHelper;
+import messenger.ChatList;
 
 public class Profile {
 
@@ -11,8 +11,13 @@ public class Profile {
 
 	}
 
+	private static void loadProfile(String profileUsername) {
+
+	}
+
 	private final String name;
-	private final HashMap<String, Property<?>> properties = new HashMap<>();
+	private Image profile;
+	private AuthCode authPassword;
 	private AuthCode publicAuth;
 	private AuthCode privateAuth;
 
@@ -20,8 +25,31 @@ public class Profile {
 		this.name = name;
 	}
 
-	public Image getImage() {
-		properties.get("profile");
-		Image ImageHelper.loadImage("messenger/ui/image/DefaultProfile.jpg");
+	public void authenticate(AuthCode authPassword) throws IOException {
+		Path profilePath = ChatList.getMainRoot().resolve("profile");
+		// TO DO: authenticate the password.
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public AuthCode getPrivateAuth() {
+		return privateAuth;
+	}
+
+	public Image getProfile() {
+		return profile;
+	}
+
+	public AuthCode getPublicAuth() {
+		return publicAuth;
+	}
+
+	public void setProfile(Image profile) throws IllegalPermissionAccessException {
+		if (privateAuth == null) {
+			throw new IllegalPermissionAccessException("You must have the private auth key to set profile");
+		}
+		this.profile = profile;
 	}
 }

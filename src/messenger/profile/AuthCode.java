@@ -21,6 +21,10 @@ public class AuthCode {
 		Public, Private, Secret;
 	}
 
+	public static KeyPair generatePublicKey() throws NoSuchAlgorithmException {
+		return generatePublicKey(null);
+	}
+
 	public static KeyPair generatePublicKey(byte[] password) throws NoSuchAlgorithmException {
 		KeyPairGenerator keygen = KeyPairGenerator.getInstance("RSA");
 		if (password == null) {
@@ -30,6 +34,10 @@ public class AuthCode {
 		}
 
 		return keygen.genKeyPair();
+	}
+
+	public static Key generateSecretKey() throws NoSuchAlgorithmException {
+		return generateSecretKey(null);
 	}
 
 	public static Key generateSecretKey(byte[] password) throws NoSuchAlgorithmException {
