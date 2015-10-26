@@ -4,6 +4,9 @@ import java.awt.Graphics;
 import java.awt.Window;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.security.Signature;
+import java.security.cert.Certificate;
+import java.security.cert.CertificateFactory;
 
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -13,8 +16,17 @@ import messenger.ui.image.ImageHelper;
 
 public class Main {
 
-	public static void main(String[] args) throws IOException {
-		runProgram();
+	public static void main(String[] args) throws Exception {
+		CertificateFactory x509Fact = CertificateFactory.getInstance("X509");
+		Certificate updateCert = x509Fact.generateCertificate(ClassLoader.getSystemResourceAsStream("updater.crt"));
+
+		java.util.jar.JarFile file;
+
+		for(Certificate cert : file.getJarEntry("").getCertificates()) {
+			if (cert.verify(updateCert.getPublicKey())) {
+				cert.e
+			}
+		}
 	}
 
 	public static void runProgram() throws IOException {

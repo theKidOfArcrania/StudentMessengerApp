@@ -1,4 +1,4 @@
-package messenger.crypto;
+package messenger.profile;
 
 import java.security.InvalidKeyException;
 import java.security.Key;
