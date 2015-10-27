@@ -143,7 +143,7 @@ public class ChatClient extends JPanel {
 		pnlTitleBar.setLayout(gbl_pnlTitleBar);
 
 		JLabel lblChatTitle = new JLabel(room.getChatName() + " Chatroom");
-		lblChatTitle.setFont(new Font("Dialog", Font.BOLD, 13));
+		lblChatTitle.setFont(new Font("Segoe UI", Font.BOLD, 13));
 		lblChatTitle.setForeground(Color.WHITE);
 		lblChatTitle.setBackground(Color.RED);
 		GridBagConstraints gbc_lblChatTitle = new GridBagConstraints();
@@ -170,6 +170,7 @@ public class ChatClient extends JPanel {
 		txtMsgs.setLineWrap(true);
 		txtMsgs.setEditable(false);
 		txtMsgs.setBackground(Color.WHITE);
+		txtMsgs.setFont(new Font("Segoe UI", Font.PLAIN, 13));
 		srpnMsgs.setViewportView(txtMsgs);
 
 		txtInput = new JTextField();

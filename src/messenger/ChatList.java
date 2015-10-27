@@ -30,9 +30,9 @@ import static java.nio.file.StandardWatchEventKinds.OVERFLOW;
 public class ChatList {
 
 	// School root:
-	// private static final Path DEF_MAIN_ROOT = Paths.get("S:/Templates/Review/StudentMessengerApp2");
+	private static final Path DEF_MAIN_ROOT = Paths.get("S:/Templates/Review/StudentMessengerApp2");
 	// Test Root:
-	private static final Path DEF_MAIN_ROOT = Paths.get("C:/Users/Henry/StudentMessengerApp");
+	// private static final Path DEF_MAIN_ROOT = Paths.get("C:/Users/Henry/StudentMessengerApp");
 	// School Test root:
 	// private static final Path root = Paths.get("H:/StudentMessengerApp");
 
