@@ -75,7 +75,7 @@ public class LoadChatPrompt extends JDialog {
 						updateList();
 					} catch (IOException e) {
 						e.printStackTrace();
-						showMessageDialog(LoadChatPrompt.this, e.getMessage(), "MessengerApp", ERROR_MESSAGE);
+						showMessageDialog(LoadChatPrompt.this, e.getMessage(), "Messenger", ERROR_MESSAGE);
 					}
 				}
 			});
@@ -151,7 +151,7 @@ public class LoadChatPrompt extends JDialog {
 			chatList = ChatList.getMainChatList();
 		} catch (IOException e1) {
 			e1.printStackTrace();
-			showMessageDialog(this, e1.getMessage(), "MessengerApp", ERROR_MESSAGE);
+			showMessageDialog(this, e1.getMessage(), "Messenger", ERROR_MESSAGE);
 			System.exit(1);
 			throw new Error();
 		}
@@ -353,7 +353,7 @@ public class LoadChatPrompt extends JDialog {
 			cmbChats.setModel(new ChatFinderModel());
 		} catch (IOException e) {
 			e.printStackTrace();
-			showMessageDialog(this, e.getMessage(), "MessengerApp", ERROR_MESSAGE);
+			showMessageDialog(this, e.getMessage(), "Messenger", ERROR_MESSAGE);
 		}
 		cmbChats.setSelectedItem("<Please Select A Chat>");
 		cmbChats.addActionListener(new ActionListener() {
@@ -442,7 +442,7 @@ public class LoadChatPrompt extends JDialog {
 				char[] password = unlisted ? txtUnlistedPassword.getPassword() : txtPassword.getPassword();
 				try {
 					if (!chatList.privateChatExists(chatName, unlisted)) {
-						showMessageDialog(LoadChatPrompt.this, "Chatroom name or password is incorrect.", "MessengerApp", WARNING_MESSAGE);
+						showMessageDialog(LoadChatPrompt.this, "Chatroom name or password is incorrect.", "Messenger", WARNING_MESSAGE);
 						if (unlisted) {
 							txtUnlistedPassword.setText("");
 							txtChatName.requestFocusInWindow();
@@ -457,7 +457,7 @@ public class LoadChatPrompt extends JDialog {
 					chatRoom = chatList.privateChatRoom(chatName, password, unlisted);
 					dispose();
 				} catch (PasswordInvalidException ex) {
-					showMessageDialog(LoadChatPrompt.this, "Chatroom name or password is incorrect.", "MessengerApp", WARNING_MESSAGE);
+					showMessageDialog(LoadChatPrompt.this, "Chatroom name or password is incorrect.", "Messenger", WARNING_MESSAGE);
 					if (unlisted) {
 						txtChatName.requestFocusInWindow();
 						txtChatName.selectAll();
@@ -469,7 +469,7 @@ public class LoadChatPrompt extends JDialog {
 				} catch (IOException ex) {
 					// TO DO: make more sophisticated error logging utility.
 					ex.printStackTrace();
-					showMessageDialog(LoadChatPrompt.this, ex.getMessage(), "MessengerApp", ERROR_MESSAGE);
+					showMessageDialog(LoadChatPrompt.this, ex.getMessage(), "Messenger", ERROR_MESSAGE);
 					if (unlisted) {
 						txtChatName.requestFocusInWindow();
 						txtChatName.selectAll();

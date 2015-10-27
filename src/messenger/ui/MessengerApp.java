@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Toolkit;
@@ -81,11 +82,12 @@ public class MessengerApp extends JFrame {
 			tabbedPane = aTabbedPane;
 
 			setOpaque(false);
-			setBorder(BorderFactory.createEmptyBorder(1, 0, 0, 0));
+			setBorder(BorderFactory.createEmptyBorder(-2, 0, 0, 0));
 
 			titleLabel = new JLabel(client.getChatRoom().getChatName() + "   ");
 			titleLabel.setOpaque(false);
 			titleLabel.setForeground(Color.WHITE);
+			titleLabel.setFont(new Font("Segoe UI", Font.PLAIN, 13));
 
 			closeButton = new JButton(closerImage);
 			closeButton.setRolloverIcon(closerRolloverImage);
@@ -96,6 +98,7 @@ public class MessengerApp extends JFrame {
 			closeButton.setRolloverEnabled(true);
 			closeButton.setOpaque(false);
 			closeButton.setContentAreaFilled(false);
+			closeButton.setFont(new Font("Segoe UI", Font.PLAIN, 13));
 			closeButton.setPreferredSize(new Dimension(closerImage.getIconWidth(), closerImage.getIconHeight()));
 			closeButton.setSize(new Dimension(closerImage.getIconWidth(), closerImage.getIconHeight()));
 			closeButton.addActionListener(new ActionListener() {
@@ -108,7 +111,7 @@ public class MessengerApp extends JFrame {
 							} catch (Exception e1) {
 								e1.printStackTrace();
 								showMessageDialog(ChatTabComponent.this, "Unable to safely leave the chatroom "
-										+ client.getName(), "MessengerApp", ERROR_MESSAGE);
+										+ client.getName(), "Messenger", ERROR_MESSAGE);
 							}
 							removed = true;
 							chatIDs.remove(i);
@@ -186,7 +189,7 @@ public class MessengerApp extends JFrame {
 			chatList = ChatList.getMainChatList();
 		} catch (IOException e1) {
 			e1.printStackTrace();
-			showMessageDialog(this, e1.getMessage(), "MessengerApp", ERROR_MESSAGE);
+			showMessageDialog(this, e1.getMessage(), "Messenger", ERROR_MESSAGE);
 			System.exit(1);
 			throw new Error();
 		}
@@ -322,7 +325,7 @@ public class MessengerApp extends JFrame {
 			addChatTab("Public", chatList.publicChatRoom());
 		} catch (IOException e) {
 			e.printStackTrace();
-			showMessageDialog(this, "Unable to open chat-room page", "MessengerApp", ERROR_MESSAGE);
+			showMessageDialog(this, "Unable to open chat-room page", "Messenger", ERROR_MESSAGE);
 		}
 	}
 
@@ -345,7 +348,7 @@ public class MessengerApp extends JFrame {
 					return;
 				}
 				if (response.isEmpty()) {
-					showMessageDialog(this, "Username cannot be empty.", "MessengerApp", WARNING_MESSAGE);
+					showMessageDialog(this, "Invalid Username", "Messenger", WARNING_MESSAGE);
 				}
 			}
 
@@ -360,7 +363,7 @@ public class MessengerApp extends JFrame {
 	}
 
 	private void promptClosing() {
-		int response = showConfirmDialog(this, "Are you sure you want to exit?", "MessengerApp", YES_NO_OPTION, QUESTION_MESSAGE);
+		int response = showConfirmDialog(this, "Are you sure you want to exit?", "Messenger", YES_NO_OPTION, QUESTION_MESSAGE);
 		if (response == YES_OPTION) {
 			int count = chatTabPane.getTabCount();
 			for (int i = 0; i < count; i++) {
@@ -371,7 +374,7 @@ public class MessengerApp extends JFrame {
 						client.leave();
 					} catch (IOException e) {
 						e.printStackTrace();
-						showMessageDialog(this, "Unable to safely leave the chatroom " + client.getName(), "MessengerApp", ERROR_MESSAGE);
+						showMessageDialog(this, "Unable to safely leave the chatroom " + client.getName(), "Messenger", ERROR_MESSAGE);
 					}
 				}
 			}

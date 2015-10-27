@@ -69,7 +69,7 @@ public class CreateChatPrompt extends JDialog {
 			chatList = ChatList.getMainChatList();
 		} catch (IOException e1) {
 			e1.printStackTrace();
-			showMessageDialog(this, e1.getMessage(), "MessengerApp", ERROR_MESSAGE);
+			showMessageDialog(this, e1.getMessage(), "Messenger", ERROR_MESSAGE);
 			System.exit(1);
 			throw new Error();
 		}
@@ -223,7 +223,7 @@ public class CreateChatPrompt extends JDialog {
 				char[] password = txtPassword.getPassword();
 				char[] confirm = txtConfirm.getPassword();
 				if (!Arrays.equals(password, confirm)) {
-					showMessageDialog(CreateChatPrompt.this, "The new password and confirm password fields are not the same.", "MessengerApp", WARNING_MESSAGE);
+					showMessageDialog(CreateChatPrompt.this, "The new password and confirm password fields are not the same.", "Messenger", WARNING_MESSAGE);
 					txtConfirm.requestFocusInWindow();
 					txtConfirm.selectAll();
 					return;
@@ -231,7 +231,7 @@ public class CreateChatPrompt extends JDialog {
 
 				try {
 					if (chatList.privateChatExists(txtChatName.getText(), unlisted)) {
-						showMessageDialog(CreateChatPrompt.this, "Chat name already exists.", "MessengerApp", WARNING_MESSAGE);
+						showMessageDialog(CreateChatPrompt.this, "Chat name already exists.", "Messenger", WARNING_MESSAGE);
 						txtChatName.requestFocusInWindow();
 						txtChatName.selectAll();
 						txtPassword.setText("");
@@ -241,7 +241,7 @@ public class CreateChatPrompt extends JDialog {
 					chatRoom = chatList.privateChatRoom(txtChatName.getText(), password, unlisted);
 				} catch (PasswordInvalidException ex) {
 					ex.printStackTrace();
-					showMessageDialog(CreateChatPrompt.this, "Unexpected Error Occured.", "MessengerApp", ERROR_MESSAGE);
+					showMessageDialog(CreateChatPrompt.this, "Unexpected Error Occured.", "Messenger", ERROR_MESSAGE);
 					txtChatName.requestFocusInWindow();
 					txtChatName.selectAll();
 					txtPassword.setText("");
@@ -250,7 +250,7 @@ public class CreateChatPrompt extends JDialog {
 				} catch (IOException ex) {
 					// TO DO: make more sophisticated error logging utility.
 					ex.printStackTrace();
-					showMessageDialog(CreateChatPrompt.this, ex.getMessage(), "MessengerApp", ERROR_MESSAGE);
+					showMessageDialog(CreateChatPrompt.this, ex.getMessage(), "Messenger", ERROR_MESSAGE);
 					txtChatName.requestFocusInWindow();
 					txtChatName.selectAll();
 					txtPassword.setText("");

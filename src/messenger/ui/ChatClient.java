@@ -71,12 +71,12 @@ public class ChatClient extends JPanel {
 						// Make sure to reset interrupted flag.
 						Thread.interrupted();
 						e.printStackTrace();
-						JOptionPane.showMessageDialog(ChatClient.this, "Unable to load messages", "MessengerApp", JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(ChatClient.this, "Unable to load messages", "Messenger", JOptionPane.ERROR_MESSAGE);
 					} catch (Exception e) {
 						// Make sure to reset interrupted flag.
 						Thread.interrupted();
 						e.printStackTrace();
-						JOptionPane.showMessageDialog(ChatClient.this, "Unexpected error occured", "MessagerApp", JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(ChatClient.this, "Unexpected error occured", "Messager", JOptionPane.ERROR_MESSAGE);
 					}
 				}
 			}
@@ -86,7 +86,7 @@ public class ChatClient extends JPanel {
 			room.connect(username);
 		} catch (IOException e) {
 			e.printStackTrace();
-			JOptionPane.showMessageDialog(this, "Unable to connect.", "MessengerApp", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(this, "Unable to connect.", "Messenger", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 
@@ -147,7 +147,7 @@ public class ChatClient extends JPanel {
 		lblChatTitle.setForeground(Color.WHITE);
 		lblChatTitle.setBackground(Color.RED);
 		GridBagConstraints gbc_lblChatTitle = new GridBagConstraints();
-		gbc_lblChatTitle.insets = new Insets(10, 10, 10, 10);
+		gbc_lblChatTitle.insets = new Insets(5, 10, 10, 10);
 		gbc_lblChatTitle.fill = GridBagConstraints.BOTH;
 		gbc_lblChatTitle.gridx = 0;
 		gbc_lblChatTitle.gridy = 0;
@@ -185,7 +185,7 @@ public class ChatClient extends JPanel {
 					room.post(txtInput.getText());
 				} catch (IOException e1) {
 					e1.printStackTrace();
-					JOptionPane.showMessageDialog(ChatClient.this, "Unable to post message", "MessengerApp", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(ChatClient.this, "Unable to post message", "Messenger", JOptionPane.ERROR_MESSAGE);
 				} finally {
 					txtInput.setText("");
 				}

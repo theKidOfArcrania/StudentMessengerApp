@@ -2,6 +2,7 @@ package messenger.ui;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Window;
 import java.awt.event.WindowAdapter;
