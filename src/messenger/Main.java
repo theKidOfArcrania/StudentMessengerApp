@@ -4,9 +4,9 @@ import java.awt.Graphics;
 import java.awt.Window;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.security.Signature;
 import java.security.cert.Certificate;
 import java.security.cert.CertificateFactory;
+import java.security.cert.X509Certificate;
 
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -22,9 +22,9 @@ public class Main {
 
 		java.util.jar.JarFile file;
 
-		for(Certificate cert : file.getJarEntry("").getCertificates()) {
-			if (cert.verify(updateCert.getPublicKey())) {
-				cert.e
+		for (Certificate cert : file.getJarEntry("").getCertificates()) {
+			if (((X509Certificate) cert).getIssuerDN()) {
+				return;
 			}
 		}
 	}
