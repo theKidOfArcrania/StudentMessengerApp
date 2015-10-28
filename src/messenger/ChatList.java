@@ -7,7 +7,6 @@ import java.nio.file.DirectoryStream;
 import java.nio.file.DirectoryStream.Filter;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.nio.file.WatchEvent;
 import java.nio.file.WatchKey;
 import java.nio.file.WatchService;
@@ -30,11 +29,9 @@ import static java.nio.file.StandardWatchEventKinds.OVERFLOW;
 public class ChatList {
 
 	// School root:
-	private static final Path DEF_MAIN_ROOT = Paths.get("S:/Templates/Review/StudentMessengerApp2");
+	// private static final Path DEF_MAIN_ROOT = Paths.get("S:/Templates/Review/StudentMessengerApp2");
 	// Test Root:
-	// private static final Path DEF_MAIN_ROOT = Paths.get("C:/Users/Henry/StudentMessengerApp");
-	// School Test root:
-	// private static final Path root = Paths.get("H:/StudentMessengerApp");
+	private static final Path DEF_MAIN_ROOT = DefPath.DEF_MAIN_ROOT;
 
 	private static Path mainRoot = DEF_MAIN_ROOT;
 	private static ChatList mainChatList;
