@@ -109,8 +109,7 @@ public class MessengerApp extends JFrame {
 								client.leave();
 							} catch (Exception e1) {
 								e1.printStackTrace();
-								showMessageDialog(ChatTabComponent.this, "Unable to safely leave the chatroom "
-										+ client.getName(), "Messenger", ERROR_MESSAGE);
+								showMessageDialog(ChatTabComponent.this, "Unable to safely leave the chatroom " + client.getName(), "Messenger", ERROR_MESSAGE);
 							}
 							removed = true;
 							chatIDs.remove(i);
@@ -124,11 +123,14 @@ public class MessengerApp extends JFrame {
 					}
 				}
 			});
-			
+
 			client.addMessageListener(new MessageListener() {
 				@Override
 				public void messageRecieved(MessageEvent evt) {
 					Message msg = evt.getMessage();
+					if (tabbedPane.getSelectedIndex() == -1) {
+						return;
+					}
 					if (msg.getFlag() != Message.FLAG_POST || ChatTabComponent.this == tabbedPane.getTabComponentAt(tabbedPane.getSelectedIndex())) {
 						return;
 					}
@@ -203,11 +205,11 @@ public class MessengerApp extends JFrame {
 		setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 		setBounds(100, 100, 453, 351);
 
-		//Creates Menu Bar
+		// Creates Menu Bar
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
-		
-		//Creates Exit Item
+
+		// Creates Exit Item
 		JMenuItem mnuExit = new JMenuItem("Exit");
 		mnuExit.addActionListener(new ActionListener() {
 			@Override
@@ -215,8 +217,8 @@ public class MessengerApp extends JFrame {
 				promptClosing();
 			}
 		});
-		
-		//Creates About Item
+
+		// Creates About Item
 		JMenuItem mntmAbout = new JMenuItem("About");
 		mntmAbout.addActionListener(new ActionListener() {
 			@Override
@@ -225,8 +227,8 @@ public class MessengerApp extends JFrame {
 				about.setVisible(true);
 			}
 		});
-		
-		//Creates New Private Chat Item
+
+		// Creates New Private Chat Item
 		JMenuItem mnuNewPrivateChat = new JMenuItem("New Private Chat");
 		mnuNewPrivateChat.addActionListener(new ActionListener() {
 			@Override
@@ -239,8 +241,8 @@ public class MessengerApp extends JFrame {
 
 			}
 		});
-		
-		//Creates New Unlisted Chat Item
+
+		// Creates New Unlisted Chat Item
 		JMenuItem mnuNewUnlistedChat = new JMenuItem("New Unlisted Chat");
 		mnuNewUnlistedChat.addActionListener(new ActionListener() {
 			@Override
@@ -253,8 +255,8 @@ public class MessengerApp extends JFrame {
 
 			}
 		});
-		
-		//Creates Join Open Chat Item
+
+		// Creates Join Open Chat Item
 		JMenuItem mnuPublicChat = new JMenuItem("Join Open Chat");
 		mnuPublicChat.addActionListener(new ActionListener() {
 			@Override
@@ -262,8 +264,8 @@ public class MessengerApp extends JFrame {
 				addChatTab();
 			}
 		});
-		
-		//Creates Join Private Chat Item
+
+		// Creates Join Private Chat Item
 		JMenuItem mnuLoadChat = new JMenuItem("Join Private Chat");
 		mnuLoadChat.addActionListener(new ActionListener() {
 			@Override
@@ -277,10 +279,10 @@ public class MessengerApp extends JFrame {
 			}
 		});
 
-		//Separators!
+		// Separators!
 		JSeparator separator = new JSeparator();
-		
-		//Creates Mnomics and Items in Messenger tab
+
+		// Creates Mnomics and Items in Messenger tab
 		JMenu mnuHelp = new JMenu("Messenger");
 		mntmAbout.setMnemonic('A');
 		mnuExit.setMnemonic('X');
@@ -290,7 +292,7 @@ public class MessengerApp extends JFrame {
 		mnuHelp.add(separator);
 		mnuHelp.add(mnuExit);
 
-		//Creates Mnemonics and Items in New tab
+		// Creates Mnemonics and Items in New tab
 		JMenu mnuNew = new JMenu("New");
 		mnuNewPrivateChat.setMnemonic('P');
 		mnuNewUnlistedChat.setMnemonic('U');
@@ -299,8 +301,8 @@ public class MessengerApp extends JFrame {
 		mnuNew.add(mnuNewPrivateChat);
 		mnuNew.add(separator);
 		mnuNew.add(mnuNewUnlistedChat);
-		
-		//Creates Mnemonics and Items in Join tab
+
+		// Creates Mnemonics and Items in Join tab
 		JMenu mnuJoin = new JMenu("Join");
 		mnuPublicChat.setMnemonic('O');
 		mnuLoadChat.setMnemonic('P');
@@ -310,18 +312,18 @@ public class MessengerApp extends JFrame {
 		mnuJoin.add(mnuPublicChat);
 		mnuJoin.add(separator);
 		mnuJoin.add(mnuLoadChat);
-		
-		//Mnemonics for tabs
+
+		// Mnemonics for tabs
 		mnuNew.setMnemonic('N');
 		mnuJoin.setMnemonic('J');
 		mnuHelp.setMnemonic('M');
-		
-		//Adds tabs to menu bar
+
+		// Adds tabs to menu bar
 		menuBar.add(mnuHelp);
 		menuBar.add(mnuNew);
 		menuBar.add(mnuJoin);
-		
-		//Sets Menu Item Fonts
+
+		// Sets Menu Item Fonts
 		mnuHelp.setFont(new Font("Segoe UI", Font.BOLD, 14));
 		mnuNew.setFont(new Font("Segoe UI", Font.BOLD, 14));
 		mnuJoin.setFont(new Font("Segoe UI", Font.BOLD, 14));

@@ -145,9 +145,8 @@ public class ChatClient extends JPanel {
 		JLabel lblChatTitle = new JLabel(room.getChatName() + " Chatroom");
 		lblChatTitle.setFont(new Font("Segoe UI", Font.BOLD, 13));
 		lblChatTitle.setForeground(Color.WHITE);
-		lblChatTitle.setBackground(Color.RED);
 		GridBagConstraints gbc_lblChatTitle = new GridBagConstraints();
-		gbc_lblChatTitle.insets = new Insets(5, 10, 10, 10);
+		gbc_lblChatTitle.insets = new Insets(10, 10, 5, 10);
 		gbc_lblChatTitle.fill = GridBagConstraints.BOTH;
 		gbc_lblChatTitle.gridx = 0;
 		gbc_lblChatTitle.gridy = 0;
@@ -196,7 +195,7 @@ public class ChatClient extends JPanel {
 			@Override
 			public void focusGained(FocusEvent e) {
 				if (txtInput.getForeground().equals(Color.GRAY)) {
-					txtInput.setForeground(Color.BLACK);
+					txtInput.setForeground(Color.WHITE);
 					txtInput.setText("");
 				}
 			}
