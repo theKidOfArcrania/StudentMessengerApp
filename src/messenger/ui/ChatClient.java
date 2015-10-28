@@ -169,7 +169,7 @@ public class ChatClient extends JPanel {
 		txtMsgs.setWrapStyleWord(true);
 		txtMsgs.setLineWrap(true);
 		txtMsgs.setEditable(false);
-		txtMsgs.setBackground(Color.WHITE);
+		txtMsgs.setBackground(Color.DARK_GRAY);
 		txtMsgs.setFont(new Font("Segoe UI", Font.PLAIN, 13));
 		srpnMsgs.setFont(new Font("Segoe UI", Font.PLAIN, 13));
 		srpnMsgs.setViewportView(txtMsgs);

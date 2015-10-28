@@ -193,7 +193,7 @@ public class MessengerApp extends JFrame {
 			throw new Error();
 		}
 
-		setTitle("Student Messenger App");
+		setTitle("Messenger");
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent e) {
@@ -332,7 +332,6 @@ public class MessengerApp extends JFrame {
 		mnuLoadChat.setFont(new Font("Segoe UI", Font.PLAIN, 13));
 		mnuPublicChat.setFont(new Font("Segoe UI", Font.PLAIN, 13));
 
-		
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(0, 0, 0, 0));
 		setContentPane(contentPane);

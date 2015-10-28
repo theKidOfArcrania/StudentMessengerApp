@@ -40,8 +40,8 @@ public class CreateChatPrompt extends JDialog {
 
 	public static void main(String[] args) {
 		try {
-			UIManager.setLookAndFeel("com.jtattoo.plaf.texture.TextureLookAndFeel");
-			com.jtattoo.plaf.texture.TextureLookAndFeel.setTheme("Textile", "Student Messenger", "Student Messenger");
+			UIManager.setLookAndFeel("com.jtattoo.plaf.hifi.HiFiLookAndFeel");
+			com.jtattoo.plaf.texture.TextureLookAndFeel.setTheme("Hifi", "Student Messenger", "Student Messenger");
 		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
 			e.printStackTrace();
 			System.exit(1);

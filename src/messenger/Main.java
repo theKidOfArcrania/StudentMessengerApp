@@ -32,8 +32,8 @@ public class Main {
 		splashScreen.setVisible(true);
 		splashScreen.setLocationRelativeTo(null);
 		try {
-			UIManager.setLookAndFeel("com.jtattoo.plaf.texture.TextureLookAndFeel");
-			com.jtattoo.plaf.texture.TextureLookAndFeel.setTheme("Textile", "Messenger App", "Messenger App");
+			UIManager.setLookAndFeel("com.jtattoo.plaf.hifi.HiFiLookAndFeel");
+			com.jtattoo.plaf.texture.TextureLookAndFeel.setTheme("Hifi", "Messenger App", "Messenger App");
 		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
 			e.printStackTrace();
 			System.exit(1);
