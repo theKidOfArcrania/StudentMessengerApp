@@ -27,7 +27,6 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JSeparator;
 import javax.swing.JTabbedPane;
 import javax.swing.KeyStroke;
 import javax.swing.SwingConstants;
@@ -279,9 +278,6 @@ public class MessengerApp extends JFrame {
 			}
 		});
 
-		// Separators!
-		JSeparator separator = new JSeparator();
-
 		// Creates Mnomics and Items in Messenger tab
 		JMenu mnuHelp = new JMenu("Messenger");
 		mntmAbout.setMnemonic('A');
@@ -289,7 +285,6 @@ public class MessengerApp extends JFrame {
 		mnuExit.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A, InputEvent.ALT_MASK));
 		mnuExit.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X, InputEvent.ALT_MASK));
 		mnuHelp.add(mntmAbout);
-		mnuHelp.add(separator);
 		mnuHelp.add(mnuExit);
 
 		// Creates Mnemonics and Items in New tab
@@ -299,7 +294,6 @@ public class MessengerApp extends JFrame {
 		mnuNewPrivateChat.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P, InputEvent.CTRL_MASK));
 		mnuNewUnlistedChat.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_U, InputEvent.CTRL_MASK));
 		mnuNew.add(mnuNewPrivateChat);
-		mnuNew.add(separator);
 		mnuNew.add(mnuNewUnlistedChat);
 
 		// Creates Mnemonics and Items in Join tab
@@ -310,7 +304,6 @@ public class MessengerApp extends JFrame {
 		mnuLoadChat.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P, InputEvent.CTRL_MASK));
 		mnuLoadChat.setActionCommand("Load Chat");
 		mnuJoin.add(mnuPublicChat);
-		mnuJoin.add(separator);
 		mnuJoin.add(mnuLoadChat);
 
 		// Mnemonics for tabs
