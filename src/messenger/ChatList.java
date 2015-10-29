@@ -128,6 +128,7 @@ public class ChatList {
 
 	private static void initFolders(Path root) throws IOException {
 		Files.createDirectories(root.resolve("chats").resolve("unlist"));
+		Files.createDirectories(root.resolve("chats").resolve("private"));
 		Files.createDirectories(root.resolve("update"));
 		Files.createDirectories(root.resolve("profile"));
 		Files.setAttribute(root, "dos:hidden", true);
@@ -149,10 +150,12 @@ public class ChatList {
 		try {
 			// See if the chat folders exist or not.
 			Files.readAttributes(root.resolve("chats").resolve("unlist"), BasicFileAttributes.class);
+			Files.readAttributes(root.resolve("chats").resolve("private"), BasicFileAttributes.class);
 		} catch (IOException e) {
 			try {
 				// Doesn't exist, attempt to make directories and make the root hide.
 				Files.createDirectories(root.resolve("chats").resolve("unlist"));
+				Files.createDirectories(root.resolve("chats").resolve("private"));
 				Files.setAttribute(root, "dos:hidden", true);
 			} catch (IOException e2) {
 				e2.printStackTrace();
@@ -199,7 +202,7 @@ public class ChatList {
 				byte[] chatID = encodeBase64(digested);
 				return root.resolve("chats").resolve("unlist").resolve(new String(chatID) + ".crm");
 			} else {
-				return root.resolve("chats").resolve(encode(chatName) + ".crm");
+				return root.resolve("chats").resolve("private").resolve(encode(chatName) + ".crm");
 			}
 		} catch (UnsupportedEncodingException | NoSuchAlgorithmException e) {
 			e.printStackTrace();
@@ -215,7 +218,7 @@ public class ChatList {
 				return path.getFileName().toString().endsWith(".crm");
 			}
 		};
-		try (DirectoryStream<Path> chatStream = Files.newDirectoryStream(root.resolve("chats"), filter)) {
+		try (DirectoryStream<Path> chatStream = Files.newDirectoryStream(root.resolve("chats").resolve("private"), filter)) {
 			for (Path chat : chatStream) {
 				String chatName = chat.getFileName().toString();
 				chatName = chatName.substring(0, chatName.length() - 4);
