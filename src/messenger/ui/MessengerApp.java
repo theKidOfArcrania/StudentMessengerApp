@@ -206,20 +206,31 @@ public class MessengerApp extends JFrame {
 
 		// Creates Menu Bar
 		JMenuBar menuBar = new JMenuBar();
+
 		setJMenuBar(menuBar);
 
 		// Creates Exit Item
-		JMenuItem mnuExit = new JMenuItem("Exit");
-		mnuExit.addActionListener(new ActionListener() {
+		JMenuItem mnutExit = new JMenuItem("Exit");
+		mnutExit.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				promptClosing();
 			}
 		});
 
+		// Creates Settings Item
+		JMenuItem mnutSettings = new JMenuItem("Settings");
+		mnutSettings.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				MessengerSettings settings = new MessengerSettings(MessengerApp.this);
+				settings.setVisible(true);
+			}
+		});
+
 		// Creates About Item
-		JMenuItem mntmAbout = new JMenuItem("About");
-		mntmAbout.addActionListener(new ActionListener() {
+		JMenuItem mnutAbout = new JMenuItem("About");
+		mnutAbout.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				MessengerAbout about = new MessengerAbout(MessengerApp.this);
@@ -228,8 +239,8 @@ public class MessengerApp extends JFrame {
 		});
 
 		// Creates New Private Chat Item
-		JMenuItem mnuNewPrivateChat = new JMenuItem("New Private Chat");
-		mnuNewPrivateChat.addActionListener(new ActionListener() {
+		JMenuItem mnutNewPrivateChat = new JMenuItem("New Private Chat");
+		mnutNewPrivateChat.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				CreateChatPrompt prompt = new CreateChatPrompt(false, MessengerApp.this);
@@ -242,8 +253,8 @@ public class MessengerApp extends JFrame {
 		});
 
 		// Creates New Unlisted Chat Item
-		JMenuItem mnuNewUnlistedChat = new JMenuItem("New Unlisted Chat");
-		mnuNewUnlistedChat.addActionListener(new ActionListener() {
+		JMenuItem mnutNewUnlistedChat = new JMenuItem("New Unlisted Chat");
+		mnutNewUnlistedChat.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				CreateChatPrompt prompt = new CreateChatPrompt(true, MessengerApp.this);
@@ -256,8 +267,8 @@ public class MessengerApp extends JFrame {
 		});
 
 		// Creates Join Open Chat Item
-		JMenuItem mnuPublicChat = new JMenuItem("Join Open Chat");
-		mnuPublicChat.addActionListener(new ActionListener() {
+		JMenuItem mnutPublicChat = new JMenuItem("Join Open Chat");
+		mnutPublicChat.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				addChatTab();
@@ -265,8 +276,8 @@ public class MessengerApp extends JFrame {
 		});
 
 		// Creates Join Private Chat Item
-		JMenuItem mnuLoadChat = new JMenuItem("Join Private Chat");
-		mnuLoadChat.addActionListener(new ActionListener() {
+		JMenuItem mnutPrivateChat = new JMenuItem("Join Private Chat");
+		mnutPrivateChat.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent evt) {
 				LoadChatPrompt prompt = new LoadChatPrompt(MessengerApp.this);
@@ -280,31 +291,41 @@ public class MessengerApp extends JFrame {
 
 		// Creates Mnomics and Items in Messenger tab
 		JMenu mnuHelp = new JMenu("Messenger");
-		mntmAbout.setMnemonic('A');
-		mnuExit.setMnemonic('X');
-		mnuExit.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A, InputEvent.ALT_MASK));
-		mnuExit.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X, InputEvent.ALT_MASK));
-		mnuHelp.add(mntmAbout);
-		mnuHelp.add(mnuExit);
+		mnutSettings.setMnemonic('S');
+		mnutAbout.setMnemonic('A');
+		mnutExit.setMnemonic('X');
+		mnutSettings.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_MASK));
+		mnutAbout.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A, InputEvent.CTRL_MASK));
+		mnutExit.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X, InputEvent.ALT_MASK));
+		mnuHelp.add(mnutSettings);
+		mnuHelp.add(mnutAbout);
+		mnuHelp.add(mnutExit);
 
 		// Creates Mnemonics and Items in New tab
 		JMenu mnuNew = new JMenu("New");
-		mnuNewPrivateChat.setMnemonic('P');
-		mnuNewUnlistedChat.setMnemonic('U');
-		mnuNewPrivateChat.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P, InputEvent.CTRL_MASK));
-		mnuNewUnlistedChat.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_U, InputEvent.CTRL_MASK));
-		mnuNew.add(mnuNewPrivateChat);
-		mnuNew.add(mnuNewUnlistedChat);
+		mnutNewPrivateChat.setMnemonic('P');
+		mnutNewUnlistedChat.setMnemonic('U');
+		mnutNewPrivateChat.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P, InputEvent.CTRL_MASK));
+		mnutNewUnlistedChat.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_U, InputEvent.CTRL_MASK));
+		mnuNew.add(mnutNewPrivateChat);
+		mnuNew.add(mnutNewUnlistedChat);
+
+		mnutNewPrivateChat.setMnemonic('P');
+		mnutNewUnlistedChat.setMnemonic('U');
+		mnutNewPrivateChat.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P, InputEvent.CTRL_MASK));
+		mnutNewUnlistedChat.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_U, InputEvent.CTRL_MASK));
+		mnuNew.add(mnutNewPrivateChat);
+		mnuNew.add(mnutNewUnlistedChat);
 
 		// Creates Mnemonics and Items in Join tab
 		JMenu mnuJoin = new JMenu("Join");
-		mnuPublicChat.setMnemonic('O');
-		mnuLoadChat.setMnemonic('P');
-		mnuPublicChat.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, InputEvent.CTRL_MASK));
-		mnuLoadChat.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P, InputEvent.CTRL_MASK));
-		mnuLoadChat.setActionCommand("Load Chat");
-		mnuJoin.add(mnuPublicChat);
-		mnuJoin.add(mnuLoadChat);
+		mnutPublicChat.setMnemonic('O');
+		mnutPrivateChat.setMnemonic('P');
+		mnutPublicChat.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, InputEvent.CTRL_MASK));
+		mnutPrivateChat.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P, InputEvent.CTRL_MASK));
+		mnutPrivateChat.setActionCommand("Load Chat");
+		mnuJoin.add(mnutPublicChat);
+		mnuJoin.add(mnutPrivateChat);
 
 		// Mnemonics for tabs
 		mnuNew.setMnemonic('N');
@@ -320,12 +341,13 @@ public class MessengerApp extends JFrame {
 		mnuHelp.setFont(new Font("Segoe UI", Font.BOLD, 14));
 		mnuNew.setFont(new Font("Segoe UI", Font.BOLD, 14));
 		mnuJoin.setFont(new Font("Segoe UI", Font.BOLD, 14));
-		mntmAbout.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-		mnuExit.setFont(new Font("Segoe UI", Font.BOLD, 13));
-		mnuNewPrivateChat.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-		mnuNewUnlistedChat.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-		mnuLoadChat.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-		mnuPublicChat.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+		mnutSettings.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+		mnutAbout.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+		mnutExit.setFont(new Font("Segoe UI", Font.BOLD, 13));
+		mnutNewPrivateChat.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+		mnutNewUnlistedChat.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+		mnutPrivateChat.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+		mnutPublicChat.setFont(new Font("Segoe UI", Font.PLAIN, 13));
 
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(0, 0, 0, 0));
