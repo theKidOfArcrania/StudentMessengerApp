@@ -223,8 +223,9 @@ public class MessengerApp extends JFrame {
 		mnutSettings.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				MessengerSettings settings = new MessengerSettings(MessengerApp.this);
-				settings.setVisible(true);
+				// TO DO: implement MessengerSettings class before uncommenting this.
+				// MessengerSettings settings = new MessengerSettings(MessengerApp.this);
+				// settings.setVisible(true);
 			}
 		});
 
