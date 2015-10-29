@@ -21,6 +21,8 @@ import messenger.ui.image.ImageHelper;
 public class MessengerSettings extends JDialog {
 	public MessengerSettings(Window owner) {
 		super(owner);
+		
+		//What the button does: TO DO: Make JFrame with options
 		try {
 			UIManager.setLookAndFeel("com.jtattoo.plaf.noire.NoireLookAndFeel");
 			com.jtattoo.plaf.noire.NoireLookAndFeel.setTheme("Noire", "Messenger App", "Messenger App");
@@ -28,6 +30,11 @@ public class MessengerSettings extends JDialog {
 			e.printStackTrace();
 			System.exit(1);
 		}
+		
+		
+		
+		
+		//Settings Window (When one is made)
 		setResizable(false);
 		setTitle("Settings");
 	}

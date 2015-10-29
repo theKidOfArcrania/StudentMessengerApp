@@ -219,7 +219,7 @@ public class MessengerApp extends JFrame {
 		});
 
 		// Creates Settings Item
-		JMenuItem mnutSettings = new JMenuItem("Settings (Switch to Black/Yellow theme)");
+		JMenuItem mnutSettings = new JMenuItem("Settings");
 		mnutSettings.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
