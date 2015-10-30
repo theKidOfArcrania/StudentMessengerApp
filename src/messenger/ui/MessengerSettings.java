@@ -1,54 +1,40 @@
 package messenger.ui;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.Window;
-import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
 
-import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JDialog;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.KeyStroke;
 import javax.swing.ToolTipManager;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
-import javax.swing.border.Border;
-import javax.swing.border.EmptyBorder;
-import javax.swing.plaf.ColorUIResource;
 
-import messenger.ui.image.ImageHelper;
+public class MessengerSettings extends JDialog {
 
-public class MessengerSettings extends JFrame {
-	
-	//Messenger App Version
-	double ver = 1.0;
-	String date = "10/30/2015";
-	
-	//Creates Buttons
+	// Messenger App Version
+	final double ver = 1.0;
+	final String date = "10/30/2015";
+
+	// Creates Buttons
 	JButton buttonUsername = new JButton("Change Username");
 	JButton buttonColor = new JButton("Change User Color");
 	JButton buttonAvatar = new JButton("Change Avatar");
 	JButton buttonTheme = new JButton("Change Theme");
-	
+
 	private JPanel panelText;
 	private JPanel panelMain;
-	
+
 	public MessengerSettings(Window owner) {
-		
-		//Creates Labels
+		super(owner);
+
+		// Creates Labels
 		JLabel labelTitle = new JLabel("Student Messenger App");
 		JLabel labelVersion = new JLabel("Version: " + ver);
 		JLabel labelCredits = new JLabel("Created By:");
@@ -56,17 +42,17 @@ public class MessengerSettings extends JFrame {
 		JLabel labelHenry = new JLabel("   Henry Wang   ");
 		JLabel labelDaniel = new JLabel("   Daniel Wong   ");
 		JLabel labelSpace = new JLabel("            ");
-		
-		//Sets sizes of buttons and labels
+
+		// Sets sizes of buttons and labels
 		buttonUsername.setPreferredSize(new Dimension(168, 39));
 		buttonColor.setPreferredSize(new Dimension(168, 39));
 		buttonAvatar.setPreferredSize(new Dimension(168, 39));
 		buttonTheme.setPreferredSize(new Dimension(168, 39));
-		
-		//Sets up tooltips
-		ToolTipManager.sharedInstance().setDismissDelay(2500);
-		
-		//Makes tooltip text
+
+		// Sets up tooltips
+		ToolTipManager.sharedInstance().setDismissDelay(3500);
+
+		// Makes tooltip text
 		buttonUsername.setToolTipText("Change Your Username");
 		buttonColor.setToolTipText("Change Your User Color");
 		buttonAvatar.setToolTipText("Change your Avatar");
@@ -75,8 +61,8 @@ public class MessengerSettings extends JFrame {
 		labelCaleb.setToolTipText("Original Concept and UI");
 		labelHenry.setToolTipText("Main Code Design");
 		labelDaniel.setToolTipText("Code Design");
-		
-		//Sets fonts
+
+		// Sets fonts
 		buttonUsername.setFont(new Font("Segoe UI", Font.PLAIN, 18));
 		buttonColor.setFont(new Font("Segoe UI", Font.PLAIN, 18));
 		buttonAvatar.setFont(new Font("Segoe UI", Font.PLAIN, 18));
@@ -88,18 +74,18 @@ public class MessengerSettings extends JFrame {
 		labelCaleb.setFont(new Font("Segoe UI", Font.PLAIN, 13));
 		labelHenry.setFont(new Font("Segoe UI", Font.PLAIN, 13));
 		labelDaniel.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-		
-		//Sets Mnemonics
+
+		// Sets Mnemonics
 		buttonUsername.setMnemonic(KeyEvent.VK_U);
 		buttonColor.setMnemonic(KeyEvent.VK_C);
 		buttonAvatar.setMnemonic(KeyEvent.VK_A);
 		buttonTheme.setMnemonic(KeyEvent.VK_T);
-		
-		//Makes Panel
+
+		// Makes Panel
 		panelText = new JPanel();
 		panelMain = new JPanel();
-		
-		//Adds the Buttons and Labels to the Main Panel
+
+		// Adds the Buttons and Labels to the Main Panel
 		panelText.add(labelTitle);
 		panelText.add(labelVersion);
 		panelText.add(labelSpace);
@@ -111,52 +97,54 @@ public class MessengerSettings extends JFrame {
 		panelMain.add(buttonColor);
 		panelMain.add(buttonAvatar);
 		panelMain.add(buttonTheme);
-		
-		//Adds panel to frame
+
+		// Adds panel to frame
 		add(panelText);
 		add(panelMain);
-		
-		//If buttons are clicked
-		buttonUsername.addMouseListener(new java.awt.event.MouseAdapter() {
-		    public void mouseClicked(java.awt.event.MouseEvent evt) {
-		    	//TO DO: username changing dialog, should write name change to chat
 
-		    }
+		// If buttons are clicked
+		buttonUsername.addMouseListener(new java.awt.event.MouseAdapter() {
+			public void mouseClicked(java.awt.event.MouseEvent evt) {
+				// TO DO: username changing dialog, should write name change to
+				// chat
+
+			}
 		});
 		buttonColor.addMouseListener(new java.awt.event.MouseAdapter() {
-		    public void mouseClicked(java.awt.event.MouseEvent evt) {
-		    	//TO DO: color picker dialog
-		    }
+			public void mouseClicked(java.awt.event.MouseEvent evt) {
+				// TO DO: color picker dialog
+			}
 		});
 		buttonAvatar.addMouseListener(new java.awt.event.MouseAdapter() {
-		    public void mouseClicked(java.awt.event.MouseEvent evt) {
-		    	//TO DO: file picker/picture chooser dialog
-		    	
-		    }
+			public void mouseClicked(java.awt.event.MouseEvent evt) {
+				// TO DO: file picker/picture chooser dialog
+
+			}
 		});
 		buttonTheme.addMouseListener(new java.awt.event.MouseAdapter() {
-		    public void mouseClicked(java.awt.event.MouseEvent evt) {
-		    	//TO DO: make radio buttons to choose theme
-		    	
+			public void mouseClicked(java.awt.event.MouseEvent evt) {
+				// TO DO: make radio buttons to choose theme
+
 				try {
 					UIManager.setLookAndFeel("com.jtattoo.plaf.noire.NoireLookAndFeel");
 					com.jtattoo.plaf.noire.NoireLookAndFeel.setTheme("Noire", "Messenger App", "Messenger App");
-				} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
+				} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
+						| UnsupportedLookAndFeelException e) {
 					e.printStackTrace();
 					System.exit(1);
 				}
-		    }
+			}
 		});
-		
-		//Settings Window (When one is made)
+
+		// Settings Window (When one is made)
+		this.setModal(true);
 		setLayout(new GridLayout(1, 5));
 		setSize(350, 230);
 		setResizable(false);
 		setTitle("Settings");
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-		setVisible(true);
-		
-		//Makes Settings window spawn in the center
+
+		// Makes Settings window spawn in the center
 		this.addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowOpened(WindowEvent e) {
@@ -164,5 +152,4 @@ public class MessengerSettings extends JFrame {
 			}
 		});
 	}
-	
-	}
+}
