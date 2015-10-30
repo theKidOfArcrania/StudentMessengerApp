@@ -50,9 +50,9 @@ public class MessengerSettings extends JFrame {
 		JLabel labelTitle = new JLabel("Student Messenger App");
 		JLabel labelVersion = new JLabel("Version: " + ver);
 		JLabel labelCredits = new JLabel("Created By:");
-		JLabel labelCaleb = new JLabel("Caleb Hoff");
-		JLabel labelHenry = new JLabel("Henry Wang");
-		JLabel labelSpace = new JLabel(" ");
+		JLabel labelCaleb = new JLabel("   Caleb Hoff   ");
+		JLabel labelHenry = new JLabel("   Henry Wang   ");
+		JLabel labelSpace = new JLabel("          ");
 		
 		//Sets sizes of buttons and labels
 		buttonUsername.setPreferredSize(new Dimension(168, 39));
@@ -62,10 +62,6 @@ public class MessengerSettings extends JFrame {
 		
 		//Sets up tooltips
 		ToolTipManager.sharedInstance().setDismissDelay(2500);
-		Border border = BorderFactory.createLineBorder(new Color(75,75,75));
-		UIManager.put("ToolTip.border", border);
-		UIManager.put("ToolTip.foreground", new ColorUIResource(55, 55, 55));
-		UIManager.put("ToolTip.background", new ColorUIResource(215, 215, 215));
 		
 		//Makes tooltip text
 		buttonUsername.setToolTipText("Change Your Username");
@@ -74,21 +70,17 @@ public class MessengerSettings extends JFrame {
 		buttonTheme.setToolTipText("Change the Messenger theme");
 		labelVersion.setToolTipText("Build Date: " + date);
 		
-		//Sets colors
-		labelTitle.setBackground(Color.BLACK);
-		labelVersion.setBackground(Color.BLACK);
-		
 		//Sets fonts
 		buttonUsername.setFont(new Font("Segoe UI", Font.PLAIN, 18));
 		buttonColor.setFont(new Font("Segoe UI", Font.PLAIN, 18));
 		buttonAvatar.setFont(new Font("Segoe UI", Font.PLAIN, 18));
 		buttonTheme.setFont(new Font("Segoe UI", Font.PLAIN, 18));
-		labelTitle.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		labelTitle.setFont(new Font("Segoe UI", Font.BOLD, 15));
 		labelVersion.setFont(new Font("Segoe UI", Font.PLAIN, 17));
 		labelSpace.setFont(new Font("Segoe UI", Font.PLAIN, 30));
 		labelCredits.setFont(new Font("Segoe UI", Font.BOLD, 20));
-		labelCaleb.setFont(new Font("Segoe UI", Font.PLAIN, 17));
-		labelHenry.setFont(new Font("Segoe UI", Font.PLAIN, 17));
+		labelCaleb.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+		labelHenry.setFont(new Font("Segoe UI", Font.PLAIN, 13));
 		
 		//Sets Mnemonics
 		buttonUsername.setMnemonic(KeyEvent.VK_U);
@@ -123,6 +115,7 @@ public class MessengerSettings extends JFrame {
 		setTitle("Settings");
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setVisible(true);
+		
 	}
 	}
 
