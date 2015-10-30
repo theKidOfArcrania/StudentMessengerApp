@@ -11,6 +11,7 @@ import java.awt.event.WindowEvent;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.ToolTipManager;
 import javax.swing.UIManager;
@@ -28,8 +29,8 @@ public class MessengerSettings extends JDialog {
 	JButton buttonAvatar = new JButton("Change Avatar");
 	JButton buttonTheme = new JButton("Change Theme");
 
-	private JPanel panelText;
-	private JPanel panelMain;
+	private final JPanel panelText;
+	private final JPanel panelMain;
 
 	public MessengerSettings(Window owner) {
 		super(owner);
@@ -104,6 +105,7 @@ public class MessengerSettings extends JDialog {
 
 		// If buttons are clicked
 		buttonUsername.addMouseListener(new java.awt.event.MouseAdapter() {
+			@Override
 			public void mouseClicked(java.awt.event.MouseEvent evt) {
 				// TO DO: username changing dialog, should write name change to
 				// chat
@@ -111,27 +113,36 @@ public class MessengerSettings extends JDialog {
 			}
 		});
 		buttonColor.addMouseListener(new java.awt.event.MouseAdapter() {
+			@Override
 			public void mouseClicked(java.awt.event.MouseEvent evt) {
 				// TO DO: color picker dialog
 			}
 		});
 		buttonAvatar.addMouseListener(new java.awt.event.MouseAdapter() {
+			@Override
 			public void mouseClicked(java.awt.event.MouseEvent evt) {
 				// TO DO: file picker/picture chooser dialog
 
 			}
 		});
 		buttonTheme.addMouseListener(new java.awt.event.MouseAdapter() {
+			@Override
 			public void mouseClicked(java.awt.event.MouseEvent evt) {
 				// TO DO: make radio buttons to choose theme
 
 				try {
 					UIManager.setLookAndFeel("com.jtattoo.plaf.noire.NoireLookAndFeel");
 					com.jtattoo.plaf.noire.NoireLookAndFeel.setTheme("Noire", "Messenger App", "Messenger App");
-				} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
-						| UnsupportedLookAndFeelException e) {
+
+					// Repaint theme.
+					Window owner = MessengerSettings.this.getOwner();
+					if (owner != null) {
+						owner.repaint();
+					}
+					repaint();
+				} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
+					JOptionPane.showMessageDialog(MessengerSettings.this, "Unable to change theme.", "Messenger", JOptionPane.ERROR_MESSAGE);
 					e.printStackTrace();
-					System.exit(1);
 				}
 			}
 		});
