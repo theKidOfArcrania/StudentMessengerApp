@@ -206,7 +206,6 @@ public class MessengerApp extends JFrame {
 
 		// Creates Menu Bar
 		JMenuBar menuBar = new JMenuBar();
-
 		setJMenuBar(menuBar);
 
 		// Creates Exit Item

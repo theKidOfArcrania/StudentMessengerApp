@@ -8,6 +8,7 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.Window;
+import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -20,6 +21,7 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.KeyStroke;
 import javax.swing.ToolTipManager;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -116,7 +118,35 @@ public class MessengerSettings extends JFrame {
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setVisible(true);
 		
+		//Makes Settings window spawn in the center of the main window
+		this.addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowOpened(WindowEvent e) {
+				setLocationRelativeTo(null);
+			}
+		});
+		buttonUsername.addMouseListener(new java.awt.event.MouseAdapter() {
+		    public void mouseClicked(java.awt.event.MouseEvent evt) {
+		    	buttonUsername.setBackground(new Color(166, 210, 225));
+		    }
+		});
+		buttonColor.addMouseListener(new java.awt.event.MouseAdapter() {
+		    public void mouseClicked(java.awt.event.MouseEvent evt) {
+		    	buttonColor.setBackground(new Color(166, 210, 225));
+		    }
+		});
+		buttonAvatar.addMouseListener(new java.awt.event.MouseAdapter() {
+		    public void mouseClicked(java.awt.event.MouseEvent evt) {
+		    	buttonAvatar.setBackground(new Color(166, 210, 225));
+		    }
+		});
+		buttonTheme.addMouseListener(new java.awt.event.MouseAdapter() {
+		    public void mouseClicked(java.awt.event.MouseEvent evt) {
+		    	buttonTheme.setBackground(new Color(166, 210, 225));
+		    }
+		});
 	}
+	
 	}
 
 /*
