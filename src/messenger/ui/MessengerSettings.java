@@ -35,7 +35,7 @@ public class MessengerSettings extends JFrame {
 	
 	//Messenger App Version
 	double ver = 1.0;
-	String date = "10/29/2015";
+	String date = "10/30/2015";
 	
 	//Creates Buttons
 	JButton buttonUsername = new JButton("Change Username");
@@ -54,7 +54,8 @@ public class MessengerSettings extends JFrame {
 		JLabel labelCredits = new JLabel("Created By:");
 		JLabel labelCaleb = new JLabel("   Caleb Hoff   ");
 		JLabel labelHenry = new JLabel("   Henry Wang   ");
-		JLabel labelSpace = new JLabel("          ");
+		JLabel labelDaniel = new JLabel("   Daniel Wong   ");
+		JLabel labelSpace = new JLabel("            ");
 		
 		//Sets sizes of buttons and labels
 		buttonUsername.setPreferredSize(new Dimension(168, 39));
@@ -71,6 +72,9 @@ public class MessengerSettings extends JFrame {
 		buttonAvatar.setToolTipText("Change your Avatar");
 		buttonTheme.setToolTipText("Change the Messenger theme");
 		labelVersion.setToolTipText("Build Date: " + date);
+		labelCaleb.setToolTipText("Original Concept and UI");
+		labelHenry.setToolTipText("Main Code Design");
+		labelDaniel.setToolTipText("Code Design");
 		
 		//Sets fonts
 		buttonUsername.setFont(new Font("Segoe UI", Font.PLAIN, 18));
@@ -78,11 +82,12 @@ public class MessengerSettings extends JFrame {
 		buttonAvatar.setFont(new Font("Segoe UI", Font.PLAIN, 18));
 		buttonTheme.setFont(new Font("Segoe UI", Font.PLAIN, 18));
 		labelTitle.setFont(new Font("Segoe UI", Font.BOLD, 15));
-		labelVersion.setFont(new Font("Segoe UI", Font.PLAIN, 17));
-		labelSpace.setFont(new Font("Segoe UI", Font.PLAIN, 30));
+		labelVersion.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+		labelSpace.setFont(new Font("Segoe UI", Font.PLAIN, 28));
 		labelCredits.setFont(new Font("Segoe UI", Font.BOLD, 20));
 		labelCaleb.setFont(new Font("Segoe UI", Font.PLAIN, 13));
 		labelHenry.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+		labelDaniel.setFont(new Font("Segoe UI", Font.PLAIN, 13));
 		
 		//Sets Mnemonics
 		buttonUsername.setMnemonic(KeyEvent.VK_U);
@@ -101,6 +106,7 @@ public class MessengerSettings extends JFrame {
 		panelText.add(labelCredits);
 		panelText.add(labelCaleb);
 		panelText.add(labelHenry);
+		panelText.add(labelDaniel);
 		panelMain.add(buttonUsername);
 		panelMain.add(buttonColor);
 		panelMain.add(buttonAvatar);
@@ -110,6 +116,38 @@ public class MessengerSettings extends JFrame {
 		add(panelText);
 		add(panelMain);
 		
+		//If buttons are clicked
+		buttonUsername.addMouseListener(new java.awt.event.MouseAdapter() {
+		    public void mouseClicked(java.awt.event.MouseEvent evt) {
+		    	//TO DO: username changing dialog, should write name change to chat
+
+		    }
+		});
+		buttonColor.addMouseListener(new java.awt.event.MouseAdapter() {
+		    public void mouseClicked(java.awt.event.MouseEvent evt) {
+		    	//TO DO: color picker dialog
+		    }
+		});
+		buttonAvatar.addMouseListener(new java.awt.event.MouseAdapter() {
+		    public void mouseClicked(java.awt.event.MouseEvent evt) {
+		    	//TO DO: file picker/picture chooser dialog
+		    	
+		    }
+		});
+		buttonTheme.addMouseListener(new java.awt.event.MouseAdapter() {
+		    public void mouseClicked(java.awt.event.MouseEvent evt) {
+		    	//TO DO: make radio buttons to choose theme
+		    	
+				try {
+					UIManager.setLookAndFeel("com.jtattoo.plaf.noire.NoireLookAndFeel");
+					com.jtattoo.plaf.noire.NoireLookAndFeel.setTheme("Noire", "Messenger App", "Messenger App");
+				} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
+					e.printStackTrace();
+					System.exit(1);
+				}
+		    }
+		});
+		
 		//Settings Window (When one is made)
 		setLayout(new GridLayout(1, 5));
 		setSize(350, 230);
@@ -118,44 +156,13 @@ public class MessengerSettings extends JFrame {
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setVisible(true);
 		
-		//Makes Settings window spawn in the center of the main window
+		//Makes Settings window spawn in the center
 		this.addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowOpened(WindowEvent e) {
 				setLocationRelativeTo(null);
 			}
 		});
-		buttonUsername.addMouseListener(new java.awt.event.MouseAdapter() {
-		    public void mouseClicked(java.awt.event.MouseEvent evt) {
-		    	buttonUsername.setBackground(new Color(166, 210, 225));
-		    }
-		});
-		buttonColor.addMouseListener(new java.awt.event.MouseAdapter() {
-		    public void mouseClicked(java.awt.event.MouseEvent evt) {
-		    	buttonColor.setBackground(new Color(166, 210, 225));
-		    }
-		});
-		buttonAvatar.addMouseListener(new java.awt.event.MouseAdapter() {
-		    public void mouseClicked(java.awt.event.MouseEvent evt) {
-		    	buttonAvatar.setBackground(new Color(166, 210, 225));
-		    }
-		});
-		buttonTheme.addMouseListener(new java.awt.event.MouseAdapter() {
-		    public void mouseClicked(java.awt.event.MouseEvent evt) {
-		    	buttonTheme.setBackground(new Color(166, 210, 225));
-		    }
-		});
 	}
 	
 	}
-
-/*
- //What the button does: TO DO: Make JFrame with options
-		try {
-			UIManager.setLookAndFeel("com.jtattoo.plaf.noire.NoireLookAndFeel");
-			com.jtattoo.plaf.noire.NoireLookAndFeel.setTheme("Noire", "Messenger App", "Messenger App");
-		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
-			e.printStackTrace();
-			System.exit(1);
-		}
- */
