@@ -41,7 +41,7 @@ public class Main {
 
 		MessengerApp app = new MessengerApp();
 		try {
-			Thread.sleep(800);
+			Thread.sleep(1000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
