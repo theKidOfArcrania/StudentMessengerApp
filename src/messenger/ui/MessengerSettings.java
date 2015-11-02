@@ -21,7 +21,8 @@ public class MessengerSettings extends JDialog {
 
 	// Messenger App Version
 	final double ver = 1.0;
-	final String date = "10/30/2015";
+	final String date = "11/2/2015";
+	int theme = 0;
 
 	// Creates Buttons
 	JButton buttonUsername = new JButton("Change Username");
@@ -106,44 +107,71 @@ public class MessengerSettings extends JDialog {
 		// If buttons are clicked
 		buttonUsername.addMouseListener(new java.awt.event.MouseAdapter() {
 			@Override
-			public void mouseClicked(java.awt.event.MouseEvent evt) {
+			public void mouseReleased(java.awt.event.MouseEvent evt) {
 				// TO DO: username changing dialog, should write name change to
 				// chat
-
 			}
 		});
 		buttonColor.addMouseListener(new java.awt.event.MouseAdapter() {
 			@Override
-			public void mouseClicked(java.awt.event.MouseEvent evt) {
+			public void mouseReleased(java.awt.event.MouseEvent evt) {
 				// TO DO: color picker dialog
 			}
 		});
 		buttonAvatar.addMouseListener(new java.awt.event.MouseAdapter() {
 			@Override
-			public void mouseClicked(java.awt.event.MouseEvent evt) {
+			public void mouseReleased(java.awt.event.MouseEvent evt) {
 				// TO DO: file picker/picture chooser dialog
 
 			}
 		});
 		buttonTheme.addMouseListener(new java.awt.event.MouseAdapter() {
 			@Override
-			public void mouseClicked(java.awt.event.MouseEvent evt) {
+			public void mouseReleased(java.awt.event.MouseEvent evt) {
 				// TO DO: make radio buttons to choose theme
 
-				try {
-					UIManager.setLookAndFeel("com.jtattoo.plaf.noire.NoireLookAndFeel");
-					com.jtattoo.plaf.noire.NoireLookAndFeel.setTheme("Noire", "Messenger App", "Messenger App");
+				if (theme == 0) {
+					try {
+						UIManager.setLookAndFeel("com.jtattoo.plaf.noire.NoireLookAndFeel");
+						com.jtattoo.plaf.noire.NoireLookAndFeel.setTheme("Noire", "Messenger App", "Messenger App");
+						buttonTheme.setText("Use Noire Theme");
 
-					// Repaint theme.
-					Window owner = MessengerSettings.this.getOwner();
-					if (owner != null) {
-						owner.repaint();
+						// Repaint theme.
+						Window owner = MessengerSettings.this.getOwner();
+						if (owner != null) {
+							owner.repaint();
+						}
+						repaint();
+					} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
+							| UnsupportedLookAndFeelException e) {
+						JOptionPane.showMessageDialog(MessengerSettings.this, "Unable to change theme.", "Messenger",
+								JOptionPane.ERROR_MESSAGE);
+						e.printStackTrace();
 					}
-					repaint();
-				} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
-					JOptionPane.showMessageDialog(MessengerSettings.this, "Unable to change theme.", "Messenger", JOptionPane.ERROR_MESSAGE);
-					e.printStackTrace();
 				}
+				if (theme == 1) {
+					try {
+						UIManager.setLookAndFeel("com.jtattoo.plaf.hifi.HiFiLookAndFeel");
+						com.jtattoo.plaf.texture.TextureLookAndFeel.setTheme("Hifi", "Messenger App", "Messenger App");
+						buttonTheme.setText("Use Hifi Theme");
+
+						// Repaint theme.
+						Window owner = MessengerSettings.this.getOwner();
+						if (owner != null) {
+							owner.repaint();
+						}
+						repaint();
+					} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
+							| UnsupportedLookAndFeelException e) {
+						JOptionPane.showMessageDialog(MessengerSettings.this, "Unable to change theme.", "Messenger",
+								JOptionPane.ERROR_MESSAGE);
+						e.printStackTrace();
+					}
+				}
+				if (theme == 1)
+					theme = 0;
+				else
+					theme = 1;
 			}
 		});
 

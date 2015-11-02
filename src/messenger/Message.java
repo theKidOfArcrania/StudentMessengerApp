@@ -13,7 +13,8 @@ import java.util.Date;
 //offset 10: body
 
 /**
- * This class encloses a message object, used to parse raw byte data for processing messages sent in from the chatroom file.
+ * This class encloses a message object, used to parse raw byte data for
+ * processing messages sent in from the chatroom file.
  *
  * @author Henry
  *
@@ -28,7 +29,8 @@ public class Message {
 	 */
 	public static final byte FLAG_POST = 0;
 	/**
-	 * Flag to signify when a user connects to chatroom. Body is optional, identifies the name of the user.
+	 * Flag to signify when a user connects to chatroom. Body is optional,
+	 * identifies the name of the user.
 	 */
 	public static final byte FLAG_CONNECT = 1;
 	/**
@@ -37,7 +39,8 @@ public class Message {
 	public static final byte FLAG_DISCONNECT = 2;
 
 	/**
-	 * Flag to signify when a user stops typing. This event is also inferred in a disconnect or a post-message. No body
+	 * Flag to signify when a user stops typing. This event is also inferred in
+	 * a disconnect or a post-message. No body
 	 */
 	public static final byte FLAG_STOP_TYPING = 3;
 	/**
@@ -66,9 +69,11 @@ public class Message {
 	/**
 	 * Parses a byte data of message into a Message object.
 	 *
-	 * @param bbMsg the raw byte message data in a buffer.
+	 * @param bbMsg
+	 *            the raw byte message data in a buffer.
 	 * @return the parsed message data represented by msgBytes
-	 * @throws ParseException if an error occurs in parsing some bits of data.
+	 * @throws ParseException
+	 *             if an error occurs in parsing some bits of data.
 	 */
 	public static Message parse(ByteBuffer bbMsg) throws ParseException {
 		byte[] sig = new byte[2];
@@ -176,9 +181,11 @@ public class Message {
 	}
 
 	/**
-	 * Encodes this Message object into a byte buffer. Note: the limit must be set so that the msg data will not overflow.
+	 * Encodes this Message object into a byte buffer. Note: the limit must be
+	 * set so that the msg data will not overflow.
 	 *
-	 * @param bbMsg the byte buffer to store the data into.
+	 * @param bbMsg
+	 *            the byte buffer to store the data into.
 	 * @see #getEncodedLength()
 	 */
 	public void encoded(ByteBuffer bbMsg) {
@@ -218,7 +225,8 @@ public class Message {
 	}
 
 	/**
-	 * Retrieve the modification id for this message used to verify any issues of concurrent modification.
+	 * Retrieve the modification id for this message used to verify any issues
+	 * of concurrent modification.
 	 *
 	 * @return mod id.
 	 */
@@ -245,9 +253,11 @@ public class Message {
 	}
 
 	/**
-	 * Sets the modification id for this message used to verify any issues of concurrent modification.
+	 * Sets the modification id for this message used to verify any issues of
+	 * concurrent modification.
 	 *
-	 * @param mod mod id.
+	 * @param mod
+	 *            mod id.
 	 */
 	public void setMod(long mod) {
 		this.mod = mod;
