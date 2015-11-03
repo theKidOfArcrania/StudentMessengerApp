@@ -42,10 +42,8 @@ public class ChatClient extends JPanel {
 	/**
 	 * Create the chat client.
 	 *
-	 * @param room
-	 *            the chat-room that this client will use.
-	 * @param username
-	 *            the selected username.
+	 * @param room the chat-room that this client will use.
+	 * @param username the selected username.
 	 */
 	@SuppressWarnings({ "serial", "unused" })
 	public ChatClient(ChatRoom room, String username) {
@@ -58,6 +56,8 @@ public class ChatClient extends JPanel {
 				while (!stop) {
 					try {
 						updateMessages();
+						// Wait for a while.
+						Thread.sleep(100);
 					} catch (InterruptedException | AsynchronousCloseException | FileLockInterruptionException e) {
 						// Interruption
 						if (stop) {
@@ -74,14 +74,12 @@ public class ChatClient extends JPanel {
 						// Make sure to reset interrupted flag.
 						Thread.interrupted();
 						e.printStackTrace();
-						JOptionPane.showMessageDialog(ChatClient.this, "Unable to load messages", "Messenger",
-								JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(ChatClient.this, "Unable to load messages", "Messenger", JOptionPane.ERROR_MESSAGE);
 					} catch (Exception e) {
 						// Make sure to reset interrupted flag.
 						Thread.interrupted();
 						e.printStackTrace();
-						JOptionPane.showMessageDialog(ChatClient.this, "Unexpected error occured", "Messager",
-								JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(ChatClient.this, "Unexpected error occured", "Messager", JOptionPane.ERROR_MESSAGE);
 					}
 				}
 			}
@@ -190,8 +188,7 @@ public class ChatClient extends JPanel {
 					room.post(txtInput.getText());
 				} catch (IOException e1) {
 					e1.printStackTrace();
-					JOptionPane.showMessageDialog(ChatClient.this, "Unable to post message", "Messenger",
-							JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(ChatClient.this, "Unable to post message", "Messenger", JOptionPane.ERROR_MESSAGE);
 				} finally {
 					txtInput.setText("");
 				}
@@ -234,8 +231,7 @@ public class ChatClient extends JPanel {
 
 		for (Message msg : msgs) {
 			String messageLine = msg.toString(room.getUserName(msg.getSender()));
-			if (msg.getFlag() == Message.FLAG_POST || msg.getFlag() == Message.FLAG_CONNECT
-					|| msg.getFlag() == Message.FLAG_DISCONNECT) {
+			if (msg.getFlag() == Message.FLAG_POST || msg.getFlag() == Message.FLAG_CONNECT || msg.getFlag() == Message.FLAG_DISCONNECT) {
 				if (txtMsgs.getText().isEmpty()) {
 					txtMsgs.setText(messageLine);
 				} else {
