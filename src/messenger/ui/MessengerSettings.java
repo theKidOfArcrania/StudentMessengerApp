@@ -17,13 +17,11 @@ import javax.swing.ToolTipManager;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
-import messenger.ChatRoom;
-
 public class MessengerSettings extends JDialog {
 
 	// Messenger App Version
 	final double ver = 1.0;
-	final String date = "11/3/2015";
+	final String date = "11/4/2015";
 	int theme = 0;
 
 	// Creates Buttons
@@ -105,6 +103,7 @@ public class MessengerSettings extends JDialog {
 		add(panelText);
 		add(panelMain);
 
+		
 		// If buttons are clicked
 		buttonUsername.addMouseListener(new java.awt.event.MouseAdapter() {
 			@Override

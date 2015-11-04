@@ -1,5 +1,8 @@
 package messenger;
 
+import static javax.swing.JOptionPane.WARNING_MESSAGE;
+import static javax.swing.JOptionPane.showMessageDialog;
+
 import java.io.IOException;
 
 import javax.swing.JOptionPane;
@@ -7,9 +10,6 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
 import messenger.ui.MessengerApp;
-
-import static javax.swing.JOptionPane.WARNING_MESSAGE;
-import static javax.swing.JOptionPane.showMessageDialog;
 
 public class Main {
 
@@ -36,7 +36,7 @@ public class Main {
 				showMessageDialog(null, "Invalid Username", "Messenger", WARNING_MESSAGE);
 			}
 		}
-
+		
 		MessengerApp app = new MessengerApp(userName);
 		app.setVisible(true);
 	}
