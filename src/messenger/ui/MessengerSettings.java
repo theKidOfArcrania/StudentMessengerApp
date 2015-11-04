@@ -139,15 +139,8 @@ public class MessengerSettings extends JDialog {
 				if (theme == 0) {
 					try {
 						UIManager.setLookAndFeel("com.jtattoo.plaf.noire.NoireLookAndFeel");
-						com.jtattoo.plaf.noire.NoireLookAndFeel.setTheme("Noire", "Messenger App", "Messenger App");
+						com.jtattoo.plaf.noire.NoireLookAndFeel.setTheme("Noire", "Messenger App", "Messenger");
 						buttonTheme.setText("Use Noire Theme");
-
-						// Repaint theme.
-						Window owner = MessengerSettings.this.getOwner();
-						if (owner != null) {
-							owner.repaint();
-						}
-						repaint();
 					} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
 							| UnsupportedLookAndFeelException e) {
 						JOptionPane.showMessageDialog(MessengerSettings.this, "Unable to change theme.", "Messenger",
@@ -158,15 +151,9 @@ public class MessengerSettings extends JDialog {
 				if (theme == 1) {
 					try {
 						UIManager.setLookAndFeel("com.jtattoo.plaf.hifi.HiFiLookAndFeel");
-						com.jtattoo.plaf.texture.TextureLookAndFeel.setTheme("Hifi", "Messenger App", "Messenger App");
+						com.jtattoo.plaf.texture.TextureLookAndFeel.setTheme("Hifi", "Messenger App", "Messenger");
 						buttonTheme.setText("Use Hifi Theme");
 
-						// Repaint theme.
-						Window owner = MessengerSettings.this.getOwner();
-						if (owner != null) {
-							owner.repaint();
-						}
-						repaint();
 					} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
 							| UnsupportedLookAndFeelException e) {
 						JOptionPane.showMessageDialog(MessengerSettings.this, "Unable to change theme.", "Messenger",
@@ -174,10 +161,16 @@ public class MessengerSettings extends JDialog {
 						e.printStackTrace();
 					}
 				}
-				if (theme == 1)
-					theme = 0;
-				else
+				// Repaint theme.
+				Window owner = MessengerSettings.this.getOwner();
+				if (owner != null) {
+					owner.repaint();
+				}
+				repaint();
+				if (theme == 0)
 					theme = 1;
+				else
+					theme = 0;
 			}
 		});
 
