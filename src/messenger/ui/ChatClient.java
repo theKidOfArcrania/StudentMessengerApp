@@ -66,8 +66,7 @@ public class ChatClient extends JPanel {
 						// Make sure to reset interrupted flag.
 						Thread.interrupted();
 					} catch (IOException e) {
-						// Place this here just in case if some how an
-						// interruption-related exception occurs.
+						// Place this here just in case if some how an interruption-related exception occurs.
 						if (stop) {
 							return;
 						}
@@ -235,6 +234,7 @@ public class ChatClient extends JPanel {
 				if (txtMsgs.getText().isEmpty()) {
 					txtMsgs.setText(messageLine);
 				} else {
+					
 					txtMsgs.setText(txtMsgs.getText() + "\n" + messageLine);
 				}
 			}

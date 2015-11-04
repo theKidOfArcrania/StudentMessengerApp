@@ -135,7 +135,6 @@ public class Message {
 		default:
 			throw new IllegalArgumentException("Invalid message flag");
 		}
-
 		this.flag = flag;
 		if (flag == -1) {
 			this.timeStampNum = -1;
