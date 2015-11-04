@@ -270,7 +270,7 @@ public class Message {
 	public String toString(String userName) {
 		switch (flag) {
 		case -1:
-			return "<INVALID MESSAGE>";
+			return "[Invalid Message]";
 		case 0:
 			try {
 				return userName + ": " + new String(body, "utf-8");
@@ -279,17 +279,17 @@ public class Message {
 				throw new InternalError(e);
 			}
 		case 1:
-			return "<" + userName + " connected>";
+			return "[" + userName + " Connected]";
 		case 2:
-			return "<" + userName + " disconnected>";
+			return "[" + userName + " Disconnected]";
 		case 3:
-			return "<" + userName + " stop typing>";
+			return "[" + userName + " Stopped Typing]";
 		case 4:
-			return "<" + userName + " is typing>";
+			return "[" + userName + " Is Typing]";
 		case 5:
-			return "<" + userName + " inactive>";
+			return "[" + userName + " Inactive]";
 		case 6:
-			return "<" + userName + " active>";
+			return "[" + userName + " Active]";
 		case 7:
 			try {
 				return "<" + userName + " has alias of \"" + new String(body, "utf-8") + "\">";
@@ -298,7 +298,7 @@ public class Message {
 				throw new InternalError(e);
 			}
 		default:
-			return "<INVALID MESSAGE>";
+			return "[Invalid Message]";
 		}
 	}
 }

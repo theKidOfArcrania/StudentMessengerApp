@@ -35,7 +35,7 @@ public class Main {
 			if (userName.isEmpty()) {
 				showMessageDialog(null, "Invalid Username", "Messenger", WARNING_MESSAGE);
 			}
-			if (userName.equalsIgnoreCase("CrunchyCat")) {
+			if (userName.equalsIgnoreCase("crunchycat")) {
 				showMessageDialog(null, "Reserved for Developer", "Messenger", WARNING_MESSAGE);
 			}
 		}

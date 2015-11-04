@@ -108,8 +108,7 @@ public class MessengerSettings extends JDialog {
 		buttonUsername.addMouseListener(new java.awt.event.MouseAdapter() {
 			@Override
 			public void mouseReleased(java.awt.event.MouseEvent evt) {
-				// TO DO: username changing dialog, should write name change to
-				// chat
+				// TO DO: username changing dialog, should write name change to chat
 				JOptionPane.showMessageDialog(panelMain, "This feauture is not yet complete", "Change Username",
 						JOptionPane.ERROR_MESSAGE);
 			}
@@ -134,8 +133,7 @@ public class MessengerSettings extends JDialog {
 		buttonTheme.addMouseListener(new java.awt.event.MouseAdapter() {
 			@Override
 			public void mouseReleased(java.awt.event.MouseEvent evt) {
-				// TO DO: make radio buttons to choose theme
-
+				
 				if (theme == 0) {
 					try {
 						UIManager.setLookAndFeel("com.jtattoo.plaf.noire.NoireLookAndFeel");
