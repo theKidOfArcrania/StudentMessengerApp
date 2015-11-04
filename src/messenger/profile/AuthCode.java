@@ -7,6 +7,7 @@ import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.security.PrivateKey;
 import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.PKCS8EncodedKeySpec;
@@ -87,14 +88,22 @@ public class AuthCode {
 		hash = computeHash(encoded);
 	}
 
-	public AuthCode(AuthKeyType keyType, Key key) throws NoSuchAlgorithmException {
+	public AuthCode(Key key) throws NoSuchAlgorithmException {
 		this.key = key;
-		this.keyType = keyType;
 
 		String algorithm = key.getAlgorithm();
-		if (!algorithm.equals("AES") && !algorithm.equals("RSA")) {
+		if (algorithm.equals("AES")) {
+			keyType = AuthKeyType.Secret;
+		} else if (algorithm.equals("RSA")) {
+			if (key instanceof PrivateKey) {
+				keyType = AuthKeyType.Private;
+			} else {
+				keyType = AuthKeyType.Public;
+			}
+		} else {
 			throw new IllegalArgumentException("Key must be of algorithm RSA or AES");
 		}
+
 		hash = computeHash(key.getEncoded());
 	}
 
