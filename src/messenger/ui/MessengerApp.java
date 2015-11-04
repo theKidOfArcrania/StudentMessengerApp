@@ -1,13 +1,5 @@
 package messenger.ui;
 
-import static javax.swing.JOptionPane.ERROR_MESSAGE;
-import static javax.swing.JOptionPane.QUESTION_MESSAGE;
-import static javax.swing.JOptionPane.WARNING_MESSAGE;
-import static javax.swing.JOptionPane.YES_NO_OPTION;
-import static javax.swing.JOptionPane.YES_OPTION;
-import static javax.swing.JOptionPane.showConfirmDialog;
-import static javax.swing.JOptionPane.showMessageDialog;
-
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
@@ -33,7 +25,6 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.KeyStroke;
@@ -50,6 +41,13 @@ import messenger.Message;
 import messenger.event.MessageEvent;
 import messenger.event.MessageListener;
 import messenger.ui.image.ImageHelper;
+
+import static javax.swing.JOptionPane.ERROR_MESSAGE;
+import static javax.swing.JOptionPane.QUESTION_MESSAGE;
+import static javax.swing.JOptionPane.YES_NO_OPTION;
+import static javax.swing.JOptionPane.YES_OPTION;
+import static javax.swing.JOptionPane.showConfirmDialog;
+import static javax.swing.JOptionPane.showMessageDialog;
 
 public class MessengerApp extends JFrame {
 	public class ChatTabComponent extends JPanel {
@@ -109,9 +107,7 @@ public class MessengerApp extends JFrame {
 								client.leave();
 							} catch (Exception e1) {
 								e1.printStackTrace();
-								showMessageDialog(ChatTabComponent.this,
-										"Unable to safely leave the chatroom " + client.getName(), "Messenger",
-										ERROR_MESSAGE);
+								showMessageDialog(ChatTabComponent.this, "Unable to safely leave the chatroom " + client.getName(), "Messenger", ERROR_MESSAGE);
 							}
 							removed = true;
 							chatIDs.remove(i);
@@ -133,8 +129,7 @@ public class MessengerApp extends JFrame {
 					if (tabbedPane.getSelectedIndex() == -1) {
 						return;
 					}
-					if (msg.getFlag() != Message.FLAG_POST
-							|| ChatTabComponent.this == tabbedPane.getTabComponentAt(tabbedPane.getSelectedIndex())) {
+					if (msg.getFlag() != Message.FLAG_POST || ChatTabComponent.this == tabbedPane.getTabComponentAt(tabbedPane.getSelectedIndex())) {
 						return;
 					}
 					lastUser = chatRoom.getUserName(msg.getSender());
@@ -184,10 +179,14 @@ public class MessengerApp extends JFrame {
 	private final JTabbedPane chatTabPane;
 	private final ChatList chatList;
 
+	private final String userName;
+
 	/**
 	 * Create the frame.
 	 */
-	public MessengerApp() {
+	public MessengerApp(String userName) {
+		this.userName = userName;
+
 		setIconImage(Toolkit.getDefaultToolkit().getImage(MessengerApp.class.getResource("/messenger/FavIcon.gif")));
 		try {
 			chatList = ChatList.getMainChatList();
@@ -394,23 +393,7 @@ public class MessengerApp extends JFrame {
 		if ((index = chatIDs.indexOf(chatID)) != -1) {
 			chatTabPane.setSelectedIndex(index);
 		} else {
-			while (response.isEmpty()) {
-				response = JOptionPane.showInputDialog(this, "Input your username.");
-				if (response == null) {
-					try {
-						room.close();
-					} catch (IOException e) {
-						// Silently ignore any error.
-						e.printStackTrace();
-					}
-					return;
-				}
-				if (response.isEmpty()) {
-					showMessageDialog(this, "Invalid Username", "Messenger", WARNING_MESSAGE);
-				}
-			}
-
-			ChatClient client = new ChatClient(room, response);
+			ChatClient client = new ChatClient(room, userName);
 			ChatTabComponent tabComp = new ChatTabComponent(chatTabPane, client);
 			chatIDs.add(chatID);
 			chatRooms.add(room);
@@ -421,8 +404,7 @@ public class MessengerApp extends JFrame {
 	}
 
 	private void promptClosing() {
-		int response = showConfirmDialog(this, "Are you sure you want to exit?", "Messenger", YES_NO_OPTION,
-				QUESTION_MESSAGE);
+		int response = showConfirmDialog(this, "Are you sure you want to exit?", "Messenger", YES_NO_OPTION, QUESTION_MESSAGE);
 		if (response == YES_OPTION) {
 			int count = chatTabPane.getTabCount();
 			for (int i = 0; i < count; i++) {
@@ -433,8 +415,7 @@ public class MessengerApp extends JFrame {
 						client.leave();
 					} catch (IOException e) {
 						e.printStackTrace();
-						showMessageDialog(this, "Unable to safely leave the chatroom " + client.getName(), "Messenger",
-								ERROR_MESSAGE);
+						showMessageDialog(this, "Unable to safely leave the chatroom " + client.getName(), "Messenger", ERROR_MESSAGE);
 					}
 				}
 			}
