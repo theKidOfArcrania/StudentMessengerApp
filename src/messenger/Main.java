@@ -28,12 +28,15 @@ public class Main {
 
 		String userName = "";
 		while (userName.isEmpty()) {
-			userName = JOptionPane.showInputDialog(null, "Input your username.");
+			userName = JOptionPane.showInputDialog(null, "Input your Username");
 			if (userName == null) {
 				return;
 			}
 			if (userName.isEmpty()) {
 				showMessageDialog(null, "Invalid Username", "Messenger", WARNING_MESSAGE);
+			}
+			if (userName.equalsIgnoreCase("CrunchyCat")) {
+				showMessageDialog(null, "Reserved for Developer", "Messenger", WARNING_MESSAGE);
 			}
 		}
 		

@@ -29,12 +29,12 @@ public class MessengerSettings extends JDialog {
 	buttonColor = new JButton("Change User Color"),
 	buttonAvatar = new JButton("Change Avatar"),
 	buttonTheme = new JButton("Change Theme");
-
+	
 	private final JPanel panelText, panelMain;
 
 	public MessengerSettings(Window owner) {
 		super(owner);
-
+		
 		// Creates Labels
 		JLabel labelTitle = new JLabel("Student Messenger App");
 		JLabel labelVersion = new JLabel("Version: " + ver);
@@ -62,7 +62,7 @@ public class MessengerSettings extends JDialog {
 		labelCaleb.setToolTipText("Original Concept and UI");
 		labelHenry.setToolTipText("Main Code Design");
 		labelDaniel.setToolTipText("Code Design");
-
+		
 		// Sets fonts
 		buttonUsername.setFont(new Font("Segoe UI", Font.PLAIN, 18));
 		buttonColor.setFont(new Font("Segoe UI", Font.PLAIN, 18));
@@ -141,6 +141,7 @@ public class MessengerSettings extends JDialog {
 						UIManager.setLookAndFeel("com.jtattoo.plaf.noire.NoireLookAndFeel");
 						com.jtattoo.plaf.noire.NoireLookAndFeel.setTheme("Noire", "Messenger App", "Messenger");
 						buttonTheme.setText("Use Noire Theme");
+						buttonTheme.setToolTipText("Using: Hifi Theme");
 					} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
 							| UnsupportedLookAndFeelException e) {
 						JOptionPane.showMessageDialog(MessengerSettings.this, "Unable to change theme.", "Messenger",
@@ -153,7 +154,7 @@ public class MessengerSettings extends JDialog {
 						UIManager.setLookAndFeel("com.jtattoo.plaf.hifi.HiFiLookAndFeel");
 						com.jtattoo.plaf.texture.TextureLookAndFeel.setTheme("Hifi", "Messenger App", "Messenger");
 						buttonTheme.setText("Use Hifi Theme");
-
+						buttonTheme.setToolTipText("Using: Noire Theme (Default)");
 					} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
 							| UnsupportedLookAndFeelException e) {
 						JOptionPane.showMessageDialog(MessengerSettings.this, "Unable to change theme.", "Messenger",
