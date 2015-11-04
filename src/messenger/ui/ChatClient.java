@@ -212,6 +212,7 @@ public class ChatClient extends JPanel {
 			}
 		});
 		txtInput.setForeground(Color.GRAY);
+		txtInput.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		txtInput.setText("Send a message...");
 		GridBagConstraints gbc_txtInput = new GridBagConstraints();
 		gbc_txtInput.fill = GridBagConstraints.BOTH;
