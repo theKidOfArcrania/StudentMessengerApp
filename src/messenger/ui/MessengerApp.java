@@ -183,6 +183,8 @@ public class MessengerApp extends JFrame {
 
 	/**
 	 * Create the frame.
+	 * 
+	 * @param userName the user name that will be used for logging in.
 	 */
 	public MessengerApp(String userName) {
 		this.userName = userName;
