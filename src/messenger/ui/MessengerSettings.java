@@ -17,6 +17,8 @@ import javax.swing.ToolTipManager;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
+import messenger.ChatRoom;
+
 public class MessengerSettings extends JDialog {
 
 	// Messenger App Version
@@ -25,13 +27,12 @@ public class MessengerSettings extends JDialog {
 	int theme = 0;
 
 	// Creates Buttons
-	JButton buttonUsername = new JButton("Change Username");
-	JButton buttonColor = new JButton("Change User Color");
-	JButton buttonAvatar = new JButton("Change Avatar");
-	JButton buttonTheme = new JButton("Change Theme");
+	JButton buttonUsername = new JButton("Change Username"),
+	buttonColor = new JButton("Change User Color"),
+	buttonAvatar = new JButton("Change Avatar"),
+	buttonTheme = new JButton("Change Theme");
 
-	private final JPanel panelText;
-	private final JPanel panelMain;
+	private final JPanel panelText, panelMain;
 
 	public MessengerSettings(Window owner) {
 		super(owner);

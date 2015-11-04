@@ -501,7 +501,7 @@ public class ChatRoom implements Closeable {
 				profile.setTyping(false);
 				break;
 			case Message.FLAG_TYPING:
-				profile.setTyping(true);
+				profile.setTyping(true); //There are problems in this area. The program often displays that a user is typing even if no one is in the chat room.
 				break;
 			case Message.FLAG_STOP_TYPING:
 			case Message.FLAG_POST:

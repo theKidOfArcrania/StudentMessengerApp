@@ -66,8 +66,7 @@ public class ChatClient extends JPanel {
 						// Make sure to reset interrupted flag.
 						Thread.interrupted();
 					} catch (IOException e) {
-						// Place this here just in case if some how an
-						// interruption-related exception occurs.
+						// Place this here just in case if some how an interruption-related exception occurs.
 						if (stop) {
 							return;
 						}
@@ -213,6 +212,7 @@ public class ChatClient extends JPanel {
 			}
 		});
 		txtInput.setForeground(Color.GRAY);
+		txtInput.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		txtInput.setText("Send a message...");
 		GridBagConstraints gbc_txtInput = new GridBagConstraints();
 		gbc_txtInput.fill = GridBagConstraints.BOTH;
@@ -235,6 +235,7 @@ public class ChatClient extends JPanel {
 				if (txtMsgs.getText().isEmpty()) {
 					txtMsgs.setText(messageLine);
 				} else {
+					
 					txtMsgs.setText(txtMsgs.getText() + "\n" + messageLine);
 				}
 			}

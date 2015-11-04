@@ -14,7 +14,6 @@ public class Main {
 	}
 
 	public static void runProgram() throws IOException {
-
 		try {
 			UIManager.setLookAndFeel("com.jtattoo.plaf.hifi.HiFiLookAndFeel");
 			com.jtattoo.plaf.texture.TextureLookAndFeel.setTheme("Hifi", "Messenger App", "Messenger App");
@@ -24,12 +23,6 @@ public class Main {
 		}
 
 		MessengerApp app = new MessengerApp();
-		try {
-			Thread.sleep(1000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-
 		app.setVisible(true);
 	}
 }
