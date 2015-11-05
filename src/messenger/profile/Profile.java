@@ -1,10 +1,12 @@
 package messenger.profile;
 
 import java.awt.Image;
+import java.awt.image.BufferedImage;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.EOFException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -20,12 +22,15 @@ import java.util.UUID;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
+import javax.imageio.ImageIO;
 
 import messenger.ChatList;
 import messenger.profile.AuthCode.AuthKeyType;
+import messenger.ui.image.ImageHelper;
 
 public class Profile {
 	public static final String PROF_STUB = "prof.ID";
+	private static final String PROF_IMAGE = "profile.bmp";
 
 	public static void createProfile(String profileName, AuthCode authPassword) throws IOException {
 		if (authPassword.getKeyType() != AuthKeyType.Secret) {
@@ -75,7 +80,7 @@ public class Profile {
 
 	private final UUID userID;
 	private final String name;
-	private Image profile;
+	private BufferedImage profile;
 	private AuthCode authPassword;
 	private AuthCode publicAuth;
 	private AuthCode privateAuth;
@@ -93,6 +98,7 @@ public class Profile {
 
 		Path profilePath = getProfilePath(userID);
 		Path profStub = profilePath.resolve(PROF_STUB);
+		Path profImage = profilePath.resolve(PROF_IMAGE);
 
 		try (DataInputStream in = new DataInputStream(Files.newInputStream(profStub))) {
 			// Read from input stream
@@ -110,6 +116,14 @@ public class Profile {
 			throw new IOException("Unable to open profile.", e);
 		} catch (EOFException e) {
 			throw new IOException("Corrupted profile file.");
+		}
+
+		if (Files.exists(profImage)) {
+			try (InputStream in = Files.newInputStream(profImage)) {
+				profile = ImageIO.read(in);
+			}
+		} else {
+			profile = ImageHelper.loadImage("messenger/ui/image/DefaultProfile.jpg");
 		}
 	}
 
@@ -136,14 +150,19 @@ public class Profile {
 		return profile;
 	}
 
+	public BufferedImage getProfileImage() {
+		return profile;
+	}
+
 	public AuthCode getPublicAuth() {
 		return publicAuth;
 	}
 
-	public void setProfile(Image profile) throws IllegalPermissionAccessException {
+	public void setProfileImage(BufferedImage newProfile) throws IOException, IllegalPermissionAccessException {
+		// TO DO: write to profile.
 		if (privateAuth == null) {
 			throw new IllegalPermissionAccessException("You must have the private auth key to set profile");
 		}
-		this.profile = profile;
+		profile = newProfile;
 	}
 }
