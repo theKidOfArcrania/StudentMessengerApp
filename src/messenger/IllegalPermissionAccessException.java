@@ -1,4 +1,4 @@
-package messenger.profile;
+package messenger;
 
 import java.security.GeneralSecurityException;
 

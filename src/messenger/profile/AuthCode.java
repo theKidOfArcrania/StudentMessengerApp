@@ -59,6 +59,14 @@ public class AuthCode {
 		return digest.digest(in);
 	}
 
+	private static byte[] computeHash(byte[] in, byte[] salt, byte pepper) throws NoSuchAlgorithmException {
+		MessageDigest digest = MessageDigest.getInstance("SHA-256");
+		digest.update(in);
+		digest.update(salt);
+		digest.update(pepper);
+		return digest.digest();
+	}
+
 	private final Key key;
 	private final AuthKeyType keyType;
 
@@ -109,6 +117,15 @@ public class AuthCode {
 
 	public byte[] getHash() {
 		return hash.clone();
+	}
+
+	public byte[] getHash(byte[] salt, byte pepper) {
+		try {
+			return computeHash(key.getEncoded(), salt, pepper);
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+			return hash.clone();
+		}
 	}
 
 	/**

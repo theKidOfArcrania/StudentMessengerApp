@@ -15,16 +15,21 @@ import java.security.InvalidKeyException;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.UUID;
 
 import javax.crypto.Cipher;
+import javax.crypto.CipherInputStream;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javax.imageio.ImageIO;
 
 import messenger.ChatList;
+import messenger.IllegalPermissionAccessException;
+import messenger.KeyExistsException;
 import messenger.profile.AuthCode.AuthKeyType;
 import messenger.ui.image.ImageHelper;
 
@@ -51,10 +56,14 @@ public class Profile {
 			byte[] passHash = authPassword.getHash();
 			byte[] pubAuth = auths.getPublic().getEncoded();
 			byte[] prvAuth = c.wrap(auths.getPrivate());
+			byte[] salt = new byte[8];
+			SecureRandom rnd = SecureRandom.getInstanceStrong();
+			rnd.nextBytes(salt);
 
 			// Write to output stream.
 			out.writeUTF(profileName);
 			out.writeInt(passHash.length);
+			out.write(salt);
 			out.write(passHash);
 			out.writeInt(pubAuth.length);
 			out.write(pubAuth);
@@ -81,9 +90,10 @@ public class Profile {
 	private final UUID userID;
 	private final String name;
 	private BufferedImage profile;
-	private AuthCode authPassword;
 	private AuthCode publicAuth;
 	private AuthCode privateAuth;
+	private HashMap<UUID, AuthCode> chatAuths;
+	private final byte[] passSalt = new byte[8];
 	private byte[] prvAuth;
 	private byte[] passHash;
 
@@ -99,43 +109,56 @@ public class Profile {
 		Path profilePath = getProfilePath(userID);
 		Path profStub = profilePath.resolve(PROF_STUB);
 		Path profImage = profilePath.resolve(PROF_IMAGE);
+		try {
+			try (DataInputStream in = new DataInputStream(Files.newInputStream(profStub))) {
+				// Read from input stream
+				in.readUTF(); // disregard the name parameter.
+				passHash = new byte[in.readInt()];
+				in.readFully(passSalt);
+				in.readFully(passHash);
+				byte[] pubAuth = new byte[in.readInt()];
+				in.readFully(pubAuth);
+				prvAuth = new byte[in.readInt()];
+				in.readFully(prvAuth);
 
-		try (DataInputStream in = new DataInputStream(Files.newInputStream(profStub))) {
-			// Read from input stream
-			in.readUTF(); // disregard the name parameter.
-			passHash = new byte[in.readInt()];
-			in.readFully(passHash);
-			byte[] pubAuth = new byte[in.readInt()];
-			in.readFully(pubAuth);
-			prvAuth = new byte[in.readInt()];
-			in.readFully(prvAuth);
+				// Load public auth.
+				publicAuth = new AuthCode(AuthKeyType.Public, pubAuth);
+			}
 
-			// Load public auth.
-			publicAuth = new AuthCode(AuthKeyType.Public, pubAuth);
-		} catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
+			if (Files.exists(profImage)) {
+				Cipher c = Cipher.getInstance("RSA");
+				publicAuth.initCipher(c, Cipher.DECRYPT_MODE);
+				try (InputStream in = new CipherInputStream(Files.newInputStream(profImage), c)) {
+					profile = ImageIO.read(in);
+				}
+			} else {
+				profile = ImageHelper.loadImage("messenger/ui/image/DefaultProfile.jpg");
+			}
+		} catch (NoSuchAlgorithmException | InvalidKeySpecException | InvalidKeyException | NoSuchPaddingException e) {
 			throw new IOException("Unable to open profile.", e);
 		} catch (EOFException e) {
 			throw new IOException("Corrupted profile file.");
 		}
+	}
 
-		if (Files.exists(profImage)) {
-			try (InputStream in = Files.newInputStream(profImage)) {
-				profile = ImageIO.read(in);
-			}
-		} else {
-			profile = ImageHelper.loadImage("messenger/ui/image/DefaultProfile.jpg");
+	public void appendKeyRing(String name, AuthCode key) {
+		UUID nameID = UUID.nameUUIDFromBytes(name.getBytes("UTF-8"));
+		if (chatAuths.containsKey(nameID)) {
+			throw new KeyExistsException();
 		}
 	}
 
 	public boolean authenticate(AuthCode authPassword) throws Exception {
-		if (!Arrays.equals(passHash, authPassword.getHash())) {
-			return false;
+		for (int i = Byte.MIN_VALUE; i <= Byte.MAX_VALUE; i++) {
+			if (Arrays.equals(passHash, authPassword.getHash(passSalt, (byte) i))) {
+				Cipher c = Cipher.getInstance("RSA");
+				authPassword.initCipher(c, Cipher.UNWRAP_MODE);
+				privateAuth = new AuthCode(c.unwrap(prvAuth, "RSA", Cipher.PRIVATE_KEY));
+				refreshKeyRing();
+				return true;
+			}
 		}
-
-		Cipher c = Cipher.getInstance("RSA");
-		authPassword.initCipher(c, Cipher.UNWRAP_MODE);
-		privateAuth = new AuthCode(c.unwrap(prvAuth, "RSA", Cipher.PRIVATE_KEY));
-		return true;
+		return false;
 	}
 
 	public String getName() {
@@ -158,11 +181,16 @@ public class Profile {
 		return publicAuth;
 	}
 
+	public void refreshKeyRing() {
+
+	}
+
 	public void setProfileImage(BufferedImage newProfile) throws IOException, IllegalPermissionAccessException {
 		// TO DO: write to profile.
 		if (privateAuth == null) {
 			throw new IllegalPermissionAccessException("You must have the private auth key to set profile");
 		}
+
 		profile = newProfile;
 	}
 }
