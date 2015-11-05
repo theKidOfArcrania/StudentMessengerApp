@@ -120,7 +120,8 @@ public class Profile {
 
 		Cipher c = Cipher.getInstance("RSA");
 		authPassword.initCipher(c, Cipher.UNWRAP_MODE);
-		privateAuth = new AuthCode(c.unwrap(prvAuth));
+		privateAuth = new AuthCode(c.unwrap(prvAuth, "RSA", Cipher.PRIVATE_KEY));
+		return true;
 	}
 
 	public String getName() {

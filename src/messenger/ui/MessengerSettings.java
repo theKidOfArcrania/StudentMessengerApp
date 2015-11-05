@@ -19,22 +19,21 @@ import javax.swing.UnsupportedLookAndFeelException;
 
 public class MessengerSettings extends JDialog {
 
+	private static int theme = 0;
 	// Messenger App Version, date, & default theme
+	// TO DO: replace ver with VERSION file that comes with updater
 	final double ver = 1.0;
 	final String date = "11/4/2015";
-	int theme = 0;
 
 	// Creates Buttons
-	JButton buttonUsername = new JButton("Change Username"),
-	buttonColor = new JButton("Change User Color"),
-	buttonAvatar = new JButton("Change Avatar"),
-	buttonTheme = new JButton("Change Theme");
-	
+	JButton buttonUsername = new JButton("Change Username"), buttonColor = new JButton("Change User Color"), buttonAvatar = new JButton("Change Avatar"),
+			buttonTheme = new JButton("Change Theme");
+
 	private final JPanel panelText, panelMain;
 
 	public MessengerSettings(Window owner) {
 		super(owner);
-		
+
 		// Creates Labels
 		JLabel labelTitle = new JLabel("Student Messenger App");
 		JLabel labelVersion = new JLabel("Version: " + ver);
@@ -62,7 +61,7 @@ public class MessengerSettings extends JDialog {
 		labelCaleb.setToolTipText("Original Concept and UI");
 		labelHenry.setToolTipText("Main Code Design");
 		labelDaniel.setToolTipText("Code Design");
-		
+
 		// Sets fonts
 		buttonUsername.setFont(new Font("Segoe UI", Font.PLAIN, 18));
 		buttonColor.setFont(new Font("Segoe UI", Font.PLAIN, 18));
@@ -103,43 +102,41 @@ public class MessengerSettings extends JDialog {
 		add(panelText);
 		add(panelMain);
 
-		
 		// If buttons are clicked
 		buttonUsername.addMouseListener(new java.awt.event.MouseAdapter() {
 			@Override
 			public void mouseReleased(java.awt.event.MouseEvent evt) {
 				// TO DO: username changing dialog, should write name change to chat
-				JOptionPane.showMessageDialog(panelMain, "This feauture is not yet complete", "Change Username",JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(panelMain, "This feauture is not yet complete", "Change Username", JOptionPane.ERROR_MESSAGE);
 			}
 		});
 		buttonColor.addMouseListener(new java.awt.event.MouseAdapter() {
 			@Override
 			public void mouseReleased(java.awt.event.MouseEvent evt) {
 				// TO DO: color picker dialog
-				JOptionPane.showMessageDialog(panelMain, "This feauture is not yet complete", "Change User Color",JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(panelMain, "This feauture is not yet complete", "Change User Color", JOptionPane.ERROR_MESSAGE);
 			}
 		});
 		buttonAvatar.addMouseListener(new java.awt.event.MouseAdapter() {
 			@Override
 			public void mouseReleased(java.awt.event.MouseEvent evt) {
 				// TO DO: file picker/picture chooser dialog
-				JOptionPane.showMessageDialog(panelMain, "This feauture is not yet complete", "Change Avatar",JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(panelMain, "This feauture is not yet complete", "Change Avatar", JOptionPane.ERROR_MESSAGE);
 
 			}
 		});
 		buttonTheme.addMouseListener(new java.awt.event.MouseAdapter() {
 			@Override
 			public void mouseReleased(java.awt.event.MouseEvent evt) {
-				
+
 				if (theme == 0) {
 					try {
 						UIManager.setLookAndFeel("com.jtattoo.plaf.noire.NoireLookAndFeel");
 						com.jtattoo.plaf.noire.NoireLookAndFeel.setTheme("Noire", "Messenger App", "Messenger");
 						buttonTheme.setText("Use Noire Theme");
 						buttonTheme.setToolTipText("Using: Hifi Theme");
-					} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
-							| UnsupportedLookAndFeelException e) {
-						JOptionPane.showMessageDialog(MessengerSettings.this, "Unable to change theme.", "Messenger",JOptionPane.ERROR_MESSAGE);
+					} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
+						JOptionPane.showMessageDialog(MessengerSettings.this, "Unable to change theme.", "Messenger", JOptionPane.ERROR_MESSAGE);
 						e.printStackTrace();
 					}
 				}
@@ -149,9 +146,8 @@ public class MessengerSettings extends JDialog {
 						com.jtattoo.plaf.texture.TextureLookAndFeel.setTheme("Hifi", "Messenger App", "Messenger");
 						buttonTheme.setText("Use Hifi Theme");
 						buttonTheme.setToolTipText("Using: Noire Theme (Default)");
-					} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
-							| UnsupportedLookAndFeelException e) {
-						JOptionPane.showMessageDialog(MessengerSettings.this, "Unable to change theme.", "Messenger",JOptionPane.ERROR_MESSAGE);
+					} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
+						JOptionPane.showMessageDialog(MessengerSettings.this, "Unable to change theme.", "Messenger", JOptionPane.ERROR_MESSAGE);
 						e.printStackTrace();
 					}
 				}
@@ -161,10 +157,11 @@ public class MessengerSettings extends JDialog {
 					owner.repaint();
 				}
 				repaint();
-				if (theme == 0)
+				if (theme == 0) {
 					theme = 1;
-				else
+				} else {
 					theme = 0;
+				}
 			}
 		});
 
