@@ -27,13 +27,16 @@ public class Main {
 		}
 		
 		String userName = "";
-		while (userName.isEmpty()) {
+		while (userName.isEmpty() | userName.length() > 30) {
 			userName = JOptionPane.showInputDialog(null, "Input your Username");
 			if (userName == null) {
-				return;
+				return;	
 			}
 			if (userName.isEmpty()) {
 				showMessageDialog(null, "Invalid Username", "Messenger", WARNING_MESSAGE);
+			}
+			if (userName.length() > 30) {
+				showMessageDialog(null, "Invalid Username. The maximum is 30 Characters.", "Messenger", WARNING_MESSAGE);
 			}
 			if (userName.equalsIgnoreCase("crunchycat")) {
 				showMessageDialog(null, "Reserved for Developer", "Messenger", WARNING_MESSAGE);
