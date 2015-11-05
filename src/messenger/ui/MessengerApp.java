@@ -3,6 +3,7 @@ package messenger.ui;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.ComponentOrientation;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
@@ -18,6 +19,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
+import javax.swing.Box;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -34,6 +36,7 @@ import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import javax.swing.plaf.basic.BasicButtonUI;
 
 import messenger.ChatList;
 import messenger.ChatRoom;
@@ -294,16 +297,16 @@ public class MessengerApp extends JFrame {
 		});
 
 		// Creates Mnomics and Items in Messenger tab
-		JMenu mnuHelp = new JMenu("Messenger");
+		JMenu mnuMessenger = new JMenu("Messenger");
 		mnutSettings.setMnemonic('S');
 		mnutAbout.setMnemonic('A');
 		mnutExit.setMnemonic('X');
 		mnutSettings.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_MASK));
 		mnutAbout.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A, InputEvent.CTRL_MASK));
 		mnutExit.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X, InputEvent.ALT_MASK));
-		mnuHelp.add(mnutSettings);
-		mnuHelp.add(mnutAbout);
-		mnuHelp.add(mnutExit);
+		mnuMessenger.add(mnutSettings);
+		mnuMessenger.add(mnutAbout);
+		mnuMessenger.add(mnutExit);
 
 		// Creates Mnemonics and Items in New tab
 		JMenu mnuNew = new JMenu("New");
@@ -330,25 +333,34 @@ public class MessengerApp extends JFrame {
 		mnutPrivateChat.setActionCommand("Load Chat");
 		mnuJoin.add(mnutPublicChat);
 		mnuJoin.add(mnutPrivateChat);
+		
+		//Creates Username Info Tab
+		JMenu mnuUserName = new JMenu("User Name: " + userName);
+		mnuUserName.setUI(new BasicButtonUI());
+		mnuUserName.setFont(new Font("Segoe UI", Font.BOLD, 12));
+		mnuUserName.setFocusable(false);
+		mnuUserName.setBorderPainted(false);
 
 		// Mnemonics for tabs
 		mnuNew.setMnemonic('N');
 		mnuJoin.setMnemonic('J');
-		mnuHelp.setMnemonic('M');
+		mnuMessenger.setMnemonic('M');
 
 		// Tooltips for Tabs
 		ToolTipManager.sharedInstance().setDismissDelay(3500);
 		mnuNew.setToolTipText("Start a New Chat Room");
 		mnuJoin.setToolTipText("Join a Chat Room");
-		mnuHelp.setToolTipText("Settings, About, or Exit");
+		mnuMessenger.setToolTipText("Settings, About, or Exit");
 
 		// Adds tabs to menu bar
-		menuBar.add(mnuHelp);
+		menuBar.add(mnuMessenger);
 		menuBar.add(mnuNew);
 		menuBar.add(mnuJoin);
+		menuBar.add(Box.createHorizontalGlue());
+		menuBar.add(mnuUserName);
 
 		// Sets Menu Item Fonts
-		mnuHelp.setFont(new Font("Segoe UI", Font.BOLD, 14));
+		mnuMessenger.setFont(new Font("Segoe UI", Font.BOLD, 14));
 		mnuNew.setFont(new Font("Segoe UI", Font.BOLD, 14));
 		mnuJoin.setFont(new Font("Segoe UI", Font.BOLD, 14));
 		mnutSettings.setFont(new Font("Segoe UI", Font.PLAIN, 13));

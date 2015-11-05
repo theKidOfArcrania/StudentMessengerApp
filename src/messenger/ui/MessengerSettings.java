@@ -19,7 +19,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 
 public class MessengerSettings extends JDialog {
 
-	// Messenger App Version
+	// Messenger App Version, date, & default theme
 	final double ver = 1.0;
 	final String date = "11/4/2015";
 	int theme = 0;
@@ -109,24 +109,21 @@ public class MessengerSettings extends JDialog {
 			@Override
 			public void mouseReleased(java.awt.event.MouseEvent evt) {
 				// TO DO: username changing dialog, should write name change to chat
-				JOptionPane.showMessageDialog(panelMain, "This feauture is not yet complete", "Change Username",
-						JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(panelMain, "This feauture is not yet complete", "Change Username",JOptionPane.ERROR_MESSAGE);
 			}
 		});
 		buttonColor.addMouseListener(new java.awt.event.MouseAdapter() {
 			@Override
 			public void mouseReleased(java.awt.event.MouseEvent evt) {
 				// TO DO: color picker dialog
-				JOptionPane.showMessageDialog(panelMain, "This feauture is not yet complete", "Change User Color",
-						JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(panelMain, "This feauture is not yet complete", "Change User Color",JOptionPane.ERROR_MESSAGE);
 			}
 		});
 		buttonAvatar.addMouseListener(new java.awt.event.MouseAdapter() {
 			@Override
 			public void mouseReleased(java.awt.event.MouseEvent evt) {
 				// TO DO: file picker/picture chooser dialog
-				JOptionPane.showMessageDialog(panelMain, "This feauture is not yet complete", "Change Avatar",
-						JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(panelMain, "This feauture is not yet complete", "Change Avatar",JOptionPane.ERROR_MESSAGE);
 
 			}
 		});
@@ -142,8 +139,7 @@ public class MessengerSettings extends JDialog {
 						buttonTheme.setToolTipText("Using: Hifi Theme");
 					} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
 							| UnsupportedLookAndFeelException e) {
-						JOptionPane.showMessageDialog(MessengerSettings.this, "Unable to change theme.", "Messenger",
-								JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(MessengerSettings.this, "Unable to change theme.", "Messenger",JOptionPane.ERROR_MESSAGE);
 						e.printStackTrace();
 					}
 				}
@@ -155,8 +151,7 @@ public class MessengerSettings extends JDialog {
 						buttonTheme.setToolTipText("Using: Noire Theme (Default)");
 					} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
 							| UnsupportedLookAndFeelException e) {
-						JOptionPane.showMessageDialog(MessengerSettings.this, "Unable to change theme.", "Messenger",
-								JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(MessengerSettings.this, "Unable to change theme.", "Messenger",JOptionPane.ERROR_MESSAGE);
 						e.printStackTrace();
 					}
 				}

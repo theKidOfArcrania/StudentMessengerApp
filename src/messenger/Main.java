@@ -3,6 +3,7 @@ package messenger;
 import static javax.swing.JOptionPane.WARNING_MESSAGE;
 import static javax.swing.JOptionPane.showMessageDialog;
 
+import java.awt.Font;
 import java.io.IOException;
 
 import javax.swing.JOptionPane;
@@ -25,7 +26,7 @@ public class Main {
 			e.printStackTrace();
 			System.exit(1);
 		}
-
+		
 		String userName = "";
 		while (userName.isEmpty()) {
 			userName = JOptionPane.showInputDialog(null, "Input your Username");
