@@ -23,10 +23,12 @@ public class MessengerSettings extends JDialog {
 	// Messenger App Version, date, & default theme
 	// TO DO: replace ver with VERSION file that comes with updater
 	final double ver = 1.0;
-	final String date = "11/4/2015";
+	final String date = "11/5/2015";
 
 	// Creates Buttons
-	JButton buttonUsername = new JButton("Change Username"), buttonColor = new JButton("Change User Color"), buttonAvatar = new JButton("Change Avatar"),
+	JButton buttonUsername = new JButton("Change Username"), 
+			buttonColor = new JButton("Change User Color"), 
+			buttonAvatar = new JButton("Change Avatar"),
 			buttonTheme = new JButton("Change Theme");
 
 	private final JPanel panelText, panelMain;

@@ -3,7 +3,6 @@ package messenger;
 import static javax.swing.JOptionPane.WARNING_MESSAGE;
 import static javax.swing.JOptionPane.showMessageDialog;
 
-import java.awt.Font;
 import java.io.IOException;
 
 import javax.swing.JOptionPane;

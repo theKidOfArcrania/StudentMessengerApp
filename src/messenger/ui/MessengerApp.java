@@ -1,9 +1,15 @@
 package messenger.ui;
 
+import static javax.swing.JOptionPane.ERROR_MESSAGE;
+import static javax.swing.JOptionPane.QUESTION_MESSAGE;
+import static javax.swing.JOptionPane.YES_NO_OPTION;
+import static javax.swing.JOptionPane.YES_OPTION;
+import static javax.swing.JOptionPane.showConfirmDialog;
+import static javax.swing.JOptionPane.showMessageDialog;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.ComponentOrientation;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
@@ -44,13 +50,6 @@ import messenger.Message;
 import messenger.event.MessageEvent;
 import messenger.event.MessageListener;
 import messenger.ui.image.ImageHelper;
-
-import static javax.swing.JOptionPane.ERROR_MESSAGE;
-import static javax.swing.JOptionPane.QUESTION_MESSAGE;
-import static javax.swing.JOptionPane.YES_NO_OPTION;
-import static javax.swing.JOptionPane.YES_OPTION;
-import static javax.swing.JOptionPane.showConfirmDialog;
-import static javax.swing.JOptionPane.showMessageDialog;
 
 public class MessengerApp extends JFrame {
 	public class ChatTabComponent extends JPanel {
@@ -370,7 +369,7 @@ public class MessengerApp extends JFrame {
 		mnutNewUnlistedChat.setFont(new Font("Segoe UI", Font.PLAIN, 13));
 		mnutPrivateChat.setFont(new Font("Segoe UI", Font.PLAIN, 13));
 		mnutPublicChat.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-
+		
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(0, 0, 0, 0));
 		setContentPane(contentPane);
