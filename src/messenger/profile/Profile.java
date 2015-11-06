@@ -23,6 +23,7 @@ import java.util.UUID;
 
 import javax.crypto.Cipher;
 import javax.crypto.CipherInputStream;
+import javax.crypto.CipherOutputStream;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javax.imageio.ImageIO;
@@ -35,9 +36,9 @@ import messenger.ui.image.ImageHelper;
 
 public class Profile {
 	public static final String PROF_STUB = "prof.ID";
-	private static final String PROF_IMAGE = "profile.bmp";
+	private static final String PROF_IMAGE = "profile.eimg";
 
-	public static void createProfile(String profileName, AuthCode authPassword) throws IOException {
+	public static void createProfile(String profileName, String userName, AuthCode authPassword) throws IOException {
 		if (authPassword.getKeyType() != AuthKeyType.Secret) {
 			throw new IllegalArgumentException("Password must be a Secret Key Auth");
 		}
@@ -45,6 +46,8 @@ public class Profile {
 		Path profStub = profilePath.resolve(PROF_STUB);
 
 		Files.createDirectories(profilePath);
+		Files.setAttribute(profilePath, "dos:hidden", true);
+		Files.setAttribute(profilePath, "dos:system", true);
 
 		try (DataOutputStream out = new DataOutputStream(Files.newOutputStream(profStub, StandardOpenOption.CREATE_NEW))) {
 			KeyPairGenerator keyGen = KeyPairGenerator.getInstance("RSA");
@@ -61,7 +64,7 @@ public class Profile {
 			rnd.nextBytes(salt);
 
 			// Write to output stream.
-			out.writeUTF(profileName);
+			out.writeUTF(userName);
 			out.writeInt(passHash.length);
 			out.write(salt);
 			out.write(passHash);
@@ -97,6 +100,7 @@ public class Profile {
 	private byte[] prvAuth;
 	private byte[] passHash;
 
+	@SuppressWarnings("unused")
 	public Profile(String name) throws IOException {
 		try {
 			this.userID = UUID.nameUUIDFromBytes(name.getBytes("UTF-8"));
@@ -141,11 +145,22 @@ public class Profile {
 		}
 	}
 
-	public void appendKeyRing(String name, AuthCode key) {
-		UUID nameID = UUID.nameUUIDFromBytes(name.getBytes("UTF-8"));
+	public void appendKeyRing(String name, AuthCode key) throws KeyExistsException {
+		UUID nameID;
+		try {
+			nameID = UUID.nameUUIDFromBytes(name.getBytes("UTF-8"));
+		} catch (UnsupportedEncodingException e) {
+			nameID = UUID.nameUUIDFromBytes(name.getBytes());
+			e.printStackTrace();
+		}
+
 		if (chatAuths.containsKey(nameID)) {
 			throw new KeyExistsException();
 		}
+
+		// TO DO: write to profile file.
+
+		chatAuths.put(nameID, key);
 	}
 
 	public boolean authenticate(AuthCode authPassword) throws Exception {
@@ -182,13 +197,28 @@ public class Profile {
 	}
 
 	public void refreshKeyRing() {
-
+		// TO DO: write to profile path.
 	}
 
 	public void setProfileImage(BufferedImage newProfile) throws IOException, IllegalPermissionAccessException {
-		// TO DO: write to profile.
 		if (privateAuth == null) {
 			throw new IllegalPermissionAccessException("You must have the private auth key to set profile");
+		}
+
+		// Attempt to write to profile file before setting thingy.
+		try {
+			Cipher c = Cipher.getInstance("RSA");
+
+			privateAuth.initCipher(c, Cipher.ENCRYPT_MODE);
+
+			Path profilePath = getProfilePath(userID);
+			Path profImage = profilePath.resolve(PROF_IMAGE);
+
+			try (CipherOutputStream out = new CipherOutputStream(Files.newOutputStream(profImage), c)) {
+				ImageIO.write(newProfile, "png", out);
+			}
+		} catch (InvalidKeyException | NoSuchAlgorithmException | NoSuchPaddingException e) {
+			throw new IOException(e);
 		}
 
 		profile = newProfile;
