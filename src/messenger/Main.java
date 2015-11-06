@@ -24,31 +24,34 @@ public class Main {
 
 		String userName = System.getProperty("user.name");
 		Path userProfilePath = Paths.get(System.getenv("USERPROFILE"));
-
+		
 		System.out.println(userProfilePath);
 
 		if (!userProfilePath.getFileName().toString().equals(userName)) {
-			System.out.println("Nice try... No tampering with the environment variables allowed...");
+			tampering();
 		} else if (!Files.exists(userProfilePath)) {
-			System.out.println("Nice try... No tampering with the environment variables allowed...");
+			tampering();
 		} else {
 			try {
 				UserPrincipal currentUser = FileSystems.getDefault().getUserPrincipalLookupService().lookupPrincipalByName(userName);
 				for (AclEntry acl : Files.getFileAttributeView(userProfilePath, AclFileAttributeView.class).getAcl()) {
 					acl.f
 					if (!owner.equals(currentUser)) {
-						System.out.println("Nice try... No tampering with the environment variables allowed...");
+						tampering();
 					} else {
 						System.out.println("Hello " + System.getProperty("user.name"));
 					}
 				}
 			} catch (IOException e) {
-				System.out.println("Nice try... No tampering with the environment variables allowed...");
+				tampering();
 			}
 
 		}
 	}
-
+	
+public static void tampering(){
+System.out.println("Nice try... No tampering with the environment variables allowed...");
+}
 	public static void main(String[] args) throws Exception {
 		runProgram();
 	}
