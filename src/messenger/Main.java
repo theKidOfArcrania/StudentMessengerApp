@@ -63,13 +63,13 @@ public class Main {
 		}
 
 		String userName = "";
-		while (userName.length() > 30 | userName.length() < 2) {
+		while (userName.length() > 28 | userName.length() < 2) {
 			userName = JOptionPane.showInputDialog(null, "Input your Username");
 			if (userName == null) {
 				return;
 			}
-			if (userName.length() > 30) {
-				showMessageDialog(null, "Invalid Username. The maximum is 30 Characters.", "Messenger", WARNING_MESSAGE);
+			if (userName.length() > 28) {
+				showMessageDialog(null, "Invalid Username. The maximum is 28 Characters.", "Messenger", WARNING_MESSAGE);
 			}
 			if (userName.length() < 2) {
 				showMessageDialog(null, "Invalid Username. Username is too short.", "Messenger", WARNING_MESSAGE);
