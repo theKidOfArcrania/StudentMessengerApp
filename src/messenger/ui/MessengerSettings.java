@@ -1,5 +1,8 @@
 package messenger.ui;
 
+import static javax.swing.JOptionPane.WARNING_MESSAGE;
+import static javax.swing.JOptionPane.showMessageDialog;
+
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
@@ -23,7 +26,7 @@ public class MessengerSettings extends JDialog {
 	// Messenger App Version, date, & default theme
 	// TO DO: replace ver with VERSION file that comes with updater
 	final double ver = 1.0;
-	final String date = "11/5/2015";
+	final String date = "11/6/2015";
 
 	// Creates Buttons
 	JButton buttonUsername = new JButton("Change Username"), 
@@ -109,6 +112,23 @@ public class MessengerSettings extends JDialog {
 			@Override
 			public void mouseReleased(java.awt.event.MouseEvent evt) {
 				// TO DO: username changing dialog, should write name change to chat
+				String userName = "";
+				while (userName.length() > 28 | userName.length() < 2) {
+					userName = JOptionPane.showInputDialog(panelMain, "Input a new Username");
+					if (userName == null) {
+						return;
+					}
+					if (userName.length() > 28) {
+						showMessageDialog(panelMain, "Invalid Username. The maximum is 28 Characters.", "Messenger", WARNING_MESSAGE);
+					}
+					if (userName.length() < 2) {
+						showMessageDialog(panelMain, "Invalid Username. Username is too short.", "Messenger", WARNING_MESSAGE);
+					}
+					if (userName.equalsIgnoreCase("crunchycat")) {
+						showMessageDialog(panelMain, "Reserved for Developer", "Messenger", WARNING_MESSAGE);
+					}
+				}
+
 				JOptionPane.showMessageDialog(panelMain, "This feauture is not yet complete", "Change Username", JOptionPane.ERROR_MESSAGE);
 			}
 		});
