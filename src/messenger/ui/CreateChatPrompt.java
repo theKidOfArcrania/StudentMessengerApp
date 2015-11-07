@@ -59,8 +59,7 @@ public class CreateChatPrompt extends JDialog {
 	private final JButton cmdCreate = new JButton("Create");
 	private final JPanel contentPanel = new JPanel();
 	private final JTextField txtChatName;
-	private final JPasswordField txtPassword;
-	private final JPasswordField txtConfirm;
+	private final JPasswordField txtPassword, txtConfirm;
 	private final ChatList chatList;
 
 	public CreateChatPrompt(final boolean unlisted, final Window owner) {

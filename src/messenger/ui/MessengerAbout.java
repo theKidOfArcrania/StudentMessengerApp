@@ -35,7 +35,7 @@ public class MessengerAbout extends JDialog {
 	public MessengerAbout(Window owner) {
 		super(owner);
 
-		setResizable(true);
+		setResizable(false);
 		setTitle("About");
 
 		BufferedImage loading;

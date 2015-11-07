@@ -48,12 +48,9 @@ public class ChatRoom implements Closeable {
 
 	private static final Object LOCK = new Object();
 
-	private static final int HEADER_MOD_LEN = 8;
-	private static final int HEADER_USER_LEN = 4;
-	private static final int HEADER_SALT_LEN = 8;
-	private static final int HEADER_HASH_LEN = 32;
-	private static final int HEADER_LEN = HEADER_MOD_LEN + HEADER_USER_LEN + HEADER_SALT_LEN + HEADER_HASH_LEN; // byte-size of header.
-	private static final int BUFFER_ALLOC = 1024; // 1K data load
+	private static final int HEADER_MOD_LEN = 8, HEADER_USER_LEN = 4, HEADER_SALT_LEN = 8, HEADER_HASH_LEN = 32, 
+	HEADER_LEN = HEADER_MOD_LEN + HEADER_USER_LEN + HEADER_SALT_LEN + HEADER_HASH_LEN, // byte-size of header.
+	BUFFER_ALLOC = 1024; // 1K data load
 	private static final char[] PUBLIC_LOCK = "THIS is A LONG PASSWORD THAT HAS DIFFERENT CHARACTERS: !@#$%^&*()_+|qwertyuioipadsfghkl;'vzcxvnm.fajkdei31874654681+".toCharArray();
 
 	public static byte[] generateChatKeyCode(MessageDigest digest, char[] passwordLock) {

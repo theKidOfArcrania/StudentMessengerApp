@@ -53,14 +53,14 @@ import messenger.ui.image.ImageHelper;
 
 public class MessengerApp extends JFrame {
 	public class ChatTabComponent extends JPanel {
+		
 		private static final long serialVersionUID = 834974693980933308L;
 
 		private JLabel titleLabel = null;
 		private JButton closeButton = null;
 		private JTabbedPane tabbedPane = null;
 		private volatile String lastUser = null;
-		private boolean rotate = false;
-		private boolean removed = false;
+		private boolean rotate = false, removed = false;
 
 		@SuppressWarnings("resource")
 		public ChatTabComponent(JTabbedPane aTabbedPane, final ChatClient client) {
@@ -167,9 +167,9 @@ public class MessengerApp extends JFrame {
 		}
 	}
 
-	private static ImageIcon closerImage = ImageHelper.loadImageIcon("closer.png");
-	private static ImageIcon closerRolloverImage = ImageHelper.loadImageIcon("closer_rollover.png");
-	private static ImageIcon closerPressedImage = ImageHelper.loadImageIcon("closer_pressed.png");
+	private static ImageIcon closerImage = ImageHelper.loadImageIcon("closer.png"),
+	closerRolloverImage = ImageHelper.loadImageIcon("closer_rollover.png"),
+	closerPressedImage = ImageHelper.loadImageIcon("closer_pressed.png");
 
 	private static final long serialVersionUID = 8989464213647457508L;
 
@@ -180,7 +180,6 @@ public class MessengerApp extends JFrame {
 	private final JPanel contentPane;
 	private final JTabbedPane chatTabPane;
 	private final ChatList chatList;
-
 	private final String userName;
 
 	/**

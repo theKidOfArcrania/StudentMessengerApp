@@ -22,9 +22,11 @@ import javax.swing.UnsupportedLookAndFeelException;
 
 public class MessengerSettings extends JDialog {
 
-	private static int theme = 0;
+	private static final long serialVersionUID = 7959262950265311250L;
+	
 	// Messenger App Version, date, & default theme
 	// TO DO: replace ver with VERSION file that comes with updater
+	private static int theme = 0;
 	final double ver = 1.0;
 	final String date = "11/6/2015";
 

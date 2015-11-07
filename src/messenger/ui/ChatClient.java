@@ -31,7 +31,7 @@ import messenger.event.MessageListener;
 
 public class ChatClient extends JPanel {
 	private static final long serialVersionUID = 2063945626125343638L;
-	private static final boolean DEBUG = false;
+	private static final boolean DEBUG = false; //Unused... Not sure what this is for
 	private JTextField txtInput;
 	private JScrollPane srpnMsgs;
 	private JTextArea txtMsgs;

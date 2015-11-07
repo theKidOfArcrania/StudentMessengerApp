@@ -7,9 +7,7 @@ import java.util.Date;
 public class UserStats {
 
 	private String userName;
-	private boolean active;
-	private boolean connected;
-	private boolean typing;
+	private boolean active, connected, typing;
 	private Date lastActive;
 
 	private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);

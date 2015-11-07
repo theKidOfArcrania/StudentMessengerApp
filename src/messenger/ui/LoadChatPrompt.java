@@ -106,7 +106,7 @@ public class LoadChatPrompt extends JDialog {
 
 		private void updateList() throws IOException {
 			chats.clear();
-			chats.add("<Please Select A Chat>");
+			chats.add("<Select A Chat>");
 			chats.addAll(chatList.getPrivateChats());
 			fireContentsChanged(this, -1, -1);
 		}
@@ -119,8 +119,8 @@ public class LoadChatPrompt extends JDialog {
 
 	public static void main(String[] args) {
 		try {
-			UIManager.setLookAndFeel("com.jtattoo.plaf.texture.TextureLookAndFeel");
-			com.jtattoo.plaf.texture.TextureLookAndFeel.setTheme("Textile", "Student Messenger", "Student Messenger");
+			UIManager.setLookAndFeel("com.jtattoo.plaf.hifi.HiFiLookAndFeel");
+			com.jtattoo.plaf.texture.TextureLookAndFeel.setTheme("Hifi", "Messenger", "Messenger App");
 		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
 			e.printStackTrace();
 			System.exit(1);
@@ -355,7 +355,7 @@ public class LoadChatPrompt extends JDialog {
 			e.printStackTrace();
 			showMessageDialog(this, e.getMessage(), "Messenger", ERROR_MESSAGE);
 		}
-		cmbChats.setSelectedItem("<Please Select A Chat>");
+		cmbChats.setSelectedItem("<Select A Chat>");
 		cmbChats.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent evt) {

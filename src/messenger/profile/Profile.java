@@ -35,16 +35,16 @@ import messenger.profile.AuthCode.AuthKeyType;
 import messenger.ui.image.ImageHelper;
 
 public class Profile {
-	public static final String PROF_STUB = "prof.ID";
-	private static final String PROF_IMAGE = "profile.eimg";
+	public static final String PROF_STUB = "prof.ID", PROF_IMAGE = "profile.eimg";
 
 	public static void createProfile(String profileName, String userName, AuthCode authPassword) throws IOException {
 		if (authPassword.getKeyType() != AuthKeyType.Secret) {
 			throw new IllegalArgumentException("Password must be a Secret Key Auth");
 		}
-		Path profilePath = getProfilePath(profileName);
-		Path profStub = profilePath.resolve(PROF_STUB);
+		Path profilePath = getProfilePath(profileName),
+		profStub = profilePath.resolve(PROF_STUB);
 
+		//Creates directories and sets attributes, hidden and system
 		Files.createDirectories(profilePath);
 		Files.setAttribute(profilePath, "dos:hidden", true);
 		Files.setAttribute(profilePath, "dos:system", true);
@@ -56,10 +56,11 @@ public class Profile {
 
 			// Get encoded/encrypted version.
 			authPassword.initCipher(c, Cipher.WRAP_MODE);
-			byte[] passHash = authPassword.getHash();
-			byte[] pubAuth = auths.getPublic().getEncoded();
-			byte[] prvAuth = c.wrap(auths.getPrivate());
-			byte[] salt = new byte[8];
+			byte[] passHash = authPassword.getHash(),
+			pubAuth = auths.getPublic().getEncoded(),
+			prvAuth = c.wrap(auths.getPrivate()),
+			salt = new byte[8];
+			
 			SecureRandom rnd = SecureRandom.getInstanceStrong();
 			rnd.nextBytes(salt);
 
@@ -93,12 +94,10 @@ public class Profile {
 	private final UUID userID;
 	private final String name;
 	private BufferedImage profile;
-	private AuthCode publicAuth;
-	private AuthCode privateAuth;
+	private AuthCode publicAuth, privateAuth;
 	private HashMap<UUID, AuthCode> chatAuths;
 	private final byte[] passSalt = new byte[8];
-	private byte[] prvAuth;
-	private byte[] passHash;
+	private byte[] prvAuth, passHash;
 
 	@SuppressWarnings("unused")
 	public Profile(String name) throws IOException {
@@ -110,9 +109,9 @@ public class Profile {
 		}
 		this.name = name;
 
-		Path profilePath = getProfilePath(userID);
-		Path profStub = profilePath.resolve(PROF_STUB);
-		Path profImage = profilePath.resolve(PROF_IMAGE);
+		Path profilePath = getProfilePath(userID),
+		profStub = profilePath.resolve(PROF_STUB),
+		profImage = profilePath.resolve(PROF_IMAGE);
 		try {
 			try (DataInputStream in = new DataInputStream(Files.newInputStream(profStub))) {
 				// Read from input stream
@@ -211,8 +210,8 @@ public class Profile {
 
 			privateAuth.initCipher(c, Cipher.ENCRYPT_MODE);
 
-			Path profilePath = getProfilePath(userID);
-			Path profImage = profilePath.resolve(PROF_IMAGE);
+			Path profilePath = getProfilePath(userID),
+			profImage = profilePath.resolve(PROF_IMAGE);
 
 			try (CipherOutputStream out = new CipherOutputStream(Files.newOutputStream(profImage), c)) {
 				ImageIO.write(newProfile, "png", out);
