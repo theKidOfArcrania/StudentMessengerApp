@@ -6,6 +6,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.attribute.AclEntry;
+import java.nio.file.attribute.AclEntryPermission;
 import java.nio.file.attribute.AclFileAttributeView;
 import java.nio.file.attribute.UserPrincipal;
 
@@ -20,12 +21,10 @@ import static javax.swing.JOptionPane.showMessageDialog;
 
 public class Main {
 
-	public static void checkProfile() {
+	public static void checkTamper() {
 
 		String userName = System.getProperty("user.name");
 		Path userProfilePath = Paths.get(System.getenv("USERPROFILE"));
-		
-		System.out.println(userProfilePath);
 
 		if (!userProfilePath.getFileName().toString().equals(userName)) {
 			tampering();
@@ -35,24 +34,39 @@ public class Main {
 			try {
 				UserPrincipal currentUser = FileSystems.getDefault().getUserPrincipalLookupService().lookupPrincipalByName(userName);
 				for (AclEntry acl : Files.getFileAttributeView(userProfilePath, AclFileAttributeView.class).getAcl()) {
-					acl.f
-					if (!owner.equals(currentUser)) {
-						tampering();
+					if (!acl.principal().equals(currentUser)) {
+						continue;
+					}
+
+					boolean read = false;
+					boolean write = false;
+
+					for (AclEntryPermission perm : acl.permissions()) {
+						switch (perm) {
+						case READ_DATA:
+							read = true;
+							break;
+						case WRITE_DATA:
+							write = true;
+							break;
+						}
+					}
+					if (read && write) {
+						return;
 					} else {
-						System.out.println("Hello " + System.getProperty("user.name"));
+						tampering();
 					}
 				}
+				tampering();
 			} catch (IOException e) {
 				tampering();
 			}
 
 		}
 	}
-	
-public static void tampering(){
-System.out.println("Nice try... No tampering with the environment variables allowed...");
-}
+
 	public static void main(String[] args) throws Exception {
+		checkTamper();
 		runProgram();
 	}
 
@@ -84,5 +98,11 @@ System.out.println("Nice try... No tampering with the environment variables allo
 
 		MessengerApp app = new MessengerApp(userName);
 		app.setVisible(true);
+	}
+
+	public static void tampering() {
+		System.out.println("Nice try... No tampering with the environment variables allowed...");
+		System.exit(1);
+		throw new Error();
 	}
 }
