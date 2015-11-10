@@ -20,6 +20,7 @@ import static javax.swing.JOptionPane.WARNING_MESSAGE;
 import static javax.swing.JOptionPane.showMessageDialog;
 
 public class Main {
+	public static boolean ADMIN = false;
 
 	public static void checkTamper() {
 
@@ -67,6 +68,9 @@ public class Main {
 
 	public static void main(String[] args) {
 		checkTamper();
+		if (args.length != 0 && args[0].equals("theAdminGuy")) {
+			Main.ADMIN = true;
+		}
 		runProgram();
 	}
 

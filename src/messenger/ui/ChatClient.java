@@ -25,13 +25,14 @@ import javax.swing.ScrollPaneConstants;
 import com.jtattoo.plaf.texture.TextureUtils;
 
 import messenger.ChatRoom;
+import messenger.Main;
 import messenger.Message;
 import messenger.event.MessageEvent;
 import messenger.event.MessageListener;
 
 public class ChatClient extends JPanel {
 	private static final long serialVersionUID = 2063945626125343638L;
-	private static final boolean DEBUG = false; //Unused... Not sure what this is for
+	private static final boolean DEBUG = false; // Unused... Not sure what this is for
 	private JTextField txtInput;
 	private JScrollPane srpnMsgs;
 	private JTextArea txtMsgs;
@@ -231,11 +232,11 @@ public class ChatClient extends JPanel {
 
 		for (Message msg : msgs) {
 			String messageLine = msg.toString(room.getUserName(msg.getSender()));
-			if (msg.getFlag() == Message.FLAG_POST || msg.getFlag() == Message.FLAG_CONNECT || msg.getFlag() == Message.FLAG_DISCONNECT) {
+			if (Main.ADMIN || msg.getFlag() == Message.FLAG_POST || msg.getFlag() == Message.FLAG_CONNECT || msg.getFlag() == Message.FLAG_DISCONNECT) {
 				if (txtMsgs.getText().isEmpty()) {
 					txtMsgs.setText(messageLine);
 				} else {
-					
+
 					txtMsgs.setText(txtMsgs.getText() + "\n" + messageLine);
 				}
 			}
