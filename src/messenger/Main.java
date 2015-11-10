@@ -65,12 +65,12 @@ public class Main {
 		}
 	}
 
-	public static void main(String[] args) throws Exception {
+	public static void main(String[] args) {
 		checkTamper();
 		runProgram();
 	}
 
-	public static void runProgram() throws IOException {
+	public static void runProgram() {
 		try {
 			UIManager.setLookAndFeel("com.jtattoo.plaf.hifi.HiFiLookAndFeel");
 			com.jtattoo.plaf.texture.TextureLookAndFeel.setTheme("Hifi", "Messenger", "Messenger App");

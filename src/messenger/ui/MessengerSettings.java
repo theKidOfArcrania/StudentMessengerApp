@@ -1,8 +1,5 @@
 package messenger.ui;
 
-import static javax.swing.JOptionPane.WARNING_MESSAGE;
-import static javax.swing.JOptionPane.showMessageDialog;
-
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
@@ -10,6 +7,9 @@ import java.awt.Window;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.DataInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -20,20 +20,39 @@ import javax.swing.ToolTipManager;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
+import org.shellupdate.Version;
+
+import static javax.swing.JOptionPane.WARNING_MESSAGE;
+import static javax.swing.JOptionPane.showMessageDialog;
+
 public class MessengerSettings extends JDialog {
 
 	private static final long serialVersionUID = 7959262950265311250L;
-	
+
 	// Messenger App Version, date, & default theme
 	// TO DO: replace ver with VERSION file that comes with updater
 	private static int theme = 0;
-	final double ver = 1.0;
+	private static final Version current = new Version();
+
+	static {
+		try {
+			InputStream is = ClassLoader.getSystemResourceAsStream("VERSION");
+
+			if (is != null) {
+				try (DataInputStream dis = new DataInputStream(is)) {
+					current.readVersion(new DataInputStream(dis));
+				}
+				System.out.println(current);
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
 	final String date = "11/6/2015";
 
 	// Creates Buttons
-	JButton buttonUsername = new JButton("Change Username"), 
-			buttonColor = new JButton("Change User Color"), 
-			buttonAvatar = new JButton("Change Avatar"),
+	JButton buttonUsername = new JButton("Change Username"), buttonColor = new JButton("Change User Color"), buttonAvatar = new JButton("Change Avatar"),
 			buttonTheme = new JButton("Change Theme");
 
 	private final JPanel panelText, panelMain;
@@ -43,7 +62,7 @@ public class MessengerSettings extends JDialog {
 
 		// Creates Labels
 		JLabel labelTitle = new JLabel("Student Messenger App");
-		JLabel labelVersion = new JLabel("Version: " + ver);
+		JLabel labelVersion = new JLabel(current.toString());
 		JLabel labelCredits = new JLabel("Created By:");
 		JLabel labelCaleb = new JLabel("   Caleb Hoff   ");
 		JLabel labelHenry = new JLabel("   Henry Wang   ");
