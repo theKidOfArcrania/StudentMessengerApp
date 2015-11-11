@@ -21,10 +21,7 @@ public class Version implements Cloneable, Comparable<Version> {
 		}
 	}
 
-	public int major = 1;
-	public int minor;
-
-	public int build = 1;
+	public int major = 1, minor, build = 1;
 
 	public boolean beta;
 

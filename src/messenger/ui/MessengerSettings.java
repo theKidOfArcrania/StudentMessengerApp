@@ -1,5 +1,8 @@
 package messenger.ui;
 
+import static javax.swing.JOptionPane.WARNING_MESSAGE;
+import static javax.swing.JOptionPane.showMessageDialog;
+
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
@@ -21,9 +24,6 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
 import org.shellupdate.Version;
-
-import static javax.swing.JOptionPane.WARNING_MESSAGE;
-import static javax.swing.JOptionPane.showMessageDialog;
 
 public class MessengerSettings extends JDialog {
 
@@ -49,7 +49,7 @@ public class MessengerSettings extends JDialog {
 		}
 	}
 
-	final String date = "11/6/2015";
+	final String date = "11/11/2015";
 
 	// Creates Buttons
 	JButton buttonUsername = new JButton("Change Username"), buttonColor = new JButton("Change User Color"), buttonAvatar = new JButton("Change Avatar"),
