@@ -123,7 +123,7 @@ public class MessengerApp extends JFrame {
 					}
 				}
 			});
-
+			
 			client.addMessageListener(new MessageListener() {
 				@Override
 				public void messageRecieved(MessageEvent evt) {
@@ -338,6 +338,16 @@ public class MessengerApp extends JFrame {
 		mnuUserName.setFont(new Font("Segoe UI", Font.BOLD, 12));
 		mnuUserName.setFocusable(false);
 		mnuUserName.setBorderPainted(false);
+		
+		//Avatar Icon
+		JButton avatarIcon = null;
+		ImageIcon profileIcon = ImageHelper.loadImageIcon("DefaultProfile.png");
+		avatarIcon = new JButton(profileIcon);
+		avatarIcon.setBorderPainted(false);
+		avatarIcon.setFocusPainted(false);
+		avatarIcon.setUI(new BasicButtonUI());
+		avatarIcon.setPreferredSize(new Dimension(25, 25));
+		avatarIcon.setSize(new Dimension(25, 25));
 
 		// Mnemonics for tabs
 		mnuNew.setMnemonic('N');
@@ -356,6 +366,7 @@ public class MessengerApp extends JFrame {
 		menuBar.add(mnuJoin);
 		menuBar.add(Box.createHorizontalGlue());
 		menuBar.add(mnuUserName);
+		menuBar.add(avatarIcon);
 
 		// Sets Menu Item Fonts
 		mnuMessenger.setFont(new Font("Segoe UI", Font.BOLD, 14));
