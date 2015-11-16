@@ -49,7 +49,7 @@ public class MessengerSettings extends JDialog {
 		}
 	}
 
-	final String date = "11/11/2015";
+	final String date = "11/16/2015";
 
 	// Creates Buttons
 	JButton buttonUsername = new JButton("Change Username"), buttonColor = new JButton("Change User Color"), buttonAvatar = new JButton("Change Avatar"),
