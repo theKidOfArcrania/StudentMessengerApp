@@ -101,12 +101,12 @@ public class Main {
 		    	        null,
 		    	        null,
 		    	        null);
-					if (adminPassword.equals("292962")){
-				Main.ADMIN = true;
-				} else {
-				showMessageDialog(null, "Password is Incorrect", "Messenger", WARNING_MESSAGE);
-				userName = "";
-				}
+					if (adminPassword.equals("292962"))
+						Main.ADMIN = true;
+					else {
+						showMessageDialog(null, "Password is Incorrect", "Messenger", WARNING_MESSAGE);
+						userName = "";
+					}
 			}
 		}
 
