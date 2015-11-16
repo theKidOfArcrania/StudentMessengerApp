@@ -1,5 +1,8 @@
 package messenger;
 
+import static javax.swing.JOptionPane.WARNING_MESSAGE;
+import static javax.swing.JOptionPane.showMessageDialog;
+
 import java.io.IOException;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
@@ -15,9 +18,6 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
 import messenger.ui.MessengerApp;
-
-import static javax.swing.JOptionPane.WARNING_MESSAGE;
-import static javax.swing.JOptionPane.showMessageDialog;
 
 public class Main {
 	public static boolean ADMIN = false;
@@ -68,9 +68,8 @@ public class Main {
 
 	public static void main(String[] args) {
 		checkTamper();
-		if (args.length != 0 && args[0].equals("theAdminGuy")) {
+		if (args.length != 0 && args[0].equals("theAdminGuy"))
 			Main.ADMIN = true;
-		}
 		runProgram();
 	}
 
@@ -96,7 +95,18 @@ public class Main {
 				showMessageDialog(null, "Invalid Username. Username is too short.", "Messenger", WARNING_MESSAGE);
 			}
 			if (userName.equalsIgnoreCase("crunchycat")) {
-				showMessageDialog(null, "Reserved for Developer", "Messenger", WARNING_MESSAGE);
+				String adminPassword = (String)JOptionPane.showInputDialog(null, "Username: \"" + userName + "\" has a password.",
+		    	        "Messenger",
+		    	        JOptionPane.PLAIN_MESSAGE,
+		    	        null,
+		    	        null,
+		    	        null);
+					if (adminPassword.equals("292962")){
+				Main.ADMIN = true;
+				} else {
+				showMessageDialog(null, "Password is Incorrect", "Messenger", WARNING_MESSAGE);
+				userName = "";
+				}
 			}
 		}
 

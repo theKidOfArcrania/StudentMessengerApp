@@ -94,7 +94,7 @@ public class Message {
 		if (body.length != 0) {
 			bbMsg.get(body);
 		}
-
+		
 		return new Message(mod, flag, timeStamp, userID, body);
 	}
 
@@ -191,7 +191,6 @@ public class Message {
 		if (getEncodedLength() > bbMsg.remaining()) {
 			throw new BufferOverflowException();
 		}
-
 		bbMsg.put(SIGNATURE);
 		bbMsg.putLong(mod);
 		bbMsg.put(flag);
@@ -292,7 +291,7 @@ public class Message {
 			return "[" + userName + " Active]";
 		case 7:
 			try {
-				return "<" + userName + " has alias of \"" + new String(body, "utf-8") + "\">";
+				return "[ADMIN: " + userName + " has alias of \"" + new String(body, "utf-8") + "\"]";
 			} catch (UnsupportedEncodingException e) {
 				e.printStackTrace();
 				throw new InternalError(e);
