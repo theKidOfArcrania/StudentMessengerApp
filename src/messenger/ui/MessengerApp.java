@@ -46,6 +46,7 @@ import javax.swing.plaf.basic.BasicButtonUI;
 
 import messenger.ChatList;
 import messenger.ChatRoom;
+import messenger.Main;
 import messenger.Message;
 import messenger.event.MessageEvent;
 import messenger.event.MessageListener;
@@ -338,6 +339,9 @@ public class MessengerApp extends JFrame {
 		mnuUserName.setFont(new Font("Segoe UI", Font.BOLD, 12));
 		mnuUserName.setFocusable(false);
 		mnuUserName.setBorderPainted(false);
+		
+		if (Main.ADMIN == true)
+		mnuUserName.setText("Admin: " + userName);
 		
 		//Avatar Icon
 		JButton avatarIcon = null;
