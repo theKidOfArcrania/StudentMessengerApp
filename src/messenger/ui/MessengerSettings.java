@@ -30,7 +30,6 @@ public class MessengerSettings extends JDialog {
 	private static final long serialVersionUID = 7959262950265311250L;
 
 	// Messenger App Version, date, & default theme
-	// TO DO: replace ver with VERSION file that comes with updater
 	private static int theme = 0;
 	private static final Version current = new Version();
 
@@ -49,10 +48,12 @@ public class MessengerSettings extends JDialog {
 		}
 	}
 
-	final String date = "11/16/2015";
+	final String DATE = "11/16/2015";
 
 	// Creates Buttons
-	JButton buttonUsername = new JButton("Change Username"), buttonColor = new JButton("Change User Color"), buttonAvatar = new JButton("Change Avatar"),
+	JButton buttonUsername = new JButton("Change Username"), 
+			buttonColor = new JButton("Change User Color"),
+			buttonAvatar = new JButton("Change Avatar"),
 			buttonTheme = new JButton("Change Theme");
 
 	private final JPanel panelText, panelMain;
@@ -61,12 +62,12 @@ public class MessengerSettings extends JDialog {
 		super(owner);
 
 		// Creates Labels
-		JLabel labelTitle = new JLabel("Student Messenger App");
-		JLabel labelVersion = new JLabel(current.toString());
-		JLabel labelCredits = new JLabel("Created By:");
-		JLabel labelCaleb = new JLabel("   Caleb Hoff   ");
-		JLabel labelHenry = new JLabel("   Henry Wang   ");
-		JLabel labelDaniel = new JLabel("   Daniel Wong   ");
+		JLabel labelTitle = new JLabel("Student Messenger App"),
+		labelVersion = new JLabel(current.toString()),
+		labelCredits = new JLabel("Created By:"),
+		labelCaleb = new JLabel("   Caleb Hoff   "),
+		labelHenry = new JLabel("   Henry Wang   "),
+		labelDaniel = new JLabel("   Daniel Wong   ");
 		JLabel labelSpace = new JLabel("            ");
 
 		// Sets sizes of buttons and labels
@@ -83,7 +84,7 @@ public class MessengerSettings extends JDialog {
 		buttonColor.setToolTipText("Change Your User Color");
 		buttonAvatar.setToolTipText("Change your Avatar");
 		buttonTheme.setToolTipText("Change the Messenger theme");
-		labelVersion.setToolTipText("Build Date: " + date);
+		labelVersion.setToolTipText("Build Date: " + DATE);
 		labelCaleb.setToolTipText("Original Concept and UI");
 		labelHenry.setToolTipText("Main Code Design");
 		labelDaniel.setToolTipText("Code Design");

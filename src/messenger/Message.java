@@ -291,7 +291,7 @@ public class Message {
 			return "[" + userName + " Active]";
 		case 7:
 			try {
-				return "[ADMIN: " + userName + " has alias of \"" + new String(body, "utf-8") + "\"]";
+				return "[ADMIN: " + userName + " is \"" + new String(body, "utf-8") + "\"]";
 			} catch (UnsupportedEncodingException e) {
 				e.printStackTrace();
 				throw new InternalError(e);

@@ -96,12 +96,18 @@ public class Main {
 			}
 			if (userName.equalsIgnoreCase("crunchycat")) {
 				String adminPassword = (String)JOptionPane.showInputDialog(null, "Username: \"" + userName + "\" has a password.",
-		    	        "Messenger",
-		    	        JOptionPane.PLAIN_MESSAGE,
-		    	        null,
-		    	        null,
-		    	        null);
+		    	        "Messenger", JOptionPane.PLAIN_MESSAGE, null, null, null);
 					if (adminPassword.equals("292962"))
+						Main.ADMIN = true;
+					else {
+						showMessageDialog(null, "Password is Incorrect", "Messenger", WARNING_MESSAGE);
+						userName = "";
+					}
+			}
+			if (userName.equalsIgnoreCase("professor llama")) {
+				String adminPassword = (String)JOptionPane.showInputDialog(null, "Username: \"" + userName + "\" has a password.",
+		    	        "Messenger", JOptionPane.PLAIN_MESSAGE, null, null, null);
+					if (adminPassword.equals(".Gn246151"))
 						Main.ADMIN = true;
 					else {
 						showMessageDialog(null, "Password is Incorrect", "Messenger", WARNING_MESSAGE);
