@@ -114,8 +114,27 @@ public class Main {
 						userName = "";
 					}
 			}
+		if (userName.equalsIgnoreCase("feather steel")) {
+			String adminPassword = (String)JOptionPane.showInputDialog(null, "Username: \"" + userName + "\" has a password.",
+	    	        "Messenger", JOptionPane.PLAIN_MESSAGE, null, null, null);
+				if (adminPassword.equals("427608"))
+					Main.ADMIN = true;
+				else {
+					showMessageDialog(null, "Password is Incorrect", "Messenger", WARNING_MESSAGE);
+					userName = "";
+				}
 		}
-
+		if (userName.equalsIgnoreCase("___")) {
+			String adminPassword = (String)JOptionPane.showInputDialog(null, "Username: \"" + userName + "\" has a password.",
+	    	        "Messenger", JOptionPane.PLAIN_MESSAGE, null, null, null);
+				if (adminPassword.equals("Sept1998&"))
+					Main.ADMIN = true;
+				else {
+					showMessageDialog(null, "Password is Incorrect", "Messenger", WARNING_MESSAGE);
+					userName = "";
+				}
+		}
+	}
 		MessengerApp app = new MessengerApp(userName);
 		app.setVisible(true);
 	}
