@@ -94,46 +94,22 @@ public class Main {
 			if (userName.length() < 2) {
 				showMessageDialog(null, "Invalid Username. Username is too short.", "Messenger", WARNING_MESSAGE);
 			}
-			if (userName.equalsIgnoreCase("crunchycat")) {
+			String reqPassword = "";
+			if (userName.equalsIgnoreCase("crunchycat")) reqPassword = "292962";
+			if (userName.equalsIgnoreCase("professor llama")) reqPassword = ".Gn246151";
+			if (userName.equalsIgnoreCase("feather steel")) reqPassword = "427608";
+			if (userName.equalsIgnoreCase("___")) reqPassword = "Sept1998&";
+			
+			if (userName.equalsIgnoreCase("crunchycat") | userName.equalsIgnoreCase("professor llama") | userName.equalsIgnoreCase("feather steel") | userName.equalsIgnoreCase("___")) {
 				String adminPassword = (String)JOptionPane.showInputDialog(null, "Username: \"" + userName + "\" has a password.",
 		    	        "Messenger", JOptionPane.PLAIN_MESSAGE, null, null, null);
-					if (adminPassword.equals("292962"))
+					if (adminPassword.equals(reqPassword))
 						Main.ADMIN = true;
 					else {
 						showMessageDialog(null, "Password is Incorrect", "Messenger", WARNING_MESSAGE);
 						userName = "";
 					}
 			}
-			if (userName.equalsIgnoreCase("professor llama")) {
-				String adminPassword = (String)JOptionPane.showInputDialog(null, "Username: \"" + userName + "\" has a password.",
-		    	        "Messenger", JOptionPane.PLAIN_MESSAGE, null, null, null);
-					if (adminPassword.equals(".Gn246151"))
-						Main.ADMIN = true;
-					else {
-						showMessageDialog(null, "Password is Incorrect", "Messenger", WARNING_MESSAGE);
-						userName = "";
-					}
-			}
-		if (userName.equalsIgnoreCase("feather steel")) {
-			String adminPassword = (String)JOptionPane.showInputDialog(null, "Username: \"" + userName + "\" has a password.",
-	    	        "Messenger", JOptionPane.PLAIN_MESSAGE, null, null, null);
-				if (adminPassword.equals("427608"))
-					Main.ADMIN = true;
-				else {
-					showMessageDialog(null, "Password is Incorrect", "Messenger", WARNING_MESSAGE);
-					userName = "";
-				}
-		}
-		if (userName.equalsIgnoreCase("___")) {
-			String adminPassword = (String)JOptionPane.showInputDialog(null, "Username: \"" + userName + "\" has a password.",
-	    	        "Messenger", JOptionPane.PLAIN_MESSAGE, null, null, null);
-				if (adminPassword.equals("Sept1998&"))
-					Main.ADMIN = true;
-				else {
-					showMessageDialog(null, "Password is Incorrect", "Messenger", WARNING_MESSAGE);
-					userName = "";
-				}
-		}
 	}
 		MessengerApp app = new MessengerApp(userName);
 		app.setVisible(true);
