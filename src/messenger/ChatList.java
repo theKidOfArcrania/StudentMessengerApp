@@ -255,7 +255,7 @@ public class ChatList {
 
 	public ChatRoom publicChatRoom() throws IOException {
 		try {
-			return new ChatRoom(root.resolve("Public.crm"), "<Public>", null);
+			return new ChatRoom(root.resolve("Public.crm"), "Public", null);
 		} catch (PasswordInvalidException e) {
 			e.printStackTrace();
 			throw new IOException("Public chat-room is password protected!!");
@@ -297,17 +297,14 @@ public class ChatList {
 			}
 		}
 		if (event.kind() == ENTRY_CREATE) {
-			if (chatName == null) {
+			if (chatName == null)
 				return;
-			}
 			fireAddEvent(chatName);
 		} else if (event.kind() == ENTRY_DELETE) {
-			if (chatName == null) {
+			if (chatName == null)
 				return;
-			}
 			fireRemoveEvent(chatName);
-		} else if (event.kind() == OVERFLOW) {
+		} else if (event.kind() == OVERFLOW)
 			fireUpdateEvent();
-		}
 	}
 }

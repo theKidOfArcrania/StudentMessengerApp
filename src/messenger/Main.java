@@ -88,17 +88,18 @@ public class Main {
 			if (userName == null) {
 				return;
 			}
-			if (userName.length() > 28) {
-				showMessageDialog(null, "Invalid Username. The maximum is 28 Characters.", "Messenger", WARNING_MESSAGE);
-			}
-			if (userName.length() < 2) {
-				showMessageDialog(null, "Invalid Username. Username is too short.", "Messenger", WARNING_MESSAGE);
-			}
+			//Username Requirements (2-28 Characters)
+			if (userName.length() > 28)
+			showMessageDialog(null, "Invalid Username. The maximum is 28 Characters.", "Messenger", WARNING_MESSAGE);
+			if (userName.length() < 2)
+			showMessageDialog(null, "Invalid Username. Username is too short.", "Messenger", WARNING_MESSAGE);
+			
+			//Sets Admin Usernames and passwords
 			String reqPassword = "";
 			if (userName.equalsIgnoreCase("crunchycat")) reqPassword = "292962";
 			if (userName.equalsIgnoreCase("professor llama")) reqPassword = ".Gn246151";
 			if (userName.equalsIgnoreCase("feather steel")) reqPassword = "427608";
-			if (userName.equalsIgnoreCase("___")) reqPassword = "Sept1998&";
+			if (userName.equals("___")) reqPassword = "Sept1998&";
 			
 			if (userName.equalsIgnoreCase("crunchycat") | userName.equalsIgnoreCase("professor llama") | userName.equalsIgnoreCase("feather steel") | userName.equalsIgnoreCase("___")) {
 				String adminPassword = (String)JOptionPane.showInputDialog(null, "Username: \"" + userName + "\" has a password.",

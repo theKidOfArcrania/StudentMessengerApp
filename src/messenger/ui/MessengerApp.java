@@ -152,11 +152,15 @@ public class MessengerApp extends JFrame {
 							}
 							Thread.sleep(1000);
 							rotate = !rotate;
+							//Code made tabs ugly and hard to close sometimes
+							/*
 							if (rotate && lastUser != null) {
 								titleLabel.setText(lastUser + " said...   ");
 							} else {
 								titleLabel.setText(chatRoom.getChatName() + "   ");
 							}
+							*/
+							titleLabel.setText(chatRoom.getChatName() + "   ");
 						} catch (Exception e1) {
 							e1.printStackTrace();
 						}
