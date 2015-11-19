@@ -22,7 +22,7 @@ import messenger.ui.MessengerApp;
 public class Main {
 	public static boolean ADMIN = false;
 
-	public static void checkTamper() {
+	public static String checkTamper() {
 
 		String userName = System.getProperty("user.name");
 		Path userProfilePath = Paths.get(System.getenv("USERPROFILE"));
@@ -67,9 +67,29 @@ public class Main {
 	}
 
 	public static void main(String[] args) {
-		checkTamper();
+		//Command-line admin by-passes tamper check.
 		if (args.length != 0 && args[0].equals("theAdminGuy"))
 			Main.ADMIN = true;
+		else {
+			String profileName = checkTamper();
+			//Note that no one can spoof the profile name, because it checks whether if your individual profile is genuine by checking the user's user file.
+			
+			//Check if this profile name has admin access.
+			if (profileName.equalsIgnoreCase("noah.goldstein.1") || profileName.equalsIgnoreCase("caleb.hoff.1") || profileName.equalsIgnoreCase("henry.wang.1")) {
+				profileName = profileName.replace('.', ' ');
+				showMessageDialog(null, "Welcome " + profileName + "! You have Admin access", "Messenger", JOptionPane.INFORMATION_MESSAGE);
+				Main.ADMIN = true;
+			}
+			
+			char num = profileName.charAt(profileName.length() - 1);
+			
+			//All students have the ".#" at the end. Teachers get automatic admin access.
+			if (num >= '0' && num <= '9') {
+				profileName = profileName.replace('.', ' ');
+				showMessageDialog(null, "Welcome " + profileName + "! You have Admin access", "Messenger", JOptionPane.INFORMATION_MESSAGE);
+				Main.ADMIN = true;
+			}
+		}
 		runProgram();
 	}
 
@@ -94,6 +114,9 @@ public class Main {
 			if (userName.length() < 2)
 			showMessageDialog(null, "Invalid Username. Username is too short.", "Messenger", WARNING_MESSAGE);
 			
+			if (Main.ADMIN) continue; //We already checked the administrator.
+			
+			//This is obsolete check, someone could still look at the password.
 			//Sets Admin Usernames and passwords
 			String reqPassword = "";
 			if (userName.equalsIgnoreCase("crunchycat")) reqPassword = "292962";
@@ -111,7 +134,7 @@ public class Main {
 						userName = "";
 					}
 			}
-	}
+		}
 		MessengerApp app = new MessengerApp(userName);
 		app.setVisible(true);
 	}
