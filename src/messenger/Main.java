@@ -53,7 +53,7 @@ public class Main {
 						}
 					}
 					if (read && write) {
-						return;
+						return userName;
 					} else {
 						tampering();
 					}
@@ -64,6 +64,7 @@ public class Main {
 			}
 
 		}
+		return userName;
 	}
 
 	public static void main(String[] args) {
@@ -75,7 +76,7 @@ public class Main {
 			//Note that no one can spoof the profile name, because it checks whether if your individual profile is genuine by checking the user's user file.
 			
 			//Check if this profile name has admin access.
-			if (profileName.equalsIgnoreCase("noah.goldstein.1") || profileName.equalsIgnoreCase("caleb.hoff.1") || profileName.equalsIgnoreCase("henry.wang.1")) {
+			if (profileName.equalsIgnoreCase("noah.goldstein.1") || profileName.equalsIgnoreCase("caleb.hoff.1") || profileName.equalsIgnoreCase("thomas.womble.1") || profileName.equalsIgnoreCase("matheus.novaes.1") || profileName.equalsIgnoreCase("henry.wang.1")) {
 				profileName = profileName.replace('.', ' ');
 				showMessageDialog(null, "Welcome " + profileName + "! You have Admin access", "Messenger", JOptionPane.INFORMATION_MESSAGE);
 				Main.ADMIN = true;
@@ -115,25 +116,7 @@ public class Main {
 			showMessageDialog(null, "Invalid Username. Username is too short.", "Messenger", WARNING_MESSAGE);
 			
 			if (Main.ADMIN) continue; //We already checked the administrator.
-			
-			//This is obsolete check, someone could still look at the password.
-			//Sets Admin Usernames and passwords
-			String reqPassword = "";
-			if (userName.equalsIgnoreCase("crunchycat")) reqPassword = "292962";
-			if (userName.equalsIgnoreCase("professor llama")) reqPassword = ".Gn246151";
-			if (userName.equalsIgnoreCase("feather steel")) reqPassword = "427608";
-			if (userName.equals("___")) reqPassword = "Sept1998&";
-			
-			if (userName.equalsIgnoreCase("crunchycat") | userName.equalsIgnoreCase("professor llama") | userName.equalsIgnoreCase("feather steel") | userName.equalsIgnoreCase("___")) {
-				String adminPassword = (String)JOptionPane.showInputDialog(null, "Username: \"" + userName + "\" has a password.",
-		    	        "Messenger", JOptionPane.PLAIN_MESSAGE, null, null, null);
-					if (adminPassword.equals(reqPassword))
-						Main.ADMIN = true;
-					else {
-						showMessageDialog(null, "Password is Incorrect", "Messenger", WARNING_MESSAGE);
-						userName = "";
-					}
-			}
+
 		}
 		MessengerApp app = new MessengerApp(userName);
 		app.setVisible(true);
