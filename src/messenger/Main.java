@@ -21,10 +21,11 @@ import messenger.ui.MessengerApp;
 
 public class Main {
 	public static boolean ADMIN = false;
+	public static String userName;
 
 	public static String checkTamper() {
 
-		String userName = System.getProperty("user.name");
+		userName = System.getProperty("user.name");
 		Path userProfilePath = Paths.get(System.getenv("USERPROFILE"));
 
 		if (!userProfilePath.getFileName().toString().equals(userName)) {
@@ -39,8 +40,7 @@ public class Main {
 						continue;
 					}
 
-					boolean read = false;
-					boolean write = false;
+					boolean read = false, write = false;
 
 					for (AclEntryPermission perm : acl.permissions()) {
 						switch (perm) {

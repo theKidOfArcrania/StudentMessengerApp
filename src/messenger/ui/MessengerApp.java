@@ -355,7 +355,6 @@ public class MessengerApp extends JFrame {
 		avatarIcon.setFocusPainted(false);
 		avatarIcon.setUI(new BasicButtonUI());
 		avatarIcon.setPreferredSize(new Dimension(25, 25));
-		avatarIcon.setSize(new Dimension(25, 25));
 
 		// Mnemonics for tabs
 		mnuNew.setMnemonic('N');
@@ -452,6 +451,5 @@ public class MessengerApp extends JFrame {
 			}
 			this.dispose();
 		}
-
 	}
 }

@@ -24,6 +24,7 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
 import org.shellupdate.Version;
+import messenger.Main;
 
 public class MessengerSettings extends JDialog {
 
@@ -48,7 +49,7 @@ public class MessengerSettings extends JDialog {
 		}
 	}
 
-	final String DATE = "11/17/2015";
+	final String DATE = "11/24/2015";
 
 	// Creates Buttons
 	JButton buttonUsername = new JButton("Change Username"), 
@@ -131,27 +132,11 @@ public class MessengerSettings extends JDialog {
 
 		// If buttons are clicked
 		buttonUsername.addMouseListener(new java.awt.event.MouseAdapter() {
-			@Override
 			public void mouseReleased(java.awt.event.MouseEvent evt) {
 				// TO DO: username changing dialog, should write name change to chat
-				String userName = "";
-				while (userName.length() > 28 | userName.length() < 2) {
-					userName = JOptionPane.showInputDialog(panelMain, "Input a new Username");
-					if (userName == null) {
-						return;
-					}
-					if (userName.length() > 28) {
-						showMessageDialog(panelMain, "Invalid Username. The maximum is 28 Characters.", "Messenger", WARNING_MESSAGE);
-					}
-					if (userName.length() < 2) {
-						showMessageDialog(panelMain, "Invalid Username. Username is too short.", "Messenger", WARNING_MESSAGE);
-					}
-					if (userName.equalsIgnoreCase("crunchycat")) {
-						showMessageDialog(panelMain, "Reserved for Developer", "Messenger", WARNING_MESSAGE);
-					}
-				}
-
-				JOptionPane.showMessageDialog(panelMain, "This feauture is not yet complete", "Change Username", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(panelMain, "This feauture is not yet complete. Creates a new window with your username instead of changing it", "Change Username", JOptionPane.ERROR_MESSAGE);
+				dispose();
+				Main.runProgram();
 			}
 		});
 		buttonColor.addMouseListener(new java.awt.event.MouseAdapter() {

@@ -1,6 +1,7 @@
 package messenger.ui;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.GridBagConstraints;
@@ -14,6 +15,8 @@ import java.io.IOException;
 import java.nio.channels.AsynchronousCloseException;
 import java.nio.channels.FileLockInterruptionException;
 
+import javax.swing.BorderFactory;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -57,8 +60,7 @@ public class ChatClient extends JPanel {
 				while (!stop) {
 					try {
 						updateMessages();
-						// Wait for a while.
-						Thread.sleep(100);
+						Thread.sleep(100); // Wait for a while.
 					} catch (InterruptedException | AsynchronousCloseException | FileLockInterruptionException e) {
 						// Interruption
 						if (stop) {
@@ -154,12 +156,13 @@ public class ChatClient extends JPanel {
 		gbc_lblChatTitle.gridx = 0;
 		gbc_lblChatTitle.gridy = 0;
 		pnlTitleBar.add(lblChatTitle, gbc_lblChatTitle);
-
+		
 		srpnMsgs = new JScrollPane();
 		srpnMsgs.setAutoscrolls(true);
 		srpnMsgs.setBorder(null);
 		srpnMsgs.setViewportBorder(null);
 		srpnMsgs.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		srpnMsgs.getVerticalScrollBar().setPreferredSize(new Dimension(16, Integer.MAX_VALUE));
 		srpnMsgs.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		GridBagConstraints gbc_scrollPane = new GridBagConstraints();
 		gbc_scrollPane.fill = GridBagConstraints.BOTH;
@@ -199,6 +202,7 @@ public class ChatClient extends JPanel {
 			public void focusGained(FocusEvent e) {
 				if (txtInput.getForeground().equals(Color.GRAY)) {
 					txtInput.setForeground(Color.WHITE);
+					txtInput.setBackground(new Color(95, 95, 95));
 					txtInput.setText("");
 				}
 			}
@@ -208,11 +212,12 @@ public class ChatClient extends JPanel {
 				if (txtInput.getText().isEmpty()) {
 					txtInput.setText("Send a message...");
 					txtInput.setForeground(Color.GRAY);
-
+					txtInput.setBackground(new Color(80, 80, 80));
 				}
 			}
 		});
 		txtInput.setForeground(Color.GRAY);
+		txtInput.setBorder(BorderFactory.createEmptyBorder());
 		txtInput.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		txtInput.setText("Send a message...");
 		GridBagConstraints gbc_txtInput = new GridBagConstraints();
